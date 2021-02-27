@@ -7,12 +7,13 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { AUTHOR_NAME } from '../lib/constants'
 import Post from '../types/post'
+import { GetStaticProps } from 'next'
 
-type Props = {
+interface IndexProps {
   allPosts: Post[]
 }
 
-const Index = ({ allPosts }: Props) => {
+const Index: React.FC<IndexProps> = ({ allPosts }) => {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
   return (
@@ -41,7 +42,7 @@ const Index = ({ allPosts }: Props) => {
 
 export default Index
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const allPosts = getAllPosts([
     'title',
     'date',
