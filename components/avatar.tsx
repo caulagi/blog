@@ -1,6 +1,4 @@
-import { AUTHOR_NAME } from '../lib/constants'
-
-const Avatar = () => {
+const Avatar: React.FC = () => {
   return (
     <div className="flex -space-x-1 overflow-hidden">
       <img

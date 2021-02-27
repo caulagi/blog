@@ -1,7 +1,7 @@
 import Container from './container'
 import { GIT_REPO, AUTHOR_NAME } from '../lib/constants'
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="bg-accent-1 border-t border-accent-2">
       <Container>

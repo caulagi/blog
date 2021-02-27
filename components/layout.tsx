@@ -1,11 +1,11 @@
 import Footer from './footer'
 import Meta from './meta'
 
-type Props = {
+type LayoutProps = {
   children: React.ReactNode
 }
 
-const Layout = ({ children }: Props) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Meta />

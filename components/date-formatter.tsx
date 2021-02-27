@@ -1,10 +1,10 @@
 import { parseISO, format } from 'date-fns'
 
-type Props = {
+interface DateFormatterProps {
   dateString: string
 }
 
-const DateFormatter = ({ dateString }: Props) => {
+const DateFormatter: React.FC<DateFormatterProps> = ({ dateString }) => {
   const date = parseISO(dateString)
   return <time dateTime={dateString}>{format(date, 'LLLL	d, yyyy')}</time>
 }
