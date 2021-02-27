@@ -1,13 +1,9 @@
-type Props = {
-  name: string
-  picture: string
-}
+import Image from 'next/image'
 
-const Avatar = ({ name, picture }: Props) => {
+const Avatar = () => {
   return (
-    <div className="flex items-center">
-      <img src={picture} className="w-12 h-12 rounded-full mr-4" alt={name} />
-      <div className="text-xl font-bold">{name}</div>
+    <div className="flex -space-x-1 overflow-hidden">
+      <img src='/assets/blog/authors/pradip.jpg' className="h-32 w-32 md:w-48 md:h-auto rounded-full" alt="Pradip Caulagi photo" />
     </div>
   )
 }
