@@ -12,12 +12,12 @@ import { AUTHOR_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
 
-type Props = {
+interface PostProps {
   post: PostType
   morePosts: PostType[]
 }
 
-const Post = ({ post, morePosts }: Props) => {
+const Post: React.FC<PostProps> = ({ post }) => {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -41,7 +41,6 @@ const Post = ({ post, morePosts }: Props) => {
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
-                author={post.author}
               />
               <PostBody content={post.content} />
             </article>
@@ -60,6 +59,7 @@ type Params = {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getStaticProps({ params }: Params) {
   const post = getPostBySlug(params.slug, [
     'title',
@@ -82,6 +82,7 @@ export async function getStaticProps({ params }: Params) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
 

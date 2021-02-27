@@ -1,11 +1,11 @@
 import PostPreview from './post-preview'
 import Post from '../types/post'
 
-type Props = {
+type MoreStoriesProps = {
   posts: Post[]
 }
 
-const MoreStories = ({ posts }: Props) => {
+const MoreStories: React.FC<MoreStoriesProps> = ({ posts }) => {
   return (
     <section>
       <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
@@ -18,7 +18,6 @@ const MoreStories = ({ posts }: Props) => {
             title={post.title}
             coverImage={post.coverImage}
             date={post.date}
-            author={post.author}
             slug={post.slug}
             excerpt={post.excerpt}
           />
