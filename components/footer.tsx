@@ -1,5 +1,5 @@
 import Container from './container'
-import { GIT_REPO } from '../lib/constants'
+import { GIT_REPO, AUTHOR_NAME } from '../lib/constants'
 
 const Footer = () => {
   return (
@@ -7,7 +7,7 @@ const Footer = () => {
       <Container>
         <div className="py-24 flex flex-col lg:flex-row items-center">
           <h3 className="text-3xl lg:text-4xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Thoughts &amp; musings of Pradip Caulagi
+            Thoughts &amp; musings of {AUTHOR_NAME}
           </h3>
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
             <a

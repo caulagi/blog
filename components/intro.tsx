@@ -1,4 +1,3 @@
-import { CMS_NAME } from '../lib/constants'
 import Avatar from './avatar'
 
 const Intro = () => {
