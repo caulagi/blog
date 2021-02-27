@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    name: Build & test
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run typecheck
