@@ -1,10 +1,10 @@
 ---
-title: 'Standup's are not cool'
+title: "Standup's are not cool"
 excerpt: 'So I find it strange that we start with the principle of self-organizing teams and then conclude — standup’s at 9! How does open-source work if standup’s are how development should be done?'
-coverImage: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+coverImage: 'https://user-images.githubusercontent.com/222507/109423898-a6531f80-79e1-11eb-9cbc-d126ddb95268.gif'
 date: '2016-12-20T05:35:07.322Z'
 ogImage:
-  url: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+  url: 'https://user-images.githubusercontent.com/222507/109423898-a6531f80-79e1-11eb-9cbc-d126ddb95268.gif'
 ---
 
 No, I am not an agile coach who has helped many teams deliver great results. I am just a developer who has read a couple of books on agile and taken part in my share of standup’s. I am now at a stage where I don’t see the value they bring. Why do we need them anyway?
