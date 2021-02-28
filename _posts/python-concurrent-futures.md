@@ -1,0 +1,45 @@
+---
+title: 'Python: concurrent.futures'
+excerpt: 'I suggest that we should use kubernetes to provision infrastructure so that we can build a platform that fixes itself when there are problems and we can spend the idle time on an island.'
+coverImage: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+date: '2014-08-05T05:35:07.322Z'
+ogImage:
+  url: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+---
+
+I had been wanting to try some new features of Python 3 for a while now. I recently found some free time and tried concurrent.futures. Concurrent.futures allows us to write code that runs in parallel in Python without resorting to creating threads or forking processes.
+
+We will use the following problem to write some code — write a script that downloads images over the internet to a local directory.
+
+Our test setting will use the built-in http server that comes bundled with Python. This will make sure that the numbers we see are not influenced by network latency and we also don’t bombard some random server with 1000's of requests.
+
+![](https://cdn-images-1.medium.com/max/2592/1*JTDRw9TNUVI4el6TXHXg0w.jpeg)
+
+We will run the script on my Intel 4 Core laptop running Ubuntu 14.04 with Python 3.4.
+
+![](https://cdn-images-1.medium.com/max/2000/1*cx0kamPUMDBOSxE5juZmWw.jpeg)
+
+The first step is to establish some base benchmark to see how much time a sequential program would require. This is what the script looks like -
+
+![](https://cdn-images-1.medium.com/max/2574/1*rqDjoAtdJDAA3mU1lX4CKQ.jpeg)
+
+The times for this simple sequential download of images are -
+
+![](https://cdn-images-1.medium.com/max/2564/1*Ti5PW1rDp3OxPXNsncYWHw.jpeg)
+
+Note that we have added a sanity check to verify that there is a linear increase in the time taken. So if 10k requests takes 80 seconds, 20k requests will require 160 seconds and so on.
+
+Now let us look at a version that uses concurrent.futures. It is surprisingly easy to change the sequential code to run parallelly -
+
+![](https://cdn-images-1.medium.com/max/2572/1*Vnh58hcRZeqz9-XWl8Cj4Q.jpeg)
+
+Only the download_ntimes method has changed to download images asynchronously using [ProcessPoolExecutor](https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor). From the documentation -
+> The ProcessPoolExecutor class uses a pool of processes to execute calls asynchronously. ProcessPoolExecutor uses the multiprocessing module, which allows it to side-step the [*Global Interpreter Lock](https://docs.python.org/3/glossary.html#term-global-interpreter-lock).*
+
+Note also that we don’t specify how many workers to use. That is because, *if max_workers is None or not given, it will default to the number of processors on the machine. *The download times now are -
+
+![](https://cdn-images-1.medium.com/max/2590/1*vJQ2cTjimq8lkvWnllDKxg.jpeg)
+
+We see that the download times are down by a factor of 3 (approximately). Theoretically, we should have seen a 4x speed up because of the 4 cores my machine has. The difference is probably due to book keeping that concurrent.futures has to do.
+
+So the question is — how many of us have the luxury of using Python 3 in real life ;). But on the other hand, if you are writing standalone scripts today and not using Python 3, you are missing out on the fun!
