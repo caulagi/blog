@@ -1,10 +1,10 @@
 ---
 title: 'Python: concurrent.futures'
-excerpt: 'I suggest that we should use kubernetes to provision infrastructure so that we can build a platform that fixes itself when there are problems and we can spend the idle time on an island.'
-coverImage: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+excerpt: 'I had been wanting to try some new features of Python 3 for a while now. I recently found some free time and tried concurrent.futures. Concurrent.futures allows us to write code that runs in parallel in Python without resorting to creating threads or forking processes.'
+coverImage: 'https://user-images.githubusercontent.com/222507/109425295-e87f5f80-79e7-11eb-8cc8-2d73a5dd3982.png'
 date: '2014-08-05T05:35:07.322Z'
 ogImage:
-  url: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+  url: 'https://user-images.githubusercontent.com/222507/109425295-e87f5f80-79e7-11eb-8cc8-2d73a5dd3982.png'
 ---
 
 I had been wanting to try some new features of Python 3 for a while now. I recently found some free time and tried concurrent.futures. Concurrent.futures allows us to write code that runs in parallel in Python without resorting to creating threads or forking processes.
@@ -34,7 +34,8 @@ Now let us look at a version that uses concurrent.futures. It is surprisingly ea
 ![](https://cdn-images-1.medium.com/max/2572/1*Vnh58hcRZeqz9-XWl8Cj4Q.jpeg)
 
 Only the download_ntimes method has changed to download images asynchronously using [ProcessPoolExecutor](https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor). From the documentation -
-> The ProcessPoolExecutor class uses a pool of processes to execute calls asynchronously. ProcessPoolExecutor uses the multiprocessing module, which allows it to side-step the [*Global Interpreter Lock](https://docs.python.org/3/glossary.html#term-global-interpreter-lock).*
+
+> The ProcessPoolExecutor class uses a pool of processes to execute calls asynchronously. ProcessPoolExecutor uses the multiprocessing module, which allows it to side-step the [\*Global Interpreter Lock](https://docs.python.org/3/glossary.html#term-global-interpreter-lock).\*
 
 Note also that we don’t specify how many workers to use. That is because, *if max_workers is None or not given, it will default to the number of processors on the machine. *The download times now are -
 
