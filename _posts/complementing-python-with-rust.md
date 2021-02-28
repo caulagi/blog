@@ -34,14 +34,13 @@ With that background, let us get a flavor of Rust by writing a hello-world appli
 
 <script src="https://gist.github.com/caulagi/7994c04f7216529748143f865d637d3a.js"></script>
 
-Let us now create a *hello-world of a Rust extension* that we can call from Python. I will use the [`cffi`](https://pypi.python.org/pypi/cffi) package in Python to interface between the two languages.
+Let us now create a _hello-world of a Rust extension_ that we can call from Python. I will use the [`cffi`](https://pypi.python.org/pypi/cffi) package in Python to interface between the two languages.
 
 <script src="https://gist.github.com/caulagi/3b39f3f02db794f254ac39e8db05ce8d.js"></script>
 
 Finally, to show you the difference in performance, I will consider the following problem — I want to read a text file, split it into words on whitespace, and find the most common words in that file. This is useful, for example, in writing a [spelling-corrector](http://norvig.com/spell-correct.html). It is simple to do this in Python since it has a built in data structure. `collections.Counter` is a kind of dictionary and has a method called `most_common`, that returns the common words with their count. Rust doesn’t have this method. So we will write an implementation of `most_common` that takes a dictionary (HashMap in Rust) as input and returns the most common key after aggregating.
 
 <script src="https://gist.github.com/caulagi/ec063cd338310dcf922de82dd43a074a.js"></script>
-
 
 Before I show the difference in numbers, I want to take a moment to talk about the method signature in Rust.
 
@@ -56,7 +55,7 @@ fn n_most_common<T>(
 
 So the `n_most_common` method takes a HashMap (dictionary) as the first argument. The key in this HashMap is a generic type T but the where clause specifies that this generic type T has to implement 3 traits — Eq, Hash and Clone. This is exactly same in a Python dictionary, where the keys have be hashable. But in the case of Rust, this is checked at compile type and doesn’t need unit-tests for this behaviour to hold.
 
-![Time taken in Rust and Python (lower is better)](https://cdn-images-1.medium.com/max/2000/1*NkDfVEodY6JRrst2XOLv4Q.png)*Time taken in Rust and Python (lower is better)*
+![Time taken in Rust and Python (lower is better)](https://cdn-images-1.medium.com/max/2000/1*NkDfVEodY6JRrst2XOLv4Q.png)_Time taken in Rust and Python (lower is better)_
 
 As for the difference in performance, I used the same file that was used in the original article. Make 3/4 copies of [`this file`](http://norvig.com/big.txt) and put it in ‘data’ directory (the file names don’t matter).
 
