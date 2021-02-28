@@ -45,8 +45,9 @@ Finally, to show you the difference in performance, I will consider the followin
 Before I show the difference in numbers, I want to take a moment to talk about the method signature in Rust.
 
 ```
-/// Find the most common words in the bag based on
-/// number of occurrences
+/// Find most common words in
+/// the bag based on number
+/// of occurrences
 fn n_most_common<T>(
     bag: HashMap<T, usize>,
     n: usize) -> Vec<(T, usize
@@ -67,6 +68,6 @@ There are a few talks that I borrowed ideas from — <a href="https://www.youtub
 
 You can also watch a recording of the video, but if you have already read so far, there is nothing new in the video. I start at 3 mins.
 
-<center><iframe width="560" height="315" src="https://www.youtube.com/embed/uBzRF8_UKNw" frameborder="0" allowfullscreen></iframe></center>
+<center><iframe src="https://www.youtube.com/embed/uBzRF8_UKNw" frameborder="0" allowfullscreen></iframe></center>
 
 Happy to hear comments/suggestions on [`twitter`](https://twitter.com/caulagi).
