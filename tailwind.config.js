@@ -1,6 +1,17 @@
 module.exports = {
   purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
+    fontFamily: {
+      cursive: ['"Dancing Script"', 'cursive'],
+      regular: [
+        'Lato',
+        '-apple-system',
+        'Roboto',
+        'Helvetica Neue',
+        'Arial',
+        'sans-serif',
+      ],
+    },
     extend: {
       colors: {
         'accent-1': '#FAFAFA',

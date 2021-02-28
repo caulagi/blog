@@ -1,6 +1,19 @@
 @tailwind base;
 
-/* Write your own custom base styles here */
+@font-face {
+  font-family: 'Dancing Script';
+  font-style: cursive;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/dancingscript/v15/If2cXTr6YS-zF4S-kcSWSVi_sxjsohD9F50Ruu7BMSoHTQ.ttf)
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: cursive;
+  font-weight: 400;
+  src: url(http://fonts.googleapis.com/css?family=Lato:400) format('truetype');
+}
 
 /* Start purging... */
 @tailwind components;

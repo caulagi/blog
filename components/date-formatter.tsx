@@ -7,7 +7,7 @@ interface DateFormatterProps {
 const DateFormatter: React.FC<DateFormatterProps> = ({ dateString }) => {
   const date = parseISO(dateString)
   return (
-    <time dateTime={dateString} className="italic text-purple-500">
+    <time dateTime={dateString} className="italic text-purple-500 font-cursive">
       {format(date, 'LLLL	d, yyyy')}
     </time>
   )
