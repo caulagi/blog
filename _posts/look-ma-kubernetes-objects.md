@@ -1,6 +1,6 @@
 ---
 title: 'Look ma, kubernetes objects'
-excerpt: 'I suggest that we should use kubernetes to provision infrastructure and other kubernetes clusters so that we can build a platform that fixes itself when there are problems and we can spend the idle time on an island.'
+excerpt: 'I suggest that we should use kubernetes to provision infrastructure so that we can build a platform that fixes itself when there are problems and we can spend the idle time on an island.'
 coverImage: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
 date: '2021-02-17T05:35:07.322Z'
 ogImage:
