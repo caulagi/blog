@@ -25,8 +25,8 @@ There is one fundamental abstraction in Kubernetes applied uniformly from how I 
 
 **Reconciliation loop**: There is a controller that will reconcile the intent with the observed state constantly.
 
-There are already projects like [`config-connector`](https://cloud.google.com/config-connector/docs/overview) and [`crossplane`](https://github.com/crossplane/crossplane) that allow us to manage infrastructure with this approach to varying degrees. In this design, there is no distinction between an infrastructure component and an application component. Everything is represented uniformly as a KRM (which means declarative and reconciliation) and the same tools are applied to manage infrastructure and applications. So perhaps a modern way to provision infrastructure is to provision a Kubernetes cluster which will provision your infrastructure and your Kubernetes clusters which will run applications.
+There are already projects like [config-connector](https://cloud.google.com/config-connector/docs/overview) and [crossplane](https://github.com/crossplane/crossplane) that allow us to manage infrastructure with this approach to varying degrees. In this design, there is no distinction between an infrastructure component and an application component. Everything is represented uniformly as a KRM (which means declarative and reconciliation) and the same tools are applied to manage infrastructure and applications. So perhaps a modern way to provision infrastructure is to provision a Kubernetes cluster which will provision your infrastructure and your Kubernetes clusters which will run applications.
 
 What I want to achieve is a platform that will fix itself when there are problems so I can have beers on an island. Occasionally the system can’t fix itself and I will write some more yaml’s.
 
-What do you think? Happy to hear thoughts/comments/critique [`on twitter`](https://twitter.com/caulagi)
+What do you think? Happy to hear thoughts/comments/critique [on twitter](https://twitter.com/caulagi)

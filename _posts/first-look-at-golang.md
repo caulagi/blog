@@ -44,10 +44,10 @@ It is not clear how to break this into idiomatic Go code. Perhaps I need to spen
 
 ### REPL
 
-As far as I can tell, there is no REPL for GO. This is something I missed terribly. Especially when you are learning a new language and want to try little snippets. No, I don’t want to use [`play`](http://play.golang.org/). I am far too used to the terminal.
+As far as I can tell, there is no REPL for GO. This is something I missed terribly. Especially when you are learning a new language and want to try little snippets. No, I don’t want to use [play](http://play.golang.org/). I am far too used to the terminal.
 
 There are a couple of other minor points. Having programmed in an interpreted language mostly, it was hard to switch over to the compiled mindset. In particular, the compile and restart server was pretty annoying. The other point is that it is not possible to change/add code to stdlib. I tend to add log lines quite a lot initially to understand an idea/concept. But this was ruled out for Go.
 
 All in all, it was an interesting weekend. But it wasn’t love at first sight. :|
 
-Don’t forget that these are my impressions after using Go for only 2 days. Also, these are my personal opinions. Feel free to disagree/discuss on [`twitter`](https://twitter.com/caulagi).
+Don’t forget that these are my impressions after using Go for only 2 days. Also, these are my personal opinions. Feel free to disagree/discuss on [twitter](https://twitter.com/caulagi).
