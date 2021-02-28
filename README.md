@@ -13,6 +13,10 @@ $ npm install
 $ npm run dev
 ```
 
+### History
+
+Git commit history doesn't accurately reflect the history of the articles prior to March 2021, because initially I had my blog on Medium. I migrated the articles from Medium due to the paywall.
+
 ## LICENSE
 
 This project is licensed under [`MIT`](LICENSE).
