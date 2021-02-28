@@ -3,7 +3,7 @@ const Avatar: React.FC = () => {
     <div className="flex -space-x-1 overflow-hidden">
       <img
         src="/assets/blog/authors/pradip.jpg"
-        className="h-32 w-32 md:w-48 md:h-auto rounded-full"
+        className="h-32 w-32 rounded-full"
         alt="{AUTHOR_NAME} photo"
       />
     </div>
