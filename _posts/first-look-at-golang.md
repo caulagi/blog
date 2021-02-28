@@ -1,10 +1,10 @@
 ---
 title: 'First look at golang'
 excerpt: 'I spent the weekend playing with Go. Specifically, I built a simple HTTP static file server. I have some first impressions.'
-coverImage: 'https://cdn-images-1.medium.com/max/2560/1*C1P0N253ts3T6vfiNlr5Pw.jpeg'
+coverImage: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
 date: '2014-07-20T15:35:07.322Z'
 ogImage:
-  url: 'https://cdn-images-1.medium.com/max/2560/1*C1P0N253ts3T6vfiNlr5Pw.jpeg'
+  url: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
 ---
 
 I spent the weekend playing with Go. Specifically, I built a simple HTTP static file server. I have some first impressions.
@@ -13,7 +13,7 @@ I spent the weekend playing with Go. Specifically, I built a simple HTTP static 
 
 ### Types
 
-<iframe src="https://medium.com/media/450f2f3fece5e1a23e4e0708dfb4fa80" frameborder=0></iframe>
+![](https://user-images.githubusercontent.com/222507/109426660-11572300-79ef-11eb-8165-65899ed34d05.png)
 
 I am a recent convert from a dynamic languages advocate to the need for static typing. I have recently spent far too much time than I would have liked fixing problems in production that should have been fixed at compile time. The compile errors and function signatures like this are almost musical —
 
