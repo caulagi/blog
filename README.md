@@ -1,4 +1,4 @@
-# Caulagi's blog
+# Pradip Caulagi's blog
 
 Based on [`blog-starter`][blog-starter] and uses Next.js, Markdown, and TypeScript. The pages are statically generated at build time.
 
