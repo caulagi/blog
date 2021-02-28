@@ -25,7 +25,7 @@ Many times (during standup’s), we talk about effort and not progress. Imagine 
 
 Which brings me to my next point. Progress, at least in software, and for me, is binary. Either you released a feature/bug-fix to production or you didn’t. Intermediate steps don’t matter. Saying you finished developing/testing a feature is irrelevant. Probably there is a regression in staging that you missed. Maybe there is a security issue. Or the code review discovered a problem that would require the same effort as the initial development. In other words, we should stop asking — how much longer will it take? Are we on track? Can we complete today? And instead ask, is it shipped?
 
-My last crib about standup’s is that it is disruptive to my schedule. Paul Graham has an excellent article on this — [http://www.paulgraham.com/makersschedule.html.](http://www.paulgraham.com/makersschedule.html.) While this form (standup’s) of updates are great for managers/management, there is no time of the day when such a meeting will not disrupt the ‘makers’.
+My last crib about standup’s is that it is disruptive to my schedule. Paul Graham has an [excellent article on this](http://www.paulgraham.com/makersschedule.html). While this form (standup’s) of updates are great for managers/management, there is no time of the day when such a meeting will not disrupt the ‘makers’.
 
 So I find it strange that we start with the principle of self-organizing teams and then conclude — standup’s at 9! How does open-source work if standup’s are how development should be done?
 
