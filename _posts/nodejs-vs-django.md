@@ -7,10 +7,9 @@ ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109427622-7ad93080-79f3-11eb-8411-519e3a696f6f.png'
 ---
 
-<blockquote class="flex flex-wrap flex-col bg-white text-gray-700 border-l-8 italic border-gray-400 px-4 py-3">
-The table was a large one, but the three were all crowded together at one corner of it: `No room! No room!’ they cried out when they saw Alice coming. `There’s PLENTY of room!’ said Alice indignantly, and she sat down in a large arm-chair at one end of the table.
-<span class="flex justify-end text-sm text-indigo-400 font-semibold pt-2">A mad tea party, Alice in Wonderland</span>
-</blockquote>
+> The table was a large one, but the three were all crowded together at one corner of it: 'No room! No room!' they cried out when they saw Alice coming. 'There’s PLENTY of room!' said Alice indignantly, and she sat down in a large arm-chair at one end of the table.
+
+<div class="text-right text-sm text-indigo-400 font-semibold pt-2">A mad tea party, Alice in Wonderland</div>
 
 We have been using both Django and Nodejs at [WWStay](https://wwstay.com/). We use Django for the customer dashboard and backoffice applications. We use Nodejs for the web application that aggregates different hotel rates from various vendors and presents it to the frontend. Of course, I have used Django and Nodejs for several hobby projects as well. I have spent quite a bit of time recently in building <strike>[a simple webapp for finding interesting events around you](http://www.hattira.com)</strike> (**Update** [28 Feb 2021]: I stopped working on this project. The domain belongs to somebody else now).
 

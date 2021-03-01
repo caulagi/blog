@@ -21,8 +21,9 @@ Of the several features that Rust has, I find 3 are particularly relevant to bui
 
 **Zero cost abstractions** is something Rust borrows from C++.
 
-<blockquote class="flex flex-wrap flex-col bg-white text-gray-700 border-l-8 italic border-gray-400 px-4 py-3">C++ implementations obey the zero-overhead principle: What you don’t use, you don’t pay for. And further: What you do use, you couldn’t hand code any better
-<span class="flex justify-end text-sm text-indigo-400 font-semibold pt-2">Stroustrup</span></blockquote>
+> C++ implementations obey the zero-overhead principle: What you don’t use, you don’t pay for. And further: What you do use, you couldn’t hand code any better
+
+<div class="text-right text-sm text-indigo-400 font-semibold pt-2">Stroustrup</div>
 
 So this language principle would mean that, for features of the language that I don’t use, there should be no penalty. For features of the language that I do use, it shouldn’t be possible to do any better by going down in the stack (i.e. by writing generated machine instructions, for example). One obvious evidence of this is in the trait implementation. Traits is one of the cornerstone’s of the abstraction model in Rust. It allows us to add behaviour to types in a variety of cases. But the design principle and the implementation of this feature guarantees that there is no penalty/overhead for using Traits. See this [excellent post](https://blog.rust-lang.org/2015/05/11/traits.html) for details.
 
