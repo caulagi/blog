@@ -6,7 +6,6 @@ const Header: React.FC = () => {
       <Link href="/">
         <a className="hover:underline font-cursive">Blog</a>
       </Link>
-      .
     </h2>
   )
 }
