@@ -1,17 +1,17 @@
 ---
 title: 'Weapons of choice'
 excerpt: 'Last month, I worked on a Nodejs project in my freetime. It is a community driven listing of events in a city. The idea was to answer the question — what is happening in city X? I have a few takeaways from that exercise that I think maybe interesting.'
-coverImage: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+coverImage: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
 date: '2013-08-27T05:35:07.322Z'
 ogImage:
-  url: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+  url: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
 ---
 
 ### Some experiences building a Nodejs project
 
 I still remember my first conversation with our architect when I joined Yahoo! I had just introduced myself. As soon as I told my name, he said, “Ah! I have heard about you. They tell me you have opinions about everything!” He definitely thought me as a bit of [Clouseau](http://en.wikipedia.org/wiki/Inspector_Clouseau).
 
-Last month, I worked on a Nodejs project in my freetime — <strike>[hattira](http://hattira.com/)</strike> (*Update 1 Mar 2021* I don't work on the project anymore and the domain belongs to somebody else). It is a community driven listing of events in a city. The idea was to answer the question — what is happening in city X? I have a few takeaways from that exercise that I think maybe interesting.
+Last month, I worked on a Nodejs project in my freetime — <strike>[hattira](http://hattira.com/)</strike> (_Update 1 Mar 2021_ I don't work on the project anymore and the domain belongs to somebody else). It is a community driven listing of events in a city. The idea was to answer the question — what is happening in city X? I have a few takeaways from that exercise that I think maybe interesting.
 
 [This is the [source](https://github.com/caulagi/hattira). It uses Nodejs, Mongodb, Mongoose, Passportjs, Underscorejs and some more [libraries](https://github.com/caulagi/hattira/blob/master/package.json) ]
 
