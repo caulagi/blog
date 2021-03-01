@@ -1,5 +1,3 @@
-import markdownStyles from './markdown-styles.module.css'
-
 type PostBodyProps = {
   content: string
 }
@@ -7,10 +5,7 @@ type PostBodyProps = {
 const PostBody: React.FC<PostBodyProps> = ({ content }) => {
   return (
     <div className="max-w-2xl mx-auto">
-      <div
-        className={markdownStyles['markdown']}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      <div dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   )
 }
