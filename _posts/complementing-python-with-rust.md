@@ -30,7 +30,7 @@ So this language principle would mean that, for features of the language that I 
 
 **Guaranteed memory safety** means that the program only accesses memory that belongs to it. It shouldn’t be possible to write past this memory or access it after it has been released. Also, remember that there is no garbage collector in Rust. So in this case, the language constructs need to ensure that these guarantees are fulfilled. It is solved in Rust using ownership and borrowing.
 
-With that background, let us get a flavor of Rust by writing a hello-world application. I use [rustup](https://www.rustup.rs/) to manage my Rust versions. [`Cargo`](http://doc.crates.io/guide.html) is the build manager of choice for Rust programs, similar to npm for JavaScript.
+With that background, let us get a flavor of Rust by writing a hello-world application. I use [rustup](https://www.rustup.rs/) to manage my Rust versions. [Cargo](http://doc.crates.io/guide.html) is the build manager of choice for Rust programs, similar to npm for JavaScript.
 
 <script src="https://gist.github.com/caulagi/7994c04f7216529748143f865d637d3a.js"></script>
 
