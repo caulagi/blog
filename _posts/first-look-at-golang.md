@@ -27,10 +27,9 @@ func serveFile(w ResponseWriter,
 
 ### Stdlib
 
-<blockquote class="flex flex-wrap flex-col bg-white text-gray-700 border-l-8 italic border-gray-400 px-4 py-3">
-Talk small and carry a big class library
-<span class="flex justify-end text-sm text-indigo-400 font-semibold pt-2">James Robertson, about Smalltalk.</span>
-</blockquote>
+> Talk small and carry a big class library
+
+<div class="text-right text-sm text-indigo-400 font-semibold pt-2">James Robertson, about Smalltalk.</div>
 
 Go is frequently said to be a modern language. This is evident in the standard libraries that come with the language. compress, crypt, html, etc are all libraries any program today would invariably use. In fact, you will notice that the static file server earlier is really tiny. It is due to the fact that stdlib has a complete implementation of a HTTP server with parts that can be easily customized.
 

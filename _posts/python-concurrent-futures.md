@@ -35,10 +35,8 @@ Now let us look at a version that uses concurrent.futures. It is surprisingly ea
 
 Only the download_ntimes method has changed to download images asynchronously using [ProcessPoolExecutor](https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor). From the documentation -
 
-<blockquote class="text-gray-700 border-l-8 border-gray-400 px-4 py-3">
-The ProcessPoolExecutor class uses a pool of processes to execute calls asynchronously. ProcessPoolExecutor uses the multiprocessing module, which allows it to side-step the
-<a href="https://docs.python.org/3/glossary.html#term-global-interpreter-lock">Global Interpreter Lock</a>
-</blockquote>
+> The ProcessPoolExecutor class uses a pool of processes to execute calls asynchronously. ProcessPoolExecutor uses the multiprocessing module, which allows it to side-step the
+> [global interpreter lock](https://docs.python.org/3/glossary.html#term-global-interpreter-lock)
 
 Note also that we don’t specify how many workers to use. That is because, *if max_workers is None or not given, it will default to the number of processors on the machine. *The download times now are -
 
