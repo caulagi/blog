@@ -4,8 +4,7 @@
 
 .markdown p,
 .markdown ul,
-.markdown ol,
-.markdown blockquote {
+.markdown ol {
   @apply my-6;
 }
 
