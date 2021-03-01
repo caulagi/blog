@@ -16,14 +16,6 @@
     format('woff2');
 }
 
-a {
-  color: #00458b;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */
