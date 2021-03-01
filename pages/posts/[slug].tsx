@@ -30,7 +30,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-            <article className="mb-32">
+            <article className="prose lg:prose-xl">
               <Head>
                 <title>
                   {post.title} | Blog of {AUTHOR_NAME}
