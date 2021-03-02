@@ -33,15 +33,202 @@ So this language principle would mean that, for features of the language that I 
 
 With that background, let us get a flavor of Rust by writing a hello-world application. I use [rustup](https://www.rustup.rs/) to manage my Rust versions. [Cargo](http://doc.crates.io/guide.html) is the build manager of choice for Rust programs, similar to npm for JavaScript.
 
-<script src="https://gist.github.com/caulagi/7994c04f7216529748143f865d637d3a.js"></script>
+```
+$ rustup show
+Default host: x86_64-apple-darwin
+
+installed toolchains
+--------------------
+
+stable-x86_64-apple-darwin
+beta-x86_64-apple-darwin
+nightly-x86_64-apple-darwin (default)
+
+active toolchain
+----------------
+
+nightly-x86_64-apple-darwin (default)
+rustc 1.15.0-nightly (daf8c1dfc 2016-12-05)
+
+# create a hello-world binary
+$ cargo new hello-world --bin
+
+$ cd hello-world
+
+$ tree
+.
+├── Cargo.toml
+└── src
+    └── main.rs
+
+1 directory, 2 files
+
+$ cargo build
+   Compiling hello-world v0.1.0 (file:///private/tmp/hello-world)
+    Finished debug [unoptimized + debuginfo] target(s) in 3.30 secs
+$ cargo run
+    Finished debug [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/hello-world`
+Hello, world!
+```
 
 Let us now create a _hello-world of a Rust extension_ that we can call from Python. I will use the [cffi](https://pypi.python.org/pypi/cffi) package in Python to interface between the two languages.
 
-<script src="https://gist.github.com/caulagi/3b39f3f02db794f254ac39e8db05ce8d.js"></script>
+```
+$ cargo new double
+$ cd double
+
+$ virtualenv .env
+$ . ./.env/bin/activate
+$ pip install cffi
+
+$ cargo build
+
+$ python double.py
+6
+
+$ cat Cargo.toml
+[package]
+name = "double"
+version = "0.1.0"
+authors = ["Pradip Caulagi <caulagi@gmail.com>"]
+
+[dependencies]
+
+[lib]
+name = "double"
+crate-type = ["dylib"]
+
+$ cat double.py
+from cffi import FFI
+
+ffi = FFI()
+ffi.cdef("""
+    int double(int);
+""")
+
+C = ffi.dlopen("target/debug/libdouble.dylib")
+print(C.double(3))
+
+$ cat lib.rs
+#[no_mangle]
+pub extern fn double(n: i32) -> i32 {
+    n * 2
+}
+```
 
 Finally, to show you the difference in performance, I will consider the following problem — I want to read a text file, split it into words on whitespace, and find the most common words in that file. This is useful, for example, in writing a [spelling-corrector](http://norvig.com/spell-correct.html). It is simple to do this in Python since it has a built in data structure. `collections.Counter` is a kind of dictionary and has a method called `most_common`, that returns the common words with their count. Rust doesn’t have this method. So we will write an implementation of `most_common` that takes a dictionary (HashMap in Rust) as input and returns the most common key after aggregating.
 
-<script src="https://gist.github.com/caulagi/ec063cd338310dcf922de82dd43a074a.js"></script>
+```
+$ cargo new words
+$ cargo build --release
+
+$ cat benchmark.py
+import os
+import re
+import time
+
+from cffi import FFI
+from collections import Counter
+
+ffi = FFI()
+ffi.cdef("""
+    int most_common(const char *, int);
+""")
+
+C = ffi.dlopen("target/release/libcounter.dylib")
+
+
+def benchmark_rs(path, n=10):
+    path = bytes(path.encode('utf-8'))
+    start = time.time()
+    C.most_common(path, n)
+    return time.time() - start
+
+
+def words(text):
+    return re.findall(r'\w+', text.lower())
+
+
+def benchmark(path, n=10):
+    start = time.time()
+    with open(path) as fp:
+        Counter(words(fp.read())).most_common(n)
+    return time.time() - start
+
+
+if __name__ == "__main__":
+    time_rs = time_py = 0
+    base_dir = 'data'
+    for f in os.listdir(base_dir):
+        path = os.path.join(base_dir, f)
+        time_rs += benchmark_rs(path)
+        time_py += benchmark(path)
+
+    print("Time in rust: %s" % time_rs)
+    print("Time in python: %s" % time_py)
+
+$ cat Cargo.toml
+[package]
+name = "words"
+version = "0.1.0"
+authors = ["Pradip Caulagi <caulagi@gmail.com>"]
+
+[dependencies]
+libc = "*"
+
+[lib]
+name = "counter"
+crate-type = ["dylib"]
+
+$ cat lib.rs
+extern crate libc;
+
+use std::clone::Clone;
+use std::collections::HashMap;
+use std::ffi::CStr;
+use std::fs::File;
+use std::hash::Hash;
+use std::io::Read;
+use std::str;
+
+use libc::c_char;
+
+#[no_mangle]
+pub extern "C" fn most_common(c_buf: *const c_char, n: i32) -> i32 {
+    let buf = unsafe { CStr::from_ptr(c_buf).to_bytes() };
+    let path = str::from_utf8(buf).unwrap();
+    bucketize_words(path, n as usize)[0].1 as i32
+}
+
+/// Read the file indicated by path and return the most common
+/// words in the file along with number of occurences
+fn bucketize_words(path: &str, n: usize) -> Vec<(String, usize)> {
+    let mut f = File::open(path).unwrap();
+    let mut data = String::new();
+    f.read_to_string(&mut data).unwrap();
+
+    let mut bag = HashMap::new();
+    for item in data.split_whitespace() {
+        let count = bag.entry(item.to_lowercase()).or_insert(0);
+        *count += 1;
+    }
+
+    n_most_common(bag, n)
+}
+
+/// Find the most common words in the bag based on number of occurrences
+fn n_most_common<T>(bag: HashMap<T, usize>, n: usize) -> Vec<(T, usize)>
+    where T: Eq + Hash + Clone
+{
+    let mut count_vec: Vec<_> = bag.into_iter().collect();
+    count_vec.sort_by(|a, b| b.1.cmp(&a.1));
+    count_vec.truncate(n);
+    count_vec
+}
+
+$ python benchmark.py
+```
 
 Before I show the difference in numbers, I want to take a moment to talk about the method signature in Rust.
 
