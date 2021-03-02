@@ -168,8 +168,6 @@ if __name__ == "__main__":
     print("Time in rust: %s" % time_rs)
     print("Time in python: %s" % time_py)
 
-$ python benchmark.py
-
 $ cat Cargo.toml
 [package]
 name = "words"
@@ -184,17 +182,52 @@ name = "counter"
 crate-type = ["dylib"]
 
 $ cat lib.rs
-[package]
-name = "words"
-version = "0.1.0"
-authors = ["Pradip Caulagi <caulagi@gmail.com>"]
+extern crate libc;
 
-[dependencies]
-libc = "*"
+use std::clone::Clone;
+use std::collections::HashMap;
+use std::ffi::CStr;
+use std::fs::File;
+use std::hash::Hash;
+use std::io::Read;
+use std::str;
 
-[lib]
-name = "counter"
-crate-type = ["dylib"]
+use libc::c_char;
+
+#[no_mangle]
+pub extern "C" fn most_common(c_buf: *const c_char, n: i32) -> i32 {
+    let buf = unsafe { CStr::from_ptr(c_buf).to_bytes() };
+    let path = str::from_utf8(buf).unwrap();
+    bucketize_words(path, n as usize)[0].1 as i32
+}
+
+/// Read the file indicated by path and return the most common
+/// words in the file along with number of occurences
+fn bucketize_words(path: &str, n: usize) -> Vec<(String, usize)> {
+    let mut f = File::open(path).unwrap();
+    let mut data = String::new();
+    f.read_to_string(&mut data).unwrap();
+
+    let mut bag = HashMap::new();
+    for item in data.split_whitespace() {
+        let count = bag.entry(item.to_lowercase()).or_insert(0);
+        *count += 1;
+    }
+
+    n_most_common(bag, n)
+}
+
+/// Find the most common words in the bag based on number of occurrences
+fn n_most_common<T>(bag: HashMap<T, usize>, n: usize) -> Vec<(T, usize)>
+    where T: Eq + Hash + Clone
+{
+    let mut count_vec: Vec<_> = bag.into_iter().collect();
+    count_vec.sort_by(|a, b| b.1.cmp(&a.1));
+    count_vec.truncate(n);
+    count_vec
+}
+
+$ python benchmark.py
 ```
 
 Before I show the difference in numbers, I want to take a moment to talk about the method signature in Rust.
