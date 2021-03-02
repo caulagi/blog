@@ -13,6 +13,13 @@ module.exports = {
       ],
     },
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            img: { 'margin-top': 0 },
+          },
+        },
+      },
       colors: {
         'accent-1': '#FAFAFA',
         'accent-2': '#EAEAEA',
