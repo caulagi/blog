@@ -9,7 +9,81 @@ ogImage:
 
 I spent the weekend playing with Go. Specifically, I built a simple HTTP static file server. I have some first impressions.
 
-<script src="https://gist.github.com/caulagi/81decc6abc55c48ad1f8cd6c6026d430.js"></script>
+```
+// A simple HTTP static file server.
+//
+//  Usage:
+//     go run --root ~/Pictures --port 8001
+//
+
+package main
+
+import (
+	"errors"
+	"flag"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"regexp"
+)
+
+// Router is a http.Handler that dispatches requests to different
+// handler functions.
+type Router struct {
+	// Root directory for serving files
+	root string
+}
+
+// Override the main http method to only serve files
+func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	if !isValidPath(req.URL.Path) {
+		http.NotFound(w, req)
+		return
+	}
+	fs := http.FileServer(http.Dir(r.root))
+	fs.ServeHTTP(w, req)
+}
+
+// Check if the path is something we want to serve
+func isValidPath(path string) bool {
+	isValid, err := regexp.Compile(`^([[:alnum:]/]+)(.png|.jpg)$`)
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+	return isValid.MatchString(path)
+}
+
+// Check if the root path specified for the server is valid
+func checkRoot(root string) error {
+	_, err := os.Stat(root)
+	if err != nil {
+		return errors.New(fmt.Sprintf("No such directory: %s", root))
+	}
+	return nil
+}
+
+var port = flag.String("port", ":8001", "Port on which the server will listen")
+var root = flag.String("root", "/var/www/example.com/static", "Root directory from where the files will be served")
+
+func init() {
+	flag.Parse()
+
+	log.Println("Serving from", *root, "on port", *port)
+	err := checkRoot(*root)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func main() {
+	err := http.ListenAndServe(*port, &Router{root: *root})
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
 
 ### Types
 
@@ -37,7 +111,18 @@ Go is frequently said to be a modern language. This is evident in the standard l
 
 This was probably the single biggest reason to try Go. To write a concurrent program. And while there are a few awesome videos describing the constructs, there are not sufficient real-time examples on the web to make this easy. Furthermore, it is not easy breaking a mostly sequential program into concurrent pieces in Go. Consider the problem of getting some data from a database in a request-response cyle in a web application. This would be some example Nodejs (find a user asynchronously from the database. If that succeeds, return the user. Else return the error) -
 
-<script src="https://gist.github.com/caulagi/1f6357bc52e2dee684e60465b23160e6.js"></script>
+```
+User.findOne({ email: email }, function (err, user) {
+  if (err) { return done(err) }
+  if (!user) {
+    return done(null, false, { message: ‘Unknown user’ })
+  }
+  if (!user.authenticate(password)) {
+    return done(null, false, { message: ‘Invalid password’ })
+  }
+  return done(null, user)
+})
+```
 
 It is not clear how to break this into idiomatic Go code. Perhaps I need to spend more time with Go.
 
