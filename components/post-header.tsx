@@ -1,11 +1,11 @@
 import Avatar from './avatar'
 import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
+import CoverImage, { ImageProps } from './cover-image'
 import PostTitle from './post-title'
 
 interface PostHeaderProps {
   title: string
-  coverImage: string
+  coverImage: ImageProps
   date: string
 }
 
@@ -22,7 +22,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ title, coverImage, date }) => {
         </div>
       </div>
       <div className="mb-8 md:mb-16 sm:mx-0">
-        <CoverImage title={title} src={coverImage} />
+        <CoverImage title={title} props={coverImage} />
       </div>
     </>
   )

@@ -1,11 +1,14 @@
 ---
 title: 'Weapons of choice'
 excerpt: 'Last month, I worked on a Nodejs project in my freetime. It is a community driven listing of events in a city. The idea was to answer the question — what is happening in city X? I have a few takeaways from that exercise that I think maybe interesting.'
-coverImage: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
+coverImage:
+  src: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
 date: '2013-08-27T05:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
 ---
+
+<div class="text-center text-sm text-gray-400">How hattira.com looked before being discontinued</div>
 
 ### Some experiences building a Nodejs project
 

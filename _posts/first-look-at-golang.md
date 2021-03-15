@@ -1,7 +1,10 @@
 ---
 title: 'First look at golang'
 excerpt: 'I spent the weekend playing with Go. Specifically, I built a simple HTTP static file server. I have some first impressions.'
-coverImage: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
+coverImage:
+  src: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
+  authorName: Yutaka Tsutano
+  authorUrl: https://www.flickr.com/photos/ivyfield/8154073189/
 date: '2014-07-20T15:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
