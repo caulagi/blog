@@ -1,7 +1,8 @@
 ---
 title: "Standup's are not cool"
 excerpt: 'So I find it strange that we start with the principle of self-organizing teams and then conclude — standup’s at 9! How does open-source work if standup’s are how development should be done?'
-coverImage: 'https://user-images.githubusercontent.com/222507/109423898-a6531f80-79e1-11eb-9cbc-d126ddb95268.gif'
+coverImage:
+  src: 'https://user-images.githubusercontent.com/222507/109423898-a6531f80-79e1-11eb-9cbc-d126ddb95268.gif'
 date: '2016-12-20T05:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109423898-a6531f80-79e1-11eb-9cbc-d126ddb95268.gif'

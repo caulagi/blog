@@ -1,7 +1,10 @@
 ---
 title: 'Python: concurrent.futures'
 excerpt: 'I had been wanting to try some new features of Python 3 for a while now. I recently found some free time and tried concurrent.futures. Concurrent.futures allows us to write code that runs in parallel in Python without resorting to creating threads or forking processes.'
-coverImage: 'https://user-images.githubusercontent.com/222507/109425295-e87f5f80-79e7-11eb-8cc8-2d73a5dd3982.png'
+coverImage:
+  src: 'https://user-images.githubusercontent.com/222507/109425295-e87f5f80-79e7-11eb-8cc8-2d73a5dd3982.png'
+  authorName: Alosh Bennett
+  authorUrl: https://www.flickr.com/photos/aloshbennett/3209564747/
 date: '2014-08-05T05:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109425295-e87f5f80-79e7-11eb-8cc8-2d73a5dd3982.png'

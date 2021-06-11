@@ -1,7 +1,8 @@
 ---
 title: 'Nodejs vs Django'
 excerpt: 'We have been using both Django and Nodejs at WWStay. We use Django for the customer dashboard and Nodejs for the web application that aggregates different hotel rates from various vendors. Based on my experiences, I have a checklist that I use to determine what framework to use.'
-coverImage: 'https://user-images.githubusercontent.com/222507/109427622-7ad93080-79f3-11eb-8411-519e3a696f6f.png'
+coverImage:
+  src: 'https://user-images.githubusercontent.com/222507/109427622-7ad93080-79f3-11eb-8411-519e3a696f6f.png'
 date: '2013-12-24T05:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109427622-7ad93080-79f3-11eb-8411-519e3a696f6f.png'

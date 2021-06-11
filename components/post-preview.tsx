@@ -1,10 +1,10 @@
 import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
+import CoverImage, { ImageProps } from './cover-image'
 import Link from 'next/link'
 
 interface PostPreviewProps {
   title: string
-  coverImage: string
+  coverImage: ImageProps
   date: string
   excerpt: string
   slug: string
@@ -17,10 +17,11 @@ const PostPreview: React.FC<PostPreviewProps> = ({
   excerpt,
   slug,
 }) => {
+  coverImage['slug'] = slug
   return (
     <div>
       <div className="mb-5">
-        <CoverImage slug={slug} title={title} src={coverImage} />
+        <CoverImage title={title} props={coverImage} />
       </div>
       <h3 className="text-3xl mb-3 leading-snug">
         <Link as={`/posts/${slug}`} href="/posts/[slug]">

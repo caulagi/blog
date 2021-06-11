@@ -1,10 +1,11 @@
 import Author from './author'
+import { ImageProps } from '../components/cover-image'
 
 type PostType = {
   slug: string
   title: string
   date: string
-  coverImage: string
+  coverImage: ImageProps
   author: Author
   excerpt: string
   ogImage: {

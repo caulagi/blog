@@ -1,7 +1,10 @@
 ---
 title: 'Complementing Python With Rust'
 excerpt: 'I show how we can offload performance critical parts of a Python codebase to use Rust. Rust is a fast systems language with performance close to C.'
-coverImage: 'https://cdn-images-1.medium.com/max/2560/1*C1P0N253ts3T6vfiNlr5Pw.jpeg'
+coverImage:
+  src: 'https://cdn-images-1.medium.com/max/2560/1*C1P0N253ts3T6vfiNlr5Pw.jpeg'
+  authorName: Atlas Green
+  authorUrl: https://unsplash.com/@atlas_green
 date: '2016-12-20T15:35:07.322Z'
 ogImage:
   url: 'https://cdn-images-1.medium.com/max/2560/1*C1P0N253ts3T6vfiNlr5Pw.jpeg'
