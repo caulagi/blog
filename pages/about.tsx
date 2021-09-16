@@ -11,13 +11,14 @@ const aboutMe = () => {
     <div>
       <p>
         I am an experienced developer interested in distributed systems. I have
-        spent 15+ years working with web applications. My goto language is
-        Python but I have been influenced and can read several other languages.
+        spent 15+ years working with web applications. 
+        I am good at Python and Golang and comfortable with Rust.
         My code is idiomatic, well tested and performs well. I have worked with
         startups, mid-size and large companies. I am active on github and have
-        contributed to open source projects. I enjoy working with Kubernetes and
-        Rust &#128521;. I would probably fit the roles of - platform/site
-        reliability/backend engineer.
+        contributed to open source projects.
+        I have worked on legacy solutions and improved them.
+        I enjoy working with Kubernetes and
+        Rust. I would probably fit the roles of platform/systems developer.
       </p>
       <p>
         Outside of work, I have 2 kids and spend my time watching/playing chess,
@@ -25,7 +26,7 @@ const aboutMe = () => {
         long walks.
       </p>
       <p>
-        Feel free to send me an email: caulagi AT gmail DOT com or on{' '}
+        Feel free to contact me via caulagi AT gmail DOT com or a DM on{' '}
         <Link href="https://twitter.com/caulagi">
           <a className="hover:underline text-black">twitter</a>
         </Link>
