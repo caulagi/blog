@@ -1,5 +1,7 @@
 # Pradip Caulagi's blog
 
+[![CI](https://github.com/caulagi/blog/actions/workflows/ci.yml/badge.svg)](https://github.com/caulagi/blog/actions/workflows/ci.yml)
+
 Based on [`blog-starter`][blog-starter] and uses Next.js, Markdown, and TypeScript. The pages are statically generated at build time.
 
 The blog posts are stored in `/_posts` as Markdown files with front matter support. Adding a new Markdown file in there will create a new blog post.
