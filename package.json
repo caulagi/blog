@@ -27,7 +27,7 @@
     "@types/classnames": "^2.2.10",
     "@types/jest": "^25.2.2",
     "@types/node": "^16.9.2",
-    "@types/react": "^17.0.21",
+    "@types/react": "^17.0.22",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "autoprefixer": "^10.2.1",
