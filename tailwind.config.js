@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./components/**/*.tsx', './pages/**/*.tsx'],
+  content: ['./components/**/*.tsx', './pages/**/*.tsx'],
   theme: {
     fontFamily: {
       cursive: ['"Dancing Script"', 'cursive'],
