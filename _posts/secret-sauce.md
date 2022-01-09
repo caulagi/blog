@@ -40,7 +40,8 @@ I want to clarify what I mean by `error-reporting`. To me, it means -
     also capture the context (variables, etc) when the error happens
 
 In simple terms, the error-reporting system should give me the debugging experience
-of an IDE (dns lookup failed for cache.example.com) but built for scale of a distributed system.
+of an IDE (dns lookup failed for cache.example.com on line 42 in src/dns.py)
+but built for scale of a distributed system.
 
 Typically, I have seen cloud-providers and several others build error-reporting on top
 of a logging system. However, there are several problems with this approach
@@ -71,4 +72,6 @@ Given these arguments, my preferred observability story would look something lik
   from support or a card got declined, etc. Logging is useful for answering questions
   about one request/transaction/user/payment etc, in my book.
 
-In other words, for a 'primitive' observability story, I only need error-reporting to support a distributed sytem!
+In other words, for a primitive observability story, I only need error-reporting to support a distributed sytem!
+
+Happy to hear thoughts/comments/criticism on [twitter](https://twitter.com/caulagi).

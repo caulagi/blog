@@ -10,13 +10,13 @@ const aboutMe = () => {
   return (
     <div>
       <p>
-        I am an experienced developer interested in distributed systems. I have
-        spent 15+ years working with web applications. I am good at Python and
-        Golang and comfortable with Rust. My code is idiomatic, well tested and
-        performs well. I have worked with startups, mid-size and large
-        companies. I am active on github and have contributed to open source
-        projects. I have worked on legacy solutions and improved them. I enjoy
-        working with Kubernetes and Rust. I would probably fit the roles of
+        I am an experienced developer/problem-solver interested in distributed
+        systems. I have spent many years working with web applications. I am
+        good at Python and Golang and comfortable with Rust. My code is
+        idiomatic, well tested and performs well. I have worked with startups,
+        mid-size and large companies. I am active on github and have contributed
+        to open source projects. I have worked on legacy solutions and improved
+        them. I enjoy working with Kubernetes and Rust. I will fit the roles of
         platform/systems developer.
       </p>
       <p>
