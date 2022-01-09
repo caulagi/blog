@@ -56,8 +56,8 @@ of a logging system. However, there are several problems with this approach
   During this period, we are also blind to system-performance. Or we took logging which
   is typically ok for a buffered, eventual-whatever system to being critical for observability.
 
-Some of the solutions today fit my description of error-reporting are:
-[sentry](https://sentry.io/), [rollbar](https://rollbar.com/), [airbrake](https://airbrake.io/).
+With that background, some of the solutions today that fit my description of error-reporting are:
+**[sentry](https://sentry.io/)**, **[rollbar](https://rollbar.com/)**, **[airbrake](https://airbrake.io/)**.
 
 Given these arguments, my preferred observability story would look something like this -
 
