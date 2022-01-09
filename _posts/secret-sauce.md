@@ -43,7 +43,7 @@ In simple terms, the error-reporting system should give me the debugging experie
 of an IDE but built for scale of a distributed system.
 
 Typically, I have seen cloud-providers and several others build error-reporting on top
-of a logging system. There are several problems, with this approach, IMO
+of a logging system. However, there are several problems with this approach
 (I would even go all the way and say these solutions are wrong).
 
 - When an error/exception happens in an application, the application has all the context.
@@ -51,13 +51,15 @@ of a logging system. There are several problems, with this approach, IMO
   solutions typically don't capture this context.
 - The other problem with this approach is where we are solving the problem. A logging based
   approach is typically trying to identify the problem at the infrastructure level (which is
-  why we loose context also) - one level higher than where the error happened. So we are not
-  shipping logs for sometime (errors **will** happen), we will not receive error reports also!
+  why we loose context also) - one level higher than where the error happened.
+- Imagine a scenario where we are not shipping logs for sometime (errors **will** happen).
+  During this period, we are also blind to system-performance. Or we took logging which
+  is typically ok for a buffered, eventual-whatever system to being critical for observability.
 
 Some of the current solutions that fit my description of error-reporting are:
 [sentry](https://sentry.io/), [rollbar](https://rollbar.com/), [airbrake](https://airbrake.io/).
 
-With that, my preferred observability story would look something like this -
+Given these arguments, my preferred observability story would look something like this -
 
 - A monitoring system like prometheus based on key metrics - number of logins,
   number of database connections, 50x errors, response times etc. All alerting would happen from this level.
