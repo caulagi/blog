@@ -1,10 +1,10 @@
 ---
 title: 'The secret sauce'
-excerpt: 'I argue that the most important component in a microservices architecture is error-reporting.'
+excerpt: 'I argue that the most important component for observability in a microservices/distributed architecture is error reporting.'
 coverImage:
-  src: 'https://user-images.githubusercontent.com/222507/148699983-b2feab34-67f9-48ca-bbe2-efc6269db789.png'
-  authorName: Mike Mozart
-  authorUrl: https://www.flickr.com/photos/39160147@N03/17169513396
+  src: 'https://user-images.githubusercontent.com/222507/148700710-cd6466ff-059b-4631-94be-bf19e7a70832.jpg'
+  authorName: Erik Mclean
+  authorUrl: https://unsplash.com/photos/l9x4U45VeNw
 date: '2022-01-09T21:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
