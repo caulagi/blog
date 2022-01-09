@@ -16,8 +16,8 @@ We used some/all of these technologies for a given HTTP request -
 - Route53 for DNS
 - Highly available HAProxy
 - A customized Python based web framework
-- [RDS](https://aws.amazon.com/rds/) instances
-- [ElastiCache](https://aws.amazon.com/elasticache/)
+- Managed [RDS](https://aws.amazon.com/rds/) instances
+- Managed [ElastiCache](https://aws.amazon.com/elasticache/)
 - Highly available Rabbitmq
 
 Can you guess which of the above technologies didn't have **any errors**?
@@ -40,7 +40,7 @@ I want to clarify what I mean by `error-reporting`. To me, it means -
     also capture the context (variables, etc) when the error happens
 
 In simple terms, the error-reporting system should give me the debugging experience
-of an IDE but built for scale of a distributed system.
+of an IDE (dns lookup failed for cache.example.com) but built for scale of a distributed system.
 
 Typically, I have seen cloud-providers and several others build error-reporting on top
 of a logging system. However, there are several problems with this approach
