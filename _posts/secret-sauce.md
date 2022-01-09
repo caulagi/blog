@@ -2,7 +2,7 @@
 title: 'The secret sauce'
 excerpt: 'I argue that the most important component in a microservices architecture is error-reporting.'
 coverImage:
-  src: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
+  src: 'https://user-images.githubusercontent.com/222507/148699983-b2feab34-67f9-48ca-bbe2-efc6269db789.png'
   authorName: Mike Mozart
   authorUrl: https://www.flickr.com/photos/39160147@N03/17169513396
 date: '2022-01-08T20:35:07.322Z'
