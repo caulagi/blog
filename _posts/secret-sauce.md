@@ -22,7 +22,7 @@ We used some/all of these technologies for a given HTTP request -
 
 Can you guess which of the above technologies didn't have **any errors**?
 
-No. Try again. Take a momemt to think.
+No. Try again; take a moment.
 
 None of them. In other words, all of the above services had occasional errors.
 Yes, even the managed services that were thousands of US dollars every month.
@@ -49,14 +49,14 @@ of a logging system. However, there are several problems with this approach
 - When an error/exception happens in an application, the application has all the context.
   It is important for this entire context to be captured for it to be actionable. But logging
   solutions typically don't capture this context.
-- The other problem with this approach is where we are solving the problem. A logging based
+- Another problem with this approach is where we are solving the problem. A logging based
   approach is typically trying to identify the problem at the infrastructure level (which is
   why we loose context also) - one level higher than where the error happened.
 - Imagine a scenario where we are not shipping logs for sometime (errors **will** happen).
   During this period, we are also blind to system-performance. Or we took logging which
   is typically ok for a buffered, eventual-whatever system to being critical for observability.
 
-Some of the current solutions that fit my description of error-reporting are:
+Some of the solutions today fit my description of error-reporting are:
 [sentry](https://sentry.io/), [rollbar](https://rollbar.com/), [airbrake](https://airbrake.io/).
 
 Given these arguments, my preferred observability story would look something like this -
@@ -68,6 +68,7 @@ Given these arguments, my preferred observability story would look something lik
   to identify and work with the problem.
 
 - A logging solution only for debugging - if a user got banned or there is a payment question
-  from support or a card got declined, etc.
+  from support or a card got declined, etc. Logging is useful for answering questions
+  about one request/transaction/user/payment etc, in my book.
 
 In other words, for a 'primitive' observability story, I only need error-reporting to support a distributed sytem!
