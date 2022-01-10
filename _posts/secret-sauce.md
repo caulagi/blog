@@ -24,7 +24,7 @@ Can you guess which of the above technologies didn't have **any errors**?
 
 No. Try again; take a moment.
 
-None of them. In other words, all of the above services had occasional errors.
+None of them. All of the above services had occasional errors.
 Yes, even the managed services that were thousands of US dollars every month.
 DNS lookup failed, we were unable to connect to database, keylookup failed,
 publishing to Rabbitmq failed, rendering templates from local disk failed, etc.
@@ -43,19 +43,20 @@ In simple terms, the error-reporting system should give me the debugging experie
 of an IDE (dns lookup failed for cache.example.com on line 42 in src/dns.py)
 but built for scale of a distributed system.
 
-Typically, I have seen cloud-providers and several others build error-reporting on top
+Many of the solutions out there (especially cloud-providers but also some infrastructure SaaS companies)
+build error-reporting on top
 of a logging system. However, there are several problems with this approach
-(I would even go all the way and say these solutions are wrong).
+(I would even go all the way and say solutions built on-top of logging systems are wrong).
 
 - When an error/exception happens in an application, the application has all the context.
   It is important for this entire context to be captured for it to be actionable. But logging
   solutions typically don't capture this context.
 - Another problem with this approach is where we are solving the problem. A logging based
-  approach is typically trying to identify the problem at the infrastructure level (which is
+  approach is trying to identify the problem at the infrastructure level (which is
   why we loose context also) - one level higher than where the error happened.
 - Imagine a scenario where we are not shipping logs for sometime (errors **will** happen).
-  During this period, we are also blind to system-performance. Or we took logging which
-  is typically ok for a buffered, eventual-whatever system to being critical for observability.
+  During this period, we are also blind to system-performance. Or we took logging which is
+  generally ok to being buffered/not-time-sensitive to being critical for observability.
 
 With that background, some of the solutions today that fit my description of error-reporting are:
 **[sentry](https://sentry.io/)**, **[rollbar](https://rollbar.com/)**, **[airbrake](https://airbrake.io/)**.
