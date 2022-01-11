@@ -6,19 +6,20 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { AUTHOR_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
 
+const intro = `
+I am an experienced developer/problem-solver interested in distributed
+systems. I have spent many years working with web applications. I am
+good at Python and Golang and comfortable with Rust. My code is
+idiomatic, well tested and performs well. I have worked with startups,
+mid-size and large companies. I am active on github and have contributed
+to open source projects. I have worked on legacy solutions and improved
+them. I enjoy working with Kubernetes and Rust. I will fit the roles of
+platform/systems developer.`
+
 const aboutMe = () => {
   return (
     <div>
-      <p>
-        I am an experienced developer/problem-solver interested in distributed
-        systems. I have spent many years working with web applications. I am
-        good at Python and Golang and comfortable with Rust. My code is
-        idiomatic, well tested and performs well. I have worked with startups,
-        mid-size and large companies. I am active on github and have contributed
-        to open source projects. I have worked on legacy solutions and improved
-        them. I enjoy working with Kubernetes and Rust. I will fit the roles of
-        platform/systems developer.
-      </p>
+      <p>{intro}</p>
       <p>
         Outside of work, I have 2 kids and spend my time watching/playing chess,
         listening to music (ask me about Indian classical) and recently, taking
@@ -48,6 +49,13 @@ const Post: React.FC = () => {
               property="og:image"
               content={HOME_OG_IMAGE_URL}
               key="ogImage"
+            />
+            <meta property="og:type" content="article" />
+            <meta property="og:title" content={title} key="ogTitle" />
+            <meta
+              property="og:description"
+              content={intro}
+              key="ogDescription"
             />
           </Head>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center">
