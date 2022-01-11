@@ -40,6 +40,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
                   content={post.ogImage.url}
                   key="ogImage"
                 />
+                <meta property="og:type" content="article" />
+                <meta property="og:title" content={post.title} key="ogTitle" />
+                <meta
+                  property="og:description"
+                  content={post.excerpt}
+                  key="ogDescription"
+                />
               </Head>
               <PostHeader
                 title={post.title}
@@ -67,6 +74,7 @@ type Params = {
 export async function getStaticProps({ params }: Params) {
   const post = getPostBySlug(params.slug, [
     'title',
+    'excerpt',
     'date',
     'slug',
     'author',
