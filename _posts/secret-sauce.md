@@ -7,7 +7,7 @@ coverImage:
   authorUrl: https://unsplash.com/photos/l9x4U45VeNw
 date: '2022-01-09T21:35:07.322Z'
 ogImage:
-  url: 'https://user-images.githubusercontent.com/222507/109426713-51b6a100-79ef-11eb-8a45-a528f9be945b.png'
+  url: 'https://user-images.githubusercontent.com/222507/148700710-cd6466ff-059b-4631-94be-bf19e7a70832.jpg'
 ---
 
 In one of my previous roles, I was working as a backend engineer for a microservices based system.
