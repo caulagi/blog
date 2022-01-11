@@ -47,6 +47,24 @@ const Post: React.FC<PostProps> = ({ post }) => {
                   content={post.excerpt}
                   key="ogDescription"
                 />
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:site" content="@blog.caulagi.com" />
+                <meta name="twitter:creator" content="@caulagi" />
+                <meta
+                  name="twitter:title"
+                  content={post.title}
+                  key="twitterTitle"
+                />
+                <meta
+                  name="twitter:description"
+                  content={post.excerpt}
+                  key="twitterDescription"
+                />
+                <meta
+                  name="twitter:image"
+                  content={post.ogImage.url}
+                  key="twitterImage"
+                />
               </Head>
               <PostHeader
                 title={post.title}

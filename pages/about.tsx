@@ -57,6 +57,20 @@ const Post: React.FC = () => {
               content={intro}
               key="ogDescription"
             />
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:site" content="@blog.caulagi.com" />
+            <meta name="twitter:creator" content="@caulagi" />
+            <meta name="twitter:title" content={title} key="twitterTitle" />
+            <meta
+              name="twitter:description"
+              content={intro}
+              key="twitterDescription"
+            />
+            <meta
+              name="twitter:image"
+              content={HOME_OG_IMAGE_URL}
+              key="twitterImage"
+            />
           </Head>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center">
             About Me
