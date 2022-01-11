@@ -44,7 +44,11 @@ const Post: React.FC = () => {
         <article className="prose lg:prose-xl">
           <Head>
             <title>{title}</title>
-            <meta property="og:image" content={HOME_OG_IMAGE_URL} />
+            <meta
+              property="og:image"
+              content={HOME_OG_IMAGE_URL}
+              key="ogImage"
+            />
           </Head>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center">
             About Me
