@@ -7,9 +7,10 @@ import Link from 'next/link'
 import { AUTHOR_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
 
 const intro = `
-I am an experienced developer/problem-solver interested in distributed
-systems. I have spent many years working with web applications. I am
-good at Python and Golang and comfortable with Rust. My code is
+Hi! I am Pradip Caulagi. I am an experienced developer/problem-solver
+interested in distributed
+systems. I have spent many years reading and writing code.
+I am proficient with Python, Golang and Rust. My code is
 idiomatic, well tested and performs well. I have worked with startups,
 mid-size and large companies. I am active on github and have contributed
 to open source projects. I have worked on legacy solutions and improved
@@ -26,9 +27,11 @@ const aboutMe = () => {
         long walks.
       </p>
       <p>
-        Feel free to contact me via caulagi AT gmail DOT com or a DM on{' '}
+        Feel free to contact me via caulagi AT gmail DOT com or on{' '}
         <Link href="https://twitter.com/caulagi">
-          <a className="hover:underline text-black">twitter</a>
+          <a className="hover:underline text-black" target="_blank">
+            twitter
+          </a>
         </Link>
         .
       </p>
