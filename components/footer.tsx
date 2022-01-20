@@ -16,13 +16,14 @@ const Footer: React.FC = () => {
                 About Me
               </a>
             </Link>
-            <a
-              href={`${GIT_REPO}`}
-              className="mx-3 mb-3 font-bold hover:underline"
-              target={'_blank'}
-            >
-              View on GitHub
-            </a>
+            <Link href={`${GIT_REPO}`}>
+              <a
+                className="mx-3 mb-3 font-bold hover:underline"
+                target="_blank"
+              >
+                View on GitHub
+              </a>
+            </Link>
           </div>
         </div>
       </Container>
