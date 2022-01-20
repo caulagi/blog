@@ -29,7 +29,9 @@ const aboutMe = () => {
       <p>
         Feel free to contact me via caulagi AT gmail DOT com or on{' '}
         <Link href="https://twitter.com/caulagi">
-          <a className="hover:underline text-black" target="_blank">twitter</a>
+          <a className="hover:underline text-black" target="_blank">
+            twitter
+          </a>
         </Link>
         .
       </p>
