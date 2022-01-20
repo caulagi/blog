@@ -19,6 +19,7 @@ const Footer: React.FC = () => {
             <a
               href={`${GIT_REPO}`}
               className="mx-3 mb-3 font-bold hover:underline"
+              target={'_blank'}
             >
               View on GitHub
             </a>
