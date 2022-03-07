@@ -36,7 +36,7 @@
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-react": "^7.29.2",
     "husky": "^7.0.4",
-    "postcss": "^8.4.7",
+    "postcss": "^8.4.8",
     "prettier": "^2.5.1",
     "tailwindcss": "^3.0.23"
   },
