@@ -259,6 +259,6 @@ There are a few talks that I borrowed ideas from — [here](https://www.youtube.
 
 You can also watch a recording of the video, but if you have already read so far, there is nothing new in the video. I start at 3 mins.
 
-<center><iframe src="https://www.youtube.com/embed/uBzRF8_UKNw" frameborder="0" allowfullscreen></iframe></center>
+::youtube[Python meetup at Fyndiq]{#uBzRF8_UKNw}
 
 Happy to hear comments/suggestions on [twitter](https://twitter.com/caulagi).
