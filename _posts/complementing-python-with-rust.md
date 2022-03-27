@@ -36,7 +36,7 @@ So this language principle would mean that, for features of the language that I 
 
 With that background, let us get a flavor of Rust by writing a hello-world application. I use [rustup](https://www.rustup.rs/) to manage my Rust versions. [Cargo](http://doc.crates.io/guide.html) is the build manager of choice for Rust programs, similar to npm for JavaScript.
 
-```
+```bash
 $ rustup show
 Default host: x86_64-apple-darwin
 
@@ -77,7 +77,7 @@ Hello, world!
 
 Let us now create a _hello-world of a Rust extension_ that we can call from Python. I will use the [cffi](https://pypi.python.org/pypi/cffi) package in Python to interface between the two languages.
 
-```
+```bash
 $ cargo new double
 $ cd double
 
@@ -122,7 +122,7 @@ pub extern fn double(n: i32) -> i32 {
 
 Finally, to show you the difference in performance, I will consider the following problem — I want to read a text file, split it into words on whitespace, and find the most common words in that file. This is useful, for example, in writing a [spelling-corrector](http://norvig.com/spell-correct.html). It is simple to do this in Python since it has a built in data structure. `collections.Counter` is a kind of dictionary and has a method called `most_common`, that returns the common words with their count. Rust doesn’t have this method. So we will write an implementation of `most_common` that takes a dictionary (HashMap in Rust) as input and returns the most common key after aggregating.
 
-```
+```rust,python,shell
 $ cargo new words
 $ cargo build --release
 
@@ -235,7 +235,7 @@ $ python benchmark.py
 
 Before I show the difference in numbers, I want to take a moment to talk about the method signature in Rust.
 
-```
+```rust
 /// Find most common words in
 /// the bag based on number
 /// of occurrences

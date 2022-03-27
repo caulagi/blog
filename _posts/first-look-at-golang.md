@@ -12,7 +12,7 @@ ogImage:
 
 I spent the weekend playing with Go. Specifically, I built a simple HTTP static file server. I have some first impressions.
 
-```
+```go
 // A simple HTTP static file server.
 //
 //  Usage:
@@ -94,7 +94,7 @@ func main() {
 
 I am a recent convert from a dynamic languages advocate to the need for static typing. I have recently spent far too much time than I would have liked fixing problems in production that should have been fixed at compile time. The compile errors and function signatures like this are almost musical —
 
-```
+```go
 func serveFile(w ResponseWriter,
                r *Request,
                fs FileSystem,
@@ -114,7 +114,7 @@ Go is frequently said to be a modern language. This is evident in the standard l
 
 This was probably the single biggest reason to try Go. To write a concurrent program. And while there are a few awesome videos describing the constructs, there are not sufficient real-time examples on the web to make this easy. Furthermore, it is not easy breaking a mostly sequential program into concurrent pieces in Go. Consider the problem of getting some data from a database in a request-response cyle in a web application. This would be some example Nodejs (find a user asynchronously from the database. If that succeeds, return the user. Else return the error) -
 
-```
+```javascript
 User.findOne({ email: email }, function (err, user) {
   if (err) { return done(err) }
   if (!user) {

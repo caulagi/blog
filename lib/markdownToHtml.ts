@@ -1,6 +1,7 @@
 import { remark } from 'remark'
 import remarkParse from 'remark-parse'
 import remarkHtml from 'remark-html'
+import remarkPrism from 'remark-prism'
 import remarkDirective from 'remark-directive'
 import { visit } from 'unist-util-visit'
 
@@ -41,6 +42,7 @@ export default async function markdownToHtml(
   r.use(remarkParse)
   r.use(remarkDirective)
   r.use(youtubePlugin)
+  r.use(remarkPrism)
   r.use(remarkHtml, { sanitize: false })
   return (await r.process(markdown)).toString()
 }
