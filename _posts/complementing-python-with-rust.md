@@ -36,7 +36,7 @@ So this language principle would mean that, for features of the language that I 
 
 With that background, let us get a flavor of Rust by writing a hello-world application. I use [rustup](https://www.rustup.rs/) to manage my Rust versions. [Cargo](http://doc.crates.io/guide.html) is the build manager of choice for Rust programs, similar to npm for JavaScript.
 
-```pshell
+```bash
 $ rustup show
 Default host: x86_64-apple-darwin
 
