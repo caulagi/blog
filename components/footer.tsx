@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
       <Container>
         <div className="py-24 flex flex-col lg:flex-row items-center">
           <h3 className="text-3xl lg:text-4xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2 font-cursive">
-            Thoughts &amp; musings of {AUTHOR_NAME}
+            Thoughts of {AUTHOR_NAME}
           </h3>
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
             <Link href="/about">
