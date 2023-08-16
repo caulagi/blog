@@ -7,14 +7,18 @@ import Link from 'next/link'
 import { AUTHOR_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
 
 const intro = `
-Hi! I am Pradip Caulagi. I am an experienced developer/problem-solver
+Hi 👋! I am Pradip Caulagi. I am an experienced developer and platform engineer
 interested in distributed
-systems. I have spent many years reading and writing code.
+systems.
 I am proficient with Python, Golang and Rust. My code is
-idiomatic, well tested and performs well. I have worked with startups,
+idiomatic, well tested and performs well.
+In my devopsy roles, I have managed production systems and
+helped other developers/team members daily.
+In my developer roles, I have built and maitained distributed systems.
+I have worked with startups,
 mid-size and large companies. I am active on github and have contributed
-to open source projects. I have worked on legacy solutions and improved
-them. I enjoy working with Kubernetes and Rust. I will fit the roles of
+to open source projects.
+I enjoy working with Kubernetes and Rust. I will fit the roles of
 platform/systems developer.`
 
 const aboutMe = () => {
@@ -28,10 +32,12 @@ const aboutMe = () => {
       </p>
       <p>
         Feel free to contact me via caulagi AT gmail DOT com or on{' '}
-        <Link href="https://twitter.com/caulagi">
-          <a className="hover:underline text-black" target="_blank">
-            twitter
-          </a>
+        <Link
+          href="https://twitter.com/caulagi"
+          className="hover:underline text-black"
+          target="_blank"
+        >
+          twitter
         </Link>
         .
       </p>
