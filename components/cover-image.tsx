@@ -43,8 +43,12 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, props }) => {
   return (
     <div className="sm:mx-0">
       {props.slug ? (
-        <Link as={`/posts/${props.slug}`} href="/posts/[slug]">
-          <a aria-label={title}>{image}</a>
+        <Link
+          as={`/posts/${props.slug}`}
+          href="/posts/[slug]"
+          aria-label={title}
+        >
+          {image}
         </Link>
       ) : (
         image

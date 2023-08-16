@@ -24,8 +24,12 @@ const PostPreview: React.FC<PostPreviewProps> = ({
         <CoverImage title={title} props={coverImage} />
       </div>
       <h3 className="text-3xl mb-3 leading-snug">
-        <Link as={`/posts/${slug}`} href="/posts/[slug]">
-          <a className="hover:underline text-black">{title}</a>
+        <Link
+          as={`/posts/${slug}`}
+          href="/posts/[slug]"
+          className="hover:underline text-black"
+        >
+          {title}
         </Link>
       </h3>
       <div className="text-lg mb-4">
