@@ -31,6 +31,7 @@ const aboutMe = () => {
       <p>
         Feel free to contact me via caulagi AT gmail DOT com or on{' '}
         <Link
+          rel="me"
           href="https://mastodon.social/@caulagi"
           className="hover:underline text-black"
           target="_blank"
