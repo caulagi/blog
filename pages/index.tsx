@@ -20,7 +20,7 @@ const Index: React.FC<IndexProps> = ({ allPosts }) => {
     <>
       <Layout>
         <Head>
-          <title>Blog of {AUTHOR_NAME}</title>
+          <title>{'Blog of ' + AUTHOR_NAME}</title>
         </Head>
         <Container>
           <Intro />

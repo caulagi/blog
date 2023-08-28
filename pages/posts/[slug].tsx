@@ -32,9 +32,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
           <>
             <article className="prose lg:prose-xl">
               <Head>
-                <title>
-                  {post.title} | Blog of {AUTHOR_NAME}
-                </title>
+                <title>{`post.title` + ' | Blog of ' + AUTHOR_NAME}</title>
                 <meta
                   property="og:image"
                   content={post.ogImage.url}
