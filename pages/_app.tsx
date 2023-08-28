@@ -3,6 +3,7 @@ import '../styles/index.css'
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { NextUIProvider } from '@nextui-org/react'
 import * as gtag from '../lib/gtag'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -18,5 +19,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [router.events])
 
-  return <Component {...pageProps} />
+  return (
+    <NextUIProvider>
+      <Component {...pageProps} />
+    </NextUIProvider>
+  )
 }
