@@ -1,5 +1,11 @@
+const { nextui } = require('@nextui-org/react')
+
 module.exports = {
-  content: ['./components/**/*.tsx', './pages/**/*.tsx'],
+  content: [
+    './components/**/*.tsx',
+    './pages/**/*.tsx',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     fontFamily: {
       cursive: ['"Dancing Script"', 'cursive'],
@@ -48,5 +54,6 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  darkMode: 'class',
+  plugins: [require('@tailwindcss/typography'), nextui()],
 }
