@@ -22,7 +22,7 @@ I will fit the roles of platform/systems developer.`
 const aboutMe = () => {
   return (
     <div>
-      <p>Hi 👋!</p>
+      <p>Hi 👋</p>
       <p>{intro}</p>
       <p>
         Outside of work, I have 2 kids and spend my time watching/playing chess,
