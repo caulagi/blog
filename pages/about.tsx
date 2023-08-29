@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { AUTHOR_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
 
 const intro = `
-Hi 👋! I am Pradip Caulagi. I am an experienced developer and platform engineer.
+I am Pradip Caulagi. I am an experienced developer and platform engineer.
 I am interested in distributed systems.
 I am proficient with Python, Golang and Rust. My code is
 idiomatic, well tested and performs well.
@@ -22,6 +22,7 @@ I will fit the roles of platform/systems developer.`
 const aboutMe = () => {
   return (
     <div>
+      <p>Hi 👋!</p>
       <p>{intro}</p>
       <p>
         Outside of work, I have 2 kids and spend my time watching/playing chess,
