@@ -1,13 +1,18 @@
+import dynamic from 'next/dynamic'
+import { MDXRemote } from 'next-mdx-remote'
+
 type PostBodyProps = {
-  content: string
+  source: string
 }
 
-const PostBody: React.FC<PostBodyProps> = ({ content }) => {
-  return (
-    <div className="max-w-2xl mx-auto">
-      <div dangerouslySetInnerHTML={{ __html: content }} />
-    </div>
-  )
+const components = {
+  Card: dynamic(() => import('@nextui-org/react').then((mod) => mod.Card)),
+}
+
+const PostBody: React.FC<PostBodyProps> = ({ source }) => {
+  console.log(source)
+  console.log(components)
+  return <MDXRemote {...source} components={components} />
 }
 
 export default PostBody

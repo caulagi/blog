@@ -1,15 +1,20 @@
+import { join } from 'path'
+import path from 'path'
+import { serialize } from 'next-mdx-remote/serialize'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Container from '../../components/container'
-import PostBody from '../../components/post-body'
-import Header from '../../components/header'
-import PostHeader from '../../components/post-header'
-import Layout from '../../components/layout'
-import { getPostBySlug, getAllPosts } from '../../lib/api'
-import PostTitle from '../../components/post-title'
+import fs from 'fs'
 import Head from 'next/head'
+import matter from 'gray-matter'
+
 import { AUTHOR_NAME } from '../../lib/constants'
-import markdownToHtml from '../../lib/markdownToHtml'
+import { getPostBySlug, getAllPosts } from '../../lib/api'
+import Container from '../../components/container'
+import Header from '../../components/header'
+import Layout from '../../components/layout'
+import PostBody from '../../components/post-body'
+import PostHeader from '../../components/post-header'
+import PostTitle from '../../components/post-title'
 import PostType from '../../types/post'
 
 interface PostProps {
@@ -105,14 +110,28 @@ export async function getStaticProps({ params }: Params) {
     'ogImage',
     'coverImage',
   ])
-  const content = await markdownToHtml(post.content || '')
+  const postsDirectory = join(process.cwd(), '_posts')
+  const postFilePath = path.join(postsDirectory, `${params.slug}.mdx`)
+  const source = fs.readFileSync(postFilePath)
+
+  const { content, data } = matter(source)
+
+  const mdxSource = await serialize(content, {
+    // Optionally pass remark/rehype plugins
+    mdxOptions: {
+      remarkPlugins: [],
+      rehypePlugins: [],
+    },
+    scope: data,
+  })
+  console.log(mdxSource)
 
   return {
     props: {
       post: {
         ...post,
-        content,
       },
+      source: mdxSource,
     },
   }
 }
