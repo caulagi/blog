@@ -19,6 +19,7 @@ import PostHeader from '../../components/post-header'
 import PostTitle from '../../components/post-title'
 import PostType from '../../types/post'
 import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import ContactMe from '../../components/contact-me'
 
 interface PostProps {
   post: PostType
@@ -86,6 +87,7 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
                 date={post.date}
               />
               <PostBody source={source} />
+              <ContactMe />
             </article>
           </>
         )}
