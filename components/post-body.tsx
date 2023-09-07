@@ -1,18 +1,30 @@
-import dynamic from 'next/dynamic'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  Link,
+  Image,
+} from '@nextui-org/react'
 
 type PostBodyProps = {
-  source: string
+  source: MDXRemoteSerializeResult
 }
 
 const components = {
-  Card: dynamic(() => import('@nextui-org/react').then((mod) => mod.Card)),
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Divider,
+  Link,
+  Image,
 }
 
 const PostBody: React.FC<PostBodyProps> = ({ source }) => {
-  console.log(source)
-  console.log(components)
-  return <MDXRemote {...source} components={components} />
+  return <MDXRemote {...source} components={{ ...components }} />
 }
 
 export default PostBody

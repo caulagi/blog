@@ -4,6 +4,8 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import fs from 'fs'
+import remarkGfm from 'remark-gfm'
+import remarkFrontmatter from 'remark-frontmatter'
 import Head from 'next/head'
 import matter from 'gray-matter'
 
@@ -16,13 +18,15 @@ import PostBody from '../../components/post-body'
 import PostHeader from '../../components/post-header'
 import PostTitle from '../../components/post-title'
 import PostType from '../../types/post'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 
 interface PostProps {
   post: PostType
+  source: MDXRemoteSerializeResult
   morePosts: PostType[]
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, source }) => {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -81,7 +85,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
                 coverImage={post.coverImage}
                 date={post.date}
               />
-              <PostBody content={post.content} />
+              <PostBody source={source} />
             </article>
           </>
         )}
@@ -119,12 +123,11 @@ export async function getStaticProps({ params }: Params) {
   const mdxSource = await serialize(content, {
     // Optionally pass remark/rehype plugins
     mdxOptions: {
-      remarkPlugins: [],
+      remarkPlugins: [remarkGfm, remarkFrontmatter],
       rehypePlugins: [],
     },
     scope: data,
   })
-  console.log(mdxSource)
 
   return {
     props: {
