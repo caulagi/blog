@@ -33,13 +33,13 @@ function onDirective() {
         if (node.name === 'youtube') {
           return youtubeDirective(node)
         }
-      }
+      },
     )
   }
 }
 
 export default async function markdownToHtml(
-  markdown: string
+  markdown: string,
 ): Promise<string> {
   const r = remark()
   r.use(remarkParse)
