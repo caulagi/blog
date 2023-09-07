@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Creepster
+- Font Author: Copyright (c) 2011, Font Diner, Inc (diner@fontdiner.com), with Reserved Font Names "Creepster"
+- Font Source: http://fonts.gstatic.com/s/creepster/v13/AlZy_zVUqJz4yMrniH4hdXf4XB0Tow.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
