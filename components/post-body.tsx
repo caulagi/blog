@@ -1,5 +1,6 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import Quotation from './quotation'
+import YoutubeEmbed from './youtube-embed'
 
 type PostBodyProps = {
   source: MDXRemoteSerializeResult
@@ -7,6 +8,7 @@ type PostBodyProps = {
 
 const components = {
   Quotation,
+  YoutubeEmbed,
 }
 
 const PostBody: React.FC<PostBodyProps> = ({ source }) => {
