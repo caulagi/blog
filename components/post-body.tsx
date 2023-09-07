@@ -1,26 +1,12 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Link,
-  Image,
-} from '@nextui-org/react'
+import Quotation from './quotation'
 
 type PostBodyProps = {
   source: MDXRemoteSerializeResult
 }
 
 const components = {
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Divider,
-  Link,
-  Image,
+  Quotation,
 }
 
 const PostBody: React.FC<PostBodyProps> = ({ source }) => {
