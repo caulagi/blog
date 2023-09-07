@@ -1,13 +1,30 @@
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  Link,
+  Image,
+} from '@nextui-org/react'
+
 type PostBodyProps = {
-  content: string
+  source: MDXRemoteSerializeResult
 }
 
-const PostBody: React.FC<PostBodyProps> = ({ content }) => {
-  return (
-    <div className="max-w-2xl mx-auto">
-      <div dangerouslySetInnerHTML={{ __html: content }} />
-    </div>
-  )
+const components = {
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Divider,
+  Link,
+  Image,
+}
+
+const PostBody: React.FC<PostBodyProps> = ({ source }) => {
+  return <MDXRemote {...source} components={{ ...components }} />
 }
 
 export default PostBody

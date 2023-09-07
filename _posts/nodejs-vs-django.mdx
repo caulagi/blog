@@ -8,26 +8,79 @@ ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109427622-7ad93080-79f3-11eb-8411-519e3a696f6f.png'
 ---
 
-> The table was a large one, but the three were all crowded together at one corner of it: 'No room! No room!' they cried out when they saw Alice coming. 'There’s PLENTY of room!' said Alice indignantly, and she sat down in a large arm-chair at one end of the table.
+<Card className="max-w-[400px]">
+  <CardHeader className="flex gap-3">
+    <div className="flex flex-col">
+      <p className="text-md">A mad tea party, Alice in Wonderland</p>
+    </div>
+  </CardHeader>
+  <Divider />
+  <CardBody>
+    <p>
+      The table was a large one, but the three were all crowded together at one
+      corner of it: 'No room! No room!' they cried out when they saw Alice
+      coming. 'There’s PLENTY of room!' said Alice indignantly, and she sat down
+      in a large arm-chair at one end of the table.
+    </p>
+  </CardBody>
+</Card>
 
-<div class="text-right text-sm text-indigo-400 font-semibold pt-2">
-  A mad tea party, Alice in Wonderland
-</div>
-
-We have been using both Django and Nodejs at [WWStay](https://wwstay.com/). We use Django for the customer dashboard and backoffice applications. We use Nodejs for the web application that aggregates different hotel rates from various vendors and presents it to the frontend. Of course, I have used Django and Nodejs for several hobby projects as well. I have spent quite a bit of time recently in building <strike>[a simple webapp for finding interesting events around you](http://www.hattira.com)</strike> (**Update** [28 Feb 2021]: I stopped working on this project. The domain belongs to somebody else now).
+We have been using both Django and Nodejs at [WWStay](https://wwstay.com/).
+We use Django for the customer dashboard and backoffice applications.
+We use Nodejs for the web application that aggregates different
+hotel rates from various vendors and presents it to the frontend.
+Of course, I have used Django and Nodejs for several hobby projects as well.
+I have spent quite a bit of time recently in
+building <strike>[a simple webapp for finding interesting events around you](http://www.hattira.com)</strike>
+(**Update** [28 Feb 2021]: I stopped working on this project. The domain belongs to somebody else now).
 
 Based on my experiences, I have a checklist that I use to determine what framework to use.
 
-- **Homogeneous** — The system should be homogeneous, as far as is practically possible. In real life, you will never have a truly homogeneous system. The webserver (like nginx) and persistence is most probably C and the frontend uses a JavaScript MVC framework. At some point, you will most probably have to start digging really deep into some of these layers. So you want to make sure that when adding additional layers like caching or an asynchronous task queue, you try to keep the number of languages to a minimum. Or to put it the other way round, if I am not happy with the asynchronous task queues available in JavaScript, I will just use Python ([Celery](http://www.celeryproject.org/)) instead.
+- **Homogeneous** — The system should be homogeneous, as far as is practically possible.
+  In real life, you will never have a truly homogeneous system. The webserver (like nginx)
+  and persistence is most probably C and the frontend uses a JavaScript MVC framework.
+  At some point, you will most probably have to start digging really deep into some of
+  these layers. So you want to make sure that when adding additional layers like caching
+  or an asynchronous task queue, you try to keep the number of languages to a minimum.
+  Or to put it the other way round, if I am not happy with the asynchronous task queues
+  available in JavaScript, I will just use Python ([Celery](http://www.celeryproject.org/)) instead.
 
-- **Community** — It is nice to be able to talk to the really senior developers of a project on that rare occasion when your application mysteriously start misbehaving in production. Like for instance, when [Yammer had problems with their Scala use](http://eng.yammer.com/scala-at-yammer). So if the [core team itself has issues](http://blog.nodejs.org/2013/12/03/bnoordhuis-departure/), I would be very cautious choosing such a project.
+- **Community** — It is nice to be able to talk to the really senior
+  developers of a project on that rare occasion when your application
+  mysteriously start misbehaving in production. Like for instance,
+  when [Yammer had problems with their Scala use](http://eng.yammer.com/scala-at-yammer).
+  So if the [core team itself has issues](http://blog.nodejs.org/2013/12/03/bnoordhuis-departure/),
+  I would be very cautious choosing such a project.
 
-- **Fun** — In a simplified sense, this would be something that appeals to my ‘artistic sense’. [Hammerprinciple](http://hammerprinciple.com/therighttool) says this as — I enjoy using this language; this language is good for distributed computing; I find code written in this language very elegant. Honestly, neither JavaScript nor Python are as much fun **today **as they were some years back. Just on the fun quotient alone, I would today pick Go or Haskell. But between the frameworks we are talking about, Nodejs is slightly more interesting in this regard because everything can be asynchronous and event driven.
+- **Fun** — In a simplified sense, this would be something that appeals to
+  my ‘artistic sense’. [Hammerprinciple](http://hammerprinciple.com/therighttool)
+  says this as — I enjoy using this language; this language is good for distributed
+  computing; I find code written in this language very elegant. Honestly, neither
+  JavaScript nor Python are as much fun **today **as they were some years back.
+  Just on the fun quotient alone, I would today pick Go or Haskell. But between
+  the frameworks we are talking about, Nodejs is slightly more interesting in this
+  regard because everything can be asynchronous and event driven.
 
 In addition to the above checklist, each framework is a natural solution for certain problems.
 
-**Django** is a great choice when you need to use a relational database. You will need a relational database when you want ACID properties on your transactions, like when processing payments. In addition to a powerful ORM, Django has sessions, security against common exploits like XSS and CSRF, form handling, cache system, templating system, admin interface, etc. In fact, I often think that Django has neatly packaged the best of web development in a very convenient project.
+**Django** is a great choice when you need to use a relational database.
+You will need a relational database when you want ACID properties on your
+transactions, like when processing payments. In addition to a powerful ORM,
+Django has sessions, security against common exploits like XSS and CSRF,
+form handling, cache system, templating system, admin interface, etc.
+In fact, I often think that Django has neatly packaged the best of
+web development in a very convenient project.
 
-**Nodejs** is similarly a great choice when you can have an asynchronous, evented stack — from the webserver all the way to your persistence and the intermediate libraries along the way. Nodejs is great in this case because the async nature will help us handle more requests with the same hardware. The other situation where I have used Nodejs is when I had to use Mongodb for persistence. Mongodb has excellent [geospatial support](http://docs.mongodb.org/manual/reference/operator/query-geospatial/) or doubles as a [spatial database](http://en.wikipedia.org/wiki/Spatial_database). This is useful when you want to run queries like — show me events near a city, like in hattira.
+**Nodejs** is similarly a great choice when you can have an
+asynchronous, evented stack — from the webserver all the way
+to your persistence and the intermediate libraries along the way.
+Nodejs is great in this case because the async nature will help us
+handle more requests with the same hardware. The other situation where
+I have used Nodejs is when I had to use Mongodb for persistence. Mongodb
+has excellent [geospatial support](http://docs.mongodb.org/manual/reference/operator/query-geospatial/)
+or doubles as a [spatial database](http://en.wikipedia.org/wiki/Spatial_database).
+This is useful when you want to run queries like — show me events near a city, like in hattira.
 
-So as with questions of this nature and probably as an anti-climax, my answer to Nodejs vs Django is — it depends. As Fred Brooks has noted years ago, there are no silver bullets. Even today.
+So as with questions of this nature and probably as an anti-climax,
+my answer to Nodejs vs Django is — it depends. As Fred Brooks has noted
+years ago, there are no silver bullets. Even today.
