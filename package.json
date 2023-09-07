@@ -30,7 +30,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint": "^8.48.0",
-    "framer-motion": "^10.16.1",
+    "framer-motion": "^10.16.4",
     "gray-matter": "^4.0.3",
     "husky": "^8.0.3",
     "next-mdx-remote": "^4.4.1",
