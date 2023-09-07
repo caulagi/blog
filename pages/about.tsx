@@ -3,8 +3,8 @@ import Header from '../components/header'
 import Avatar from '../components/avatar'
 import Layout from '../components/layout'
 import Head from 'next/head'
-import Link from 'next/link'
 import { AUTHOR_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
+import ContactMe from '../components/contact-me'
 
 const intro = `
 I am Pradip Caulagi. I am an experienced developer and platform engineer.
@@ -29,18 +29,7 @@ const aboutMe = () => {
         listening to music (ask me about Indian classical) and recently, taking
         long walks.
       </p>
-      <p>
-        Feel free to contact me via caulagi AT gmail DOT com or on{' '}
-        <Link
-          rel="me"
-          href="https://mastodon.social/@caulagi"
-          className="hover:underline text-black"
-          target="_blank"
-        >
-          mastodon
-        </Link>
-        .
-      </p>
+      <ContactMe />
     </div>
   )
 }
