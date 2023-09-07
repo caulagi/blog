@@ -11,10 +11,10 @@ const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({ title, id, start }) => {
       height="315"
       src={`https://www.youtube-nocookie.com/embed/${id}&amp;start=${start}`}
       title={title}
-      frameborder="0"
+      frameBorder="0"
       className="mx-auto mb-8"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
+      allowFullScreen
     ></iframe>
   )
 }
