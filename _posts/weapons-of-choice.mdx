@@ -14,24 +14,75 @@ ogImage:
 
 ### Some experiences building a Nodejs project
 
-I still remember my first conversation with our architect when I joined Yahoo! I had just introduced myself. As soon as I told my name, he said, “Ah! I have heard about you. They tell me you have opinions about everything!” He definitely thought me as a bit of [Clouseau](http://en.wikipedia.org/wiki/Inspector_Clouseau).
+I still remember my first conversation with our architect when
+I joined Yahoo! I had just introduced myself. As soon as I
+told my name, he said, “Ah! I have heard about you. They tell me
+you have opinions about everything!” He definitely thought me as a
+bit of [Clouseau](http://en.wikipedia.org/wiki/Inspector_Clouseau).
 
-Last month, I worked on a Nodejs project in my freetime — <strike>[hattira](http://hattira.com/)</strike> (_Update [1 Mar 2021]:_ I don't work on the project anymore and the domain belongs to somebody else). It is a community driven listing of events in a city. The idea was to answer the question — what is happening in city X? I have a few takeaways from that exercise that I think maybe interesting.
+Last month, I worked on a Nodejs project in my freetime —
 
-[This is the [source](https://github.com/caulagi/hattira). It uses Nodejs, Mongodb, Mongoose, Passportjs, Underscorejs and some more [libraries](https://github.com/caulagi/hattira/blob/master/package.json) ]
+(_Update [1 Mar 2021]:_ I don't work on the project anymore and the domain belongs
+to somebody else).
 
-One of the Aha! moments was when I did the first deploy on [Heroku](https://www.heroku.com/). It was a one step deploy that just worked! In addition, a couple of other things really stood out. I was able to follow logs and see what was happening with a simple `heroku logs -t` just like in a terminal. There is even documentation on Heroku website about forwarding the logs to an external server so you can run all types of analytics later.
+<strike>[hattira](http://hattira.com/)</strike>
+It is a community driven listing of events in a city. The idea was to answer the
+question — what is happening in city X? I have a few takeaways from that exercise
+that I think maybe interesting.
 
-The other zen moment was how they allowed `console` access to the server instance. One of the things I wanted to do after my deploy was to populate the Mongodb instance with a set of cities. This was a one time load script that had to be run before starting my app. And this was possible with the — `heroku run` — option. I just had to create a [node script that loads the cities](https://github.com/caulagi/sntd/blob/fb1f437a8ec65e51839357e74dc2a7cac86b5928/data/loadCities.js) and call that with — `heroku run node loadCities.js`.
+[This is the [source](https://github.com/caulagi/hattira). It uses Nodejs,
+Mongodb, Mongoose, Passportjs, Underscorejs and some more
+[libraries](https://github.com/caulagi/hattira/blob/master/package.json) ]
 
-Then, there were a few libraries that were very illustrative. I would probably use them in every node project. The first two are [async](https://github.com/caolan/async) and [underscore](http://underscorejs.org/).
+One of the Aha! moments was when I did the first deploy
+on [Heroku](https://www.heroku.com/). It was a one step
+deploy that just worked! In addition, a couple of other things
+really stood out. I was able to follow logs and see what was happening
+with a simple <Code>heroku logs -t</Code> just like in a terminal.
+There is even documentation on Heroku website about forwarding the logs
+to an external server so you can run all types of analytics later.
 
-One of the problems I already talked about is the loading of cities. We want to load a bunch of countries, followed by about 47K cities. Each write to the datastore is asynchronous. If any of the write to the store fails, we want to stop. We want to exit once all the write’s have finished. You can [write code](https://github.com/caulagi/sntd/blob/fb1f437a8ec65e51839357e74dc2a7cac86b5928/data/loadCities.js) that expresses this intent with async. I even went a little meta. I wrote a [Python script](https://github.com/caulagi/sntd/blob/fb1f437a8ec65e51839357e74dc2a7cac86b5928/data/load.py) that generates the JavaScript needed to load cities.
+The other zen moment was how they allowed <Code>console</Code> access to the
+server instance. One of the things I wanted to do after my deploy was to
+populate the Mongodb instance with a set of cities. This was a one time
+load script that had to be run before starting my app. And this was possible
+with the — <Code>heroku run</Code> — option. I just had to create a [node script that
+loads the cities](https://github.com/caulagi/sntd/blob/fb1f437a8ec65e51839357e74dc2a7cac86b5928/data/loadCities.js)
+and call that with — <Code>heroku run node loadCities.js</Code>.
 
-The problem is also idiomatic of what we do in a request-response cycle of a web app. We do a few queries against the datastore and serve the response. Async nicely handles this problem and we can avoid having a long nested sequence of callbacks with error handling sprinkled between other code.
+Then, there were a few libraries that were very illustrative.
+I would probably use them in every node project. The first two are
+[async](https://github.com/caolan/async) and [underscore](http://underscorejs.org/).
 
-The other library, underscore, is an awesome tool because of the uniform and high level abstraction it provides. Underscore gives the power tools of functional programming. Map, filter, reduce and functions allow you to deal and transform collections instead of individual elements. These functions also eliminate subtle bugs when looping over JavaScript Objects and Arrays. We can have beautiful and succinct code for problems — `_.extend({}, _base, { db: _base.db+’_dev’ })` — like in [config.js](https://github.com/caulagi/sntd/blob/master/config/config.js).
+One of the problems I already talked about is the loading of cities.
+We want to load a bunch of countries, followed by about 47K cities.
+Each write to the datastore is asynchronous. If any of the write to the store
+fails, we want to stop. We want to exit once all the write’s have finished.
+You can [write code](https://github.com/caulagi/sntd/blob/fb1f437a8ec65e51839357e74dc2a7cac86b5928/data/loadCities.js) that expresses this intent with async. I even went a little meta. I wrote a [Python script](https://github.com/caulagi/sntd/blob/fb1f437a8ec65e51839357e74dc2a7cac86b5928/data/load.py) that generates the JavaScript needed to load cities.
 
-There are other libraries that I used for their utility and clean, modular code. [Passportjs](http://passportjs.org/) is probably the default library everyone uses for node projects requiring (social) authentication (Facebook,Twitter, etc). It is very modular. I only used passport and passport-facebook. I used a [template](https://github.com/madhums/node-express-mongoose-demo) project that gave a great platform to get started quickly and easily.
+The problem is also idiomatic of what we do in a request-response cycle
+of a web app. We do a few queries against the datastore and serve the response.
+Async nicely handles this problem and we can avoid having a long nested
+sequence of callbacks with error handling sprinkled between other code.
 
-Lastly, the one thing that still rankles are the tests. While `npm test` works, it is not covering as many scenarios as I want. I have some difficultly in writing tests for the case when the user is logged in. That will be a task for one of these weekends.
+The other library, underscore, is an awesome tool because of the uniform
+and high level abstraction it provides. Underscore gives the power tools
+of functional programming. Map, filter, reduce and functions allow you to
+deal and transform collections instead of individual elements. These
+functions also eliminate subtle bugs when looping over JavaScript Objects
+and Arrays. We can have beautiful and succinct code for
+problems — <Code>\_.extend({}, \_base, \{ db: \_base.db+’\_dev’ \})</Code> —
+like in [config.js](https://github.com/caulagi/sntd/blob/master/config/config.js).
+
+There are other libraries that I used for their utility and clean, modular code.
+[Passportjs](http://passportjs.org/) is probably the default library everyone
+uses for node projects requiring (social) authentication (Facebook,Twitter, etc).
+It is very modular. I only used passport and passport-facebook.
+I used a [template](https://github.com/madhums/node-express-mongoose-demo) project
+that gave a great platform to get started quickly and easily.
+
+Lastly, the one thing that still rankles are the tests. While
+
+<Code>npm test</Code> works, it is not covering as many scenarios as I want. I have
+some difficultly in writing tests for the case when the user is logged in. That will
+be a task for one of these weekends.
