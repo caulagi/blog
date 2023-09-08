@@ -1,4 +1,6 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { Code } from '@nextui-org/react'
+
 import Quotation from './quotation'
 import YoutubeEmbed from './youtube-embed'
 
@@ -9,6 +11,7 @@ type PostBodyProps = {
 const components = {
   Quotation,
   YoutubeEmbed,
+  Code,
 }
 
 const PostBody: React.FC<PostBodyProps> = ({ source }) => {
