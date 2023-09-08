@@ -121,7 +121,17 @@ pub extern fn double(n: i32) -> i32 {
 }
 ```
 
-Finally, to show you the difference in performance, I will consider the following problem — I want to read a text file, split it into words on whitespace, and find the most common words in that file. This is useful, for example, in writing a [spelling-corrector](http://norvig.com/spell-correct.html). It is simple to do this in Python since it has a built in data structure. `collections.Counter` is a kind of dictionary and has a method called `most_common`, that returns the common words with their count. Rust doesn’t have this method. So we will write an implementation of `most_common` that takes a dictionary (HashMap in Rust) as input and returns the most common key after aggregating.
+Finally, to show you the difference in performance,
+I will consider the following problem — I want to read a text file,
+split it into words on whitespace, and find the most common words in
+that file. This is useful, for example,
+in writing a [spelling-corrector](http://norvig.com/spell-correct.html). It
+is simple to do this in Python since it has a built in
+data structure. <Code>collections.Counter</Code> is a kind of dictionary and
+has a method called <Code>most_common</Code>, that returns the common words
+with their count. Rust doesn’t have this method. So we will write an
+implementation of <Code>most_common</Code> that takes a dictionary (HashMap in Rust)
+as input and returns the most common key after aggregating.
 
 ```rust,python,shell
 $ cargo new words
@@ -246,7 +256,12 @@ fn n_most_common<T>(
 )> where T: Eq + Hash + Clone
 ```
 
-So the `n_most_common` method takes a HashMap (dictionary) as the first argument. The key in this HashMap is a generic type T but the where clause specifies that this generic type T has to implement 3 traits — Eq, Hash and Clone. This is exactly same in a Python dictionary, where the keys have be hashable. But in the case of Rust, this is checked at compile type and doesn’t need unit-tests for this behaviour to hold.
+So the <Code>n_most_common</Code> method takes a HashMap (dictionary) as the
+first argument. The key in this HashMap is a generic type T but the where
+clause specifies that this generic type T has to implement 3 traits — Eq, Hash
+and Clone. This is exactly same in a Python dictionary, where the keys have be
+hashable. But in the case of Rust, this is checked at compile type and doesn’t
+need unit-tests for this behaviour to hold.
 
 ![Time taken in Rust and Python (lower is better)](https://cdn-images-1.medium.com/max/2000/1*NkDfVEodY6JRrst2XOLv4Q.png)_Time taken in Rust and Python (lower is better)_
 

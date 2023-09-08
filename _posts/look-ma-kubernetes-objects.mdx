@@ -24,9 +24,10 @@ Today I work as a Site Reliability Engineer. The goal of our team is to provide 
 
 There is one fundamental abstraction in Kubernetes applied uniformly from how I think about it. That of a [Kubernetes Resource Model (KRM)](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/resource-management.md). When you represent something as a KRM, it means two things —
 
-`Declarative`: We focus on specifying the intent/what.
+<Code>Declarative</Code> We focus on specifying the intent/what.
 
-`Reconciliation loop` There is a controller that will reconcile the intent with the observed state constantly.
+<Code>Reconciliation loop</Code> There is a controller that will reconcile the intent
+with the observed state constantly.
 
 There are already projects like [config-connector](https://cloud.google.com/config-connector/docs/overview) and [crossplane](https://github.com/crossplane/crossplane) that allow us to manage infrastructure with this approach to varying degrees. In this design, there is no distinction between an infrastructure component and an application component. Everything is represented uniformly as a KRM (which means declarative and reconciliation) and the same tools are applied to manage infrastructure and applications. So perhaps a modern way to provision infrastructure is to provision a Kubernetes cluster which will provision your infrastructure and your Kubernetes clusters which will run applications.
 
