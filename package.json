@@ -15,7 +15,7 @@
     "@mdx-js/react": "^2.3.0",
     "@next/eslint-plugin-next": "^13.4.19",
     "@next/mdx": "^13.4.19",
-    "@nextui-org/react": "^2.1.12",
+    "@nextui-org/react": "^2.1.13",
     "@tailwindcss/typography": "^0.5.10",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^29.5.5",
