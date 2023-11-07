@@ -8,26 +8,79 @@ ogImage:
   url: 'https://user-images.githubusercontent.com/222507/109423898-a6531f80-79e1-11eb-9cbc-d126ddb95268.gif'
 ---
 
-No, I am not an agile coach who has helped many teams deliver great results. I am just a developer who has read a couple of books on agile and taken part in my share of standup’s. I am now at a stage where I don’t see the value they bring. Why do we need them anyway?
+**Update (7 Nov 2023)** I wrote this article before Covid and when it was common to work from
+the same location. _I don't believe these arguments are applicable for a remote setup._
+I believe we need more opportunities for facetime in a remote setup and standup's
+provide a simple way to achieve that.
 
-The way I have practised standup’s is — each member of the team provides a brief update on what he worked on yesterday, what he will do today and if there are any blockers. I have also seen variations of this — there is a ball that is passed around and only the person with the ball talks. Or we talk about bugs/features instead of individuals.
+No, I am not an agile coach who has helped many teams deliver great results.
+I am just a developer who has read a couple of books on agile and taken part
+in my share of standup’s. I am now at a stage where I don’t see the value
+they bring. Why do we need them anyway?
 
-If I were to abstract it to a higher level, we are trying to answer two things — communication and progress. We are trying to communicate to other members of the team about our progress (or the lack of it).
+The way I have practised standup’s is — each member of the team provides a
+brief update on what he worked on yesterday, what he will do today and if
+there are any blockers. I have also seen variations of this — there is a
+ball that is passed around and only the person with the ball talks.
+Or we talk about bugs/features instead of individuals.
 
-Lets talk about communication. To me, communication means “shared understanding”. I often find that standup is a pretty bad medium to achieve this. Especially because standup’s discourage discussion and questions. I have a hard time imagining how we can have a shared understanding without a dialogue. At best, an update like — I added a ‘remember me’ option on the login page — is information. For a shared understanding, we would need to ask more questions — does it work across devices? Are there any security implications? Can it affect existing logged in users? Have you written unit tests? Is there any technical debt with the solution?
+If I were to abstract it to a higher level, we are trying to answer
+two things — communication and progress. We are trying to communicate
+to other members of the team about our progress (or the lack of it).
 
-Also, the fact that this communication needs such a forum is interesting. I mean, why can’t this communication happen over the regular channel that the team uses for updating each other? Is there no free flow of information within the team and across teams? Perhaps there are several layers of hierarchy that need to be updated? Maybe the team mates don’t talk to each other unless asked to? Or it is difficult to see the state of the project without talking to the team. In all these cases, standup’s suppresses the symptom without curing it.
+Lets talk about communication. To me, communication means “shared understanding”.
+I often find that standup is a pretty bad medium to achieve this.
+Especially because standup’s discourage discussion and questions.
+I have a hard time imagining how we can have a shared understanding
+without a dialogue. At best, an update like — I added a ‘remember me’
+option on the login page — is information. For a shared understanding,
+we would need to ask more questions — does it work across devices? Are
+there any security implications? Can it affect existing logged in users?
+Have you written unit tests? Is there any technical debt with the solution?
 
-My last crib about this form of communication is the frequency. One day is either too late or too short. For emergencies, one day is simply unacceptable. For features or bug fixes, one day is too short. IMO, the one day time window makes sense only if the task is approximately one day as well. I will add some more points in the next section.
+Also, the fact that this communication needs such a forum is interesting. I mean,
+why can’t this communication happen over the regular channel that the team
+uses for updating each other? Is there no free flow of information within
+the team and across teams? Perhaps there are several layers of hierarchy
+that need to be updated? Maybe the team mates don’t talk to each other
+unless asked to? Or it is difficult to see the state of the project without
+talking to the team. In all these cases, standup’s suppresses the symptom
+without curing it.
+
+My last crib about this form of communication is the frequency. One day is either
+too late or too short. For emergencies, one day is simply unacceptable.
+For features or bug fixes, one day is too short. IMO, the one day time window
+makes sense only if the task is approximately one day as well. I will add some
+more points in the next section.
 
 So that brings me to progress. But let me take a digression first and talk about a related idea — effort.
 
-Many times (during standup’s), we talk about effort and not progress. Imagine a typical update like — I worked on updating the MySQL client library. This is effort. In a few rare cases, it is followed by — I hope to finish it tomorrow (50% done?). But if you think about it, the entire format of standup’s is based on an assumption. It is based on the assumption that daily effort corresponds directly to progress. I wish this were true. But most often, it is not. In fact, this is the fundamental idea in Fred Brooks classic — the mythical man month — that effort doesn’t imply progress. So if daily effort doesn’t automatically mean progress, standup’s are a pretty bad medium for tracking progress.
+Many times (during standup’s), we talk about effort and not progress.
+Imagine a typical update like — I worked on updating the MySQL client library.
+This is effort. In a few rare cases, it is followed by — I hope to finish it
+tomorrow (50% done?). But if you think about it, the entire format of standup’s
+is based on an assumption. It is based on the assumption that daily effort corresponds
+directly to progress. I wish this were true. But most often, it is not. In fact,
+this is the fundamental idea in Fred Brooks classic — the mythical man month — that
+effort doesn’t imply progress. So if daily effort doesn’t automatically mean progress,
+standup’s are a pretty bad medium for tracking progress.
 
-Which brings me to my next point. Progress, at least in software, and for me, is binary. Either you released a feature/bug-fix to production or you didn’t. Intermediate steps don’t matter. Saying you finished developing/testing a feature is irrelevant. Probably there is a regression in staging that you missed. Maybe there is a security issue. Or the code review discovered a problem that would require the same effort as the initial development. In other words, we should stop asking — how much longer will it take? Are we on track? Can we complete today? And instead ask, is it shipped?
+Which brings me to my next point. Progress, at least in software, and for me,
+is binary. Either you released a feature/bug-fix to production or you didn’t.
+Intermediate steps don’t matter. Saying you finished developing/testing a
+feature is irrelevant. Probably there is a regression in staging that you missed.
+Maybe there is a security issue. Or the code review discovered a problem
+that would require the same effort as the initial development. In other words,
+we should stop asking — how much longer will it take? Are we on track?
+Can we complete today? And instead ask, is it shipped?
 
-My last crib about standup’s is that it is disruptive to my schedule. Paul Graham has an [excellent article on this](http://www.paulgraham.com/makersschedule.html). While this form (standup’s) of updates are great for managers/management, there is no time of the day when such a meeting will not disrupt the ‘makers’.
+My last crib about standup’s is that it is disruptive to my schedule.
+Paul Graham has an [excellent article on this](http://www.paulgraham.com/makersschedule.html).
+While this form (standup’s) of updates are great for managers/management,
+there is no time of the day when such a meeting will not disrupt the ‘makers’.
 
-So I find it strange that we start with the principle of self-organizing teams and then conclude — standup’s at 9! How does open-source work if standup’s are how development should be done?
+So I find it strange that we start with the principle of self-organizing
+teams and then conclude — standup’s at 9! How does open-source work if
+standup’s are how development should be done?
 
 These are my thoughts as an individual, of course.
