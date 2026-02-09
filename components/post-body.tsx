@@ -1,5 +1,5 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { Code } from '@nextui-org/react'
+import { Code } from '@heroui/react'
 
 import Quotation from './quotation'
 import YoutubeEmbed from './youtube-embed'
