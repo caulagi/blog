@@ -3,7 +3,7 @@ import '../styles/index.css'
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { NextUIProvider } from '@nextui-org/react'
+import { HeroUIProvider } from '@heroui/react'
 import * as gtag from '../lib/gtag'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -20,8 +20,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   return (
-    <NextUIProvider>
+    <HeroUIProvider>
       <Component {...pageProps} />
-    </NextUIProvider>
+    </HeroUIProvider>
   )
 }

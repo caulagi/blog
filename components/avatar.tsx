@@ -1,4 +1,4 @@
-import { Avatar as NextUiAvatar } from '@nextui-org/react'
+import { Avatar as NextUiAvatar } from '@heroui/react'
 
 const Avatar: React.FC = () => {
   return (
