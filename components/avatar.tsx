@@ -1,14 +1,9 @@
-import { Avatar as NextUiAvatar } from '@heroui/react'
+import { Avatar } from '@heroui/react'
 
-const Avatar: React.FC = () => {
+export default () => {
   return (
-    <div className="flex gap-4 items-center">
-      <NextUiAvatar
-        src="/assets/blog/authors/pradip.jpg"
-        className="w-32 h-32"
-      />
+    <div className="flex w-32 h-32 rounded-full">
+      <Avatar src="/assets/blog/authors/pradip.jpg" alt="Pradip Caulagi" />
     </div>
   )
 }
-
-export default Avatar
