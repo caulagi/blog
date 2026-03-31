@@ -28,12 +28,12 @@ const CoverImage: React.FC<CoverImageProps> = ({ title, props }) => {
       {props.authorName ? (
         <>
           {baseImage}
-          <div className="text-center text-sm text-gray-400">
+          <span className="block text-center text-sm text-gray-400">
             Photo by &nbsp;
             <a href={props.authorUrl} target="_blank" rel="noreferrer">
               {props.authorName}
             </a>
-          </div>
+          </span>
         </>
       ) : (
         baseImage
