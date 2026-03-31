@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             Thoughts of {AUTHOR_NAME}
           </h3>
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <Link href="/about" size="lg">
+            <Link href="/about" className="text-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
               &nbsp; About Me
             </Link>
             <div className="mx-3">/</div>
-            <Link href={`${GIT_REPO}`} target="_blank" size="lg">
+            <Link href={`${GIT_REPO}`} target="_blank" className="text-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
