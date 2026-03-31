@@ -1,4 +1,7 @@
-@tailwind base;
+@import 'tailwindcss';
+@import '@heroui/styles/css';
+
+@plugin '@tailwindcss/typography';
 
 @font-face {
   font-family: 'Dancing Script';
@@ -16,14 +19,26 @@
     format('woff2');
 }
 
-/* Start purging... */
-@tailwind components;
-/* Stop purging. */
+@theme {
+  --font-cursive: 'Dancing Script', cursive;
+  --font-regular:
+    Lato, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-/* Write you own custom component styles here */
+  --color-accent-1: #fafafa;
+  --color-accent-2: #eaeaea;
+  --color-accent-7: #333;
+  --color-success: #0070f3;
+  --color-cyan: #79ffe1;
 
-/* Start purging... */
-@tailwind utilities;
-/* Stop purging. */
+  --spacing-28: 7rem;
+  --tracking-tighter: -0.04em;
+  --leading-tight: 1.2;
 
-/* Your own custom utilities */
+  --text-5xl: 2.5rem;
+  --text-6xl: 2.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6.25rem;
+
+  --shadow-small: 0 5px 10px rgba(0, 0, 0, 0.12);
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
