@@ -1,30 +1,31 @@
-import { join } from 'path'
-import path from 'path'
-import { serialize } from 'next-mdx-remote/serialize'
-import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
 import fs from 'fs'
+import path, { join } from 'path'
+
+import Head from 'next/head'
+import Link from 'next/link'
+import ErrorPage from 'next/error'
+import { useRouter } from 'next/router'
+import matter from 'gray-matter'
 import remarkGfm from 'remark-gfm'
 import remarkFrontmatter from 'remark-frontmatter'
-import Head from 'next/head'
-import matter from 'gray-matter'
+import rehypePrettyCode from 'rehype-pretty-code'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { serialize } from 'next-mdx-remote/serialize'
 
-import { AUTHOR_NAME } from '../../lib/constants'
-import { getPostBySlug, getAllPosts } from '../../lib/api'
-import Container from '../../components/container'
-import Header from '../../components/header'
+import ContactCard from '../../components/contact-card'
+import CoverImage from '../../components/cover-image'
+import DateFormatter from '../../components/date-formatter'
 import Layout from '../../components/layout'
 import PostBody from '../../components/post-body'
-import PostHeader from '../../components/post-header'
-import PostTitle from '../../components/post-title'
+import { getPostBySlug, getAllPosts } from '../../lib/api'
+import codeTheme from '../../lib/code-theme'
+import { AUTHOR_NAME, AUTHOR_PICTURE } from '../../lib/constants'
+import rehypeCodeCard from '../../lib/rehype-code-card'
 import PostType from '../../types/post'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote'
-import ContactMe from '../../components/contact-me'
 
 interface PostProps {
   post: PostType
   source: MDXRemoteSerializeResult
-  morePosts: PostType[]
 }
 
 const Post: React.FC<PostProps> = ({ post, source }) => {
@@ -32,66 +33,87 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+  if (router.isFallback) {
+    return (
+      <Layout>
+        <header className="post-header">
+          <h1>Loading…</h1>
+        </header>
+      </Layout>
+    )
+  }
+
+  const tags = post.tags ?? []
   return (
     <Layout>
-      <Container>
-        <Header />
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <article className="prose lg:prose-xl">
-              <Head>
-                <title>{post.title + ' | Blog of ' + AUTHOR_NAME}</title>
-                <meta
-                  property="og:image"
-                  content={post.ogImage.url}
-                  key="ogImage"
-                />
-                <meta property="og:type" content="article" />
-                <meta property="og:title" content={post.title} key="ogTitle" />
-                <meta
-                  property="og:description"
-                  content={post.excerpt}
-                  key="ogDescription"
-                />
-                <meta name="twitter:card" content="summary" />
-                <meta name="twitter:site" content="@blog.caulagi.com" />
-                <meta name="twitter:creator" content="@caulagi" />
-                <meta
-                  name="twitter:title"
-                  content={post.title}
-                  key="twitterTitle"
-                />
-                <meta
-                  name="twitter:description"
-                  content={post.excerpt}
-                  key="twitterDescription"
-                />
-                <meta
-                  name="twitter:image"
-                  content={post.ogImage.url}
-                  key="twitterImage"
-                />
-                <link
-                  rel="stylesheet"
-                  href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-gruvbox-dark.min.css"
-                  integrity="sha512-XZoe1WroNfbcndQJexn+pbMEytiaSYRHDuKjew+Nn0xYSTmB4sfoZnBdqYCrXq2IwAcPZS/sXE5ju/JbppYOsA=="
-                  crossOrigin="anonymous"
-                  referrerPolicy="no-referrer"
-                />
-              </Head>
-              <PostHeader
-                title={post.title}
-                coverImage={post.coverImage}
-                date={post.date}
-              />
-              <PostBody source={source} />
-              <ContactMe />
-            </article>
-          </>
-        )}
-      </Container>
+      <Head>
+        <title>{post.title + ' | Blog of ' + AUTHOR_NAME}</title>
+        <meta property="og:image" content={post.ogImage.url} key="ogImage" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.title} key="ogTitle" />
+        <meta
+          property="og:description"
+          content={post.excerpt}
+          key="ogDescription"
+        />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@blog.caulagi.com" />
+        <meta name="twitter:creator" content="@caulagi" />
+        <meta name="twitter:title" content={post.title} key="twitterTitle" />
+        <meta
+          name="twitter:description"
+          content={post.excerpt}
+          key="twitterDescription"
+        />
+        <meta
+          name="twitter:image"
+          content={post.ogImage.url}
+          key="twitterImage"
+        />
+      </Head>
+
+      <article>
+        <header className="post-header">
+          <Link href="/" className="back-link">
+            ← All posts
+          </Link>
+          <div className="meta-row">
+            <span className="accent">
+              <DateFormatter dateString={post.date} />
+            </span>
+            {tags.length > 0 && <span>{tags.join(' · ')}</span>}
+          </div>
+          <h1>{post.title}</h1>
+          <p className="post-lede">{post.excerpt}</p>
+          <div className="byline">
+            <img src={AUTHOR_PICTURE} alt={AUTHOR_NAME} />
+            <span>{AUTHOR_NAME}</span>
+          </div>
+        </header>
+
+        <div className="post-cover">
+          <CoverImage title={post.title} image={post.coverImage} />
+          {post.coverImage.authorName && (
+            <p className="credit">
+              Photo by{' '}
+              {post.coverImage.authorUrl ? (
+                <a
+                  href={post.coverImage.authorUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {post.coverImage.authorName}
+                </a>
+              ) : (
+                post.coverImage.authorName
+              )}
+            </p>
+          )}
+        </div>
+
+        <PostBody source={source} />
+        <ContactCard />
+      </article>
     </Layout>
   )
 }
@@ -115,6 +137,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'tags',
   ])
   const postsDirectory = join(process.cwd(), '_posts')
   const postFilePath = path.join(postsDirectory, `${params.slug}.mdx`)
@@ -123,10 +146,19 @@ export async function getStaticProps({ params }: Params) {
   const { content, data } = matter(source)
 
   const mdxSource = await serialize(content, {
-    // Optionally pass remark/rehype plugins
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkFrontmatter],
-      rehypePlugins: [],
+      rehypePlugins: [
+        [
+          rehypePrettyCode,
+          {
+            theme: codeTheme,
+            keepBackground: false,
+            defaultLang: 'text',
+          },
+        ],
+        rehypeCodeCard,
+      ],
     },
     scope: data,
   })

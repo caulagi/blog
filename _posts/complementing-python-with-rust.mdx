@@ -8,6 +8,7 @@ coverImage:
 date: '2016-12-20T15:35:07.322Z'
 ogImage:
   url: 'https://cdn-images-1.medium.com/max/2560/1*C1P0N253ts3T6vfiNlr5Pw.jpeg'
+tags: ['rust', 'python']
 ---
 
 I gave a talk the other day at Python meetup in Stockholm with the same title. I wanted to also put it online as a post in case anybody is interested in using Rust from Python. (If you fancy watching a video instead, scroll to the bottom).
@@ -133,7 +134,7 @@ with their count. Rust doesn’t have this method. So we will write an
 implementation of <Code>most_common</Code> that takes a dictionary (HashMap in Rust)
 as input and returns the most common key after aggregating.
 
-```rust,python,shell
+```shell title="benchmark.py / lib.rs / shell"
 $ cargo new words
 $ cargo build --release
 

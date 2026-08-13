@@ -1,5 +1,9 @@
 import Head from 'next/head'
-import { AUTHOR_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
+import {
+  AUTHOR_NAME,
+  HOME_OG_IMAGE_URL,
+  SITE_DESCRIPTION,
+} from '../lib/constants'
 
 const Meta: React.FC = () => {
   return (
@@ -30,9 +34,15 @@ const Meta: React.FC = () => {
       <link rel="shortcut icon" href="/favicon/favicon.ico" />
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
-      <meta name="theme-color" content="#000" />
-      <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <meta name="description" content={`Blog of ${AUTHOR_NAME}`} />
+      <meta name="theme-color" content="#fbf8f3" />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`Blog of ${AUTHOR_NAME}`}
+        href="/feed.xml"
+      />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="description" content={SITE_DESCRIPTION} />
       <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" />
     </Head>
   )
