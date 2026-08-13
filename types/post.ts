@@ -8,6 +8,7 @@ type PostType = {
   coverImage: ImageProps
   author: Author
   excerpt: string
+  tags?: string[]
   ogImage: {
     url: string
   }

@@ -1,42 +1,74 @@
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
+import { GetStaticProps } from 'next'
+
+import FeaturedPost from '../components/featured-post'
+import Layout from '../components/layout'
+import PostRow from '../components/post-row'
+import { getAllPosts } from '../lib/api'
 import { AUTHOR_NAME } from '../lib/constants'
 import Post from '../types/post'
-import { GetStaticProps } from 'next'
 
 interface IndexProps {
   allPosts: Post[]
 }
 
 const Index: React.FC<IndexProps> = ({ allPosts }) => {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
+  const [featured, ...rest] = allPosts
   return (
-    <>
-      <Layout>
-        <Head>
-          <title>{'Blog of ' + AUTHOR_NAME}</title>
-        </Head>
-        <Container>
-          <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.coverImage}
-              date={heroPost.date}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
+    <Layout>
+      <Head>
+        <title>{'Blog of ' + AUTHOR_NAME}</title>
+      </Head>
+
+      <section className="masthead">
+        <p className="eyebrow">Blog of {AUTHOR_NAME}</p>
+        <h1>Notes on distributed systems and the tools in between.</h1>
+        <p>
+          I build and run backend systems in Python, Go and Rust. These are the
+          things I picked up along the way — mostly the hard way.
+        </p>
+      </section>
+
+      {featured && (
+        <FeaturedPost
+          title={featured.title}
+          coverImage={featured.coverImage}
+          date={featured.date}
+          slug={featured.slug}
+          excerpt={featured.excerpt}
+          tags={featured.tags}
+        />
+      )}
+
+      {rest.length > 0 && (
+        <section>
+          <div className="section-label">
+            <span>Earlier</span>
+            <span />
+          </div>
+          {rest.map((post) => (
+            <PostRow
+              key={post.slug}
+              title={post.title}
+              date={post.date}
+              slug={post.slug}
+              excerpt={post.excerpt}
+              tags={post.tags}
             />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </Container>
-      </Layout>
-    </>
+          ))}
+        </section>
+      )}
+
+      <section className="rss-card">
+        <div>
+          <h4>New posts, straight to your reader.</h4>
+          <p>No newsletter, no tracking — just a feed.</p>
+        </div>
+        <a className="btn-solid" href="/feed.xml">
+          Subscribe via RSS
+        </a>
+      </section>
+    </Layout>
   )
 }
 
@@ -50,6 +82,7 @@ export const getStaticProps: GetStaticProps = async () => {
     'author',
     'coverImage',
     'excerpt',
+    'tags',
   ])
 
   return {
