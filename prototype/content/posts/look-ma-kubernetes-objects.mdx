@@ -1,0 +1,91 @@
+---
+title: 'Look ma, kubernetes objects'
+excerpt: 'If a control loop can keep your pods alive, it can keep your databases, DNS records and IAM roles alive too.'
+date: '2021-02-17'
+coverImage: 'https://user-images.githubusercontent.com/222507/109411007-21dfad00-799f-11eb-8ac8-b89cd3f8c2c0.jpg'
+coverCredit: 'Photo by Stefan Lehner'
+tags: ['kubernetes']
+author:
+  name: 'Pradip Caulagi'
+  picture: '/assets/blog/authors/pradip.jpg'
+---
+
+Every team I have worked with eventually builds the same thing: a pile of scripts
+that create infrastructure, plus a human whose job is to run them in the right
+order and notice when they half-fail. It works until the day it doesn't, and the
+recovery story is always _somebody remembers_.
+
+Kubernetes already solved the general shape of this problem. You declare what you
+want, a controller watches the world, and the difference between the two is
+continuously worked off. There is nothing pod-specific about that idea — so let's
+point it at a Postgres instance.
+
+## A database as an object
+
+A custom resource is just a schema plus a name. Nothing happens when you apply it
+— which is exactly the point. It is a statement of intent that survives the person
+who wrote it.
+
+```yaml title="database.yaml"
+apiVersion: infra.caulagi.com/v1alpha1
+kind: Database
+metadata:
+  name: orders-prod
+spec:
+  engine: postgres
+  version: '14.2'
+  size: db.r6g.large
+  backups:
+    retention: 30d # compliance, not optimism
+```
+
+The controller is the boring half. Fetch the object, ask the cloud what exists,
+reconcile, requeue. Two hundred lines of Go and you have replaced a runbook.
+
+```go title="controllers/database_controller.go"
+// Reconcile drives the world toward spec, one nudge at a time.
+func (r *DatabaseReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+	var db infrav1.Database
+	if err := r.Get(ctx, req.NamespacedName, &db); err != nil {
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+
+	live, err := r.Cloud.Describe(ctx, db.Spec.Name)
+	switch {
+	case errors.Is(err, cloud.ErrNotFound):
+		return r.create(ctx, &db)
+	case err != nil:
+		return ctrl.Result{RequeueAfter: 30 * time.Second}, err
+	}
+
+	return ctrl.Result{RequeueAfter: 5 * time.Minute}, r.drift(ctx, &db, live)
+}
+```
+
+<Caption>Requeue instead of retry — the loop is the error handler.</Caption>
+
+Note the shape: no `if first_run`, no ordering, no state file to lose. Apply it
+twice and nothing happens the second time.
+
+> The win isn't the YAML. It's that recovery and creation are the same code path,
+> so recovery is tested every five minutes.
+
+None of this is new thinking. The line that finally made it click for me was
+written about a very different system:
+
+<PullQuote cite="Site Reliability Engineering, ch. 9">
+  A system that is continuously converging on a desired state does not need a
+  recovery procedure. Convergence <em>is</em> the recovery procedure.
+</PullQuote>
+
+## What it costs you
+
+- You now own a controller. Someone has to upgrade it, and CRD versioning is a real tax.
+- Cloud APIs are eventually consistent in ways your reconciler will discover at 3am.
+- Deletion is genuinely hard. Finalizers protect you right up until they wedge.
+
+I still think the trade is worth it for infrastructure you provision more than
+twice a year. For everything else, a script and a good README is fine — and
+admitting that is part of the job.
+
+<Contact />
