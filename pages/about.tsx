@@ -53,7 +53,7 @@ const About: React.FC = () => {
 
       <div className="about-body prose-blog">
         <p>
-          Hi. I am proficient with Python, Golang and Rust — my code is
+          Hi 👋. I am proficient with Python, Golang and Rust — my code is
           idiomatic, well tested and performs well. In devops-ish roles I have
           run production systems and helped other developers daily; in developer
           roles I have built and maintained backend APIs and gRPC services.
@@ -65,9 +65,9 @@ const About: React.FC = () => {
           platform or systems developer.
         </p>
         <p>
-          Outside of work I have two kids and spend my time watching and playing
-          chess, listening to music (ask me about Indian classical) and,
-          recently, taking long walks.
+          Outside of work I have two kids and a girlfriend. I spend my time
+          watching and playing chess, listening to music (ask me about Indian
+          classical) and, recently, taking long walks.
         </p>
       </div>
 

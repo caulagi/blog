@@ -6,7 +6,7 @@ const ContactCard: React.FC = () => {
       <span className="contact-badge" aria-hidden="true">
         🐢
       </span>
-      <p>Happy to hear your thoughts — disagreements especially.</p>
+      <p>Happy to hear your thoughts — disagreements first, applause ok.</p>
       <div className="contact-links">
         <a href={`mailto:${EMAIL}`}>
           <span className="emoji" aria-hidden="true">
