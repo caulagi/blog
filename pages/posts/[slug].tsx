@@ -14,12 +14,13 @@ import { serialize } from 'next-mdx-remote/serialize'
 
 import ContactCard from '../../components/contact-card'
 import CoverImage from '../../components/cover-image'
+import JsonLd from '../../components/json-ld'
 import DateFormatter from '../../components/date-formatter'
 import Layout from '../../components/layout'
 import PostBody from '../../components/post-body'
 import { getPostBySlug, getAllPosts } from '../../lib/api'
 import codeTheme from '../../lib/code-theme'
-import { AUTHOR_NAME, AUTHOR_PICTURE } from '../../lib/constants'
+import { AUTHOR_NAME, AUTHOR_PICTURE, SITE_URL } from '../../lib/constants'
 import rehypeCodeCard from '../../lib/rehype-code-card'
 import PostType from '../../types/post'
 
@@ -44,8 +45,27 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
   }
 
   const tags = post.tags ?? []
+  const url = `${SITE_URL}/posts/${post.slug}`
+  const blogPosting = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    image: post.coverImage.src,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    author: {
+      '@type': 'Person',
+      name: AUTHOR_NAME,
+      url: `${SITE_URL}/about`,
+    },
+    ...(tags.length > 0 && { keywords: tags.join(', ') }),
+  }
+
   return (
     <Layout description={post.excerpt}>
+      <JsonLd data={blogPosting} />
       <Head>
         <title>{post.title + ' | Blog of ' + AUTHOR_NAME}</title>
         <meta property="og:image" content={post.ogImage.url} key="ogImage" />

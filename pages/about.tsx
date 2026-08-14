@@ -1,11 +1,14 @@
 import Head from 'next/head'
 
 import ContactCard from '../components/contact-card'
+import JsonLd from '../components/json-ld'
 import Layout from '../components/layout'
 import {
   AUTHOR_NAME,
   AUTHOR_PICTURE,
   HOME_OG_IMAGE_URL,
+  SAME_AS,
+  SITE_URL,
 } from '../lib/constants'
 
 const lede =
@@ -17,10 +20,30 @@ const facts = [
   { label: 'Off the clock', value: 'Chess · long walks' },
 ]
 
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: AUTHOR_NAME,
+  description: lede,
+  url: `${SITE_URL}/about`,
+  image: `${SITE_URL}${AUTHOR_PICTURE}`,
+  jobTitle: 'Platform engineer',
+  knowsAbout: [
+    'Distributed systems',
+    'Platform engineering',
+    'Python',
+    'Go',
+    'Rust',
+    'Kubernetes',
+  ],
+  sameAs: SAME_AS,
+}
+
 const About: React.FC = () => {
   const title = `About ${AUTHOR_NAME}`
   return (
     <Layout description={lede}>
+      <JsonLd data={person} />
       <Head>
         <title>{title}</title>
         <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" />
