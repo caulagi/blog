@@ -20,27 +20,88 @@ We will use the following problem to write some code — write a script that dow
 
 Our test setting will use the built-in http server that comes bundled with Python. This will make sure that the numbers we see are not influenced by network latency and we also don’t bombard some random server with 1000's of requests.
 
-![](https://cdn-images-1.medium.com/max/2592/1*JTDRw9TNUVI4el6TXHXg0w.jpeg)
+```shell
+$ cd Pictures
+$ python -m SimpleHTTPServer
+Serving HTTP on 0.0.0.0 port 8000 ...
+127.0.0.1 - - [03/Aug/2014 19:37:37] "GET /shakuni.png HTTP/1.1" 200 -
+```
 
-We will run the script on my Intel 4 Core laptop running Ubuntu 14.04 with Python 3.4.
+We will run the script on my _Intel 4 Core laptop running Ubuntu 14.04 with Python 3.4_.
 
-![](https://cdn-images-1.medium.com/max/2000/1*cx0kamPUMDBOSxE5juZmWw.jpeg)
+```text
+Processor           4x Intel(R) Core(TM) i7-3517U CPU @ 1.90GHz
+Memory              3905MB (2645MB used)
+Operating System    Ubuntu 14.04.1 LTS
+```
 
-The first step is to establish some base benchmark to see how much time a sequential program would require. This is what the script looks like -
+The first step is to establish some base benchmark to see how much time a sequential program
+would require. This is what the script looks like -
 
-![](https://cdn-images-1.medium.com/max/2574/1*rqDjoAtdJDAA3mU1lX4CKQ.jpeg)
+```python title="picit-seq.py"
+import requests
+import time
+
+URL = "http://127.0.0.1:8000/shakuni.png"
+
+def download_ntimes(n):
+    for i in range(n):
+        requests.get(URL)
+
+def measure(n):
+    start = time.clock()
+    download_ntimes(n)
+    end = time.clock()
+    print("Time to download a image %s times: %s CPU units" % (n, end-start))
+
+measure(10000)
+measure(20000)
+measure(30000)
+measure(40000)
+```
 
 The times for this simple sequential download of images are -
 
-![](https://cdn-images-1.medium.com/max/2564/1*Ti5PW1rDp3OxPXNsncYWHw.jpeg)
+```shell
+$ python3.4 picit-seq.py
+Time to download a image 10000 times: 79.61527 CPU units
+Time to download a image 20000 times: 160.204535 CPU units
+Time to download a image 30000 times: 240.62441900000002 CPU units
+Time to download a image 40000 times: 317.55276999999995 CPU units
+```
 
-Note that we have added a sanity check to verify that there is a linear increase in the time taken. So if 10k requests takes 80 seconds, 20k requests will require 160 seconds and so on.
+Note that we have added a sanity check to verify that there is a linear increase in the time taken.
+So if 10k requests takes 80 seconds, 20k requests will require 160 seconds and so on.
 
-Now let us look at a version that uses concurrent.futures. It is surprisingly easy to change the sequential code to run parallelly -
+Now let us look at a version that uses `concurrent.futures`. It is surprisingly easy to change the sequential code to run parallelly -
 
-![](https://cdn-images-1.medium.com/max/2572/1*Vnh58hcRZeqz9-XWl8Cj4Q.jpeg)
+```python title="picit.py"
+import requests
+import time
+import concurrent.futures
 
-Only the download_ntimes method has changed to download images asynchronously using [ProcessPoolExecutor](https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor). From the documentation -
+URL = "http://127.0.0.1:8000/shakuni.png"
+
+def download_ntimes(n):
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        for i in range(n):
+            executor.map(requests.get, [URL])
+
+def measure(n):
+    start = time.clock()
+    download_ntimes(n)
+    end = time.clock()
+    print("Time to download a image %s times: %s CPU units" % (n, end-start))
+
+measure(10000)
+measure(20000)
+measure(30000)
+measure(40000)
+```
+
+Only the `download_ntimes` method has changed to download images asynchronously
+using [ProcessPoolExecutor](https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor).
+From the documentation -
 
 > The ProcessPoolExecutor class uses a pool of processes to execute calls asynchronously.
 > ProcessPoolExecutor uses the multiprocessing module, which allows it to side-step the
@@ -53,8 +114,17 @@ That is because
 
 The download times now are -
 
-![](https://cdn-images-1.medium.com/max/2590/1*vJQ2cTjimq8lkvWnllDKxg.jpeg)
+```shell
+$ python3.4 picit.py
+Time to download a image 10000 times: 31.90206 CPU units
+Time to download a image 20000 times: 57.468886 CPU units
+Time to download a image 30000 times: 78.56723 CPU units
+Time to download a image 40000 times: 98.28945499999998 CPU units
+```
 
-We see that the download times are down by a factor of 3 (approximately). Theoretically, we should have seen a 4x speed up because of the 4 cores my machine has. The difference is probably due to book keeping that concurrent.futures has to do.
+We see that the download times are down by a factor of 3 (approximately). Theoretically,
+we should have seen a 4x speed up because of the 4 cores my machine has. The difference
+is probably due to book keeping that concurrent.futures has to do.
 
-So the question is — how many of us have the luxury of using Python 3 in real life ;). But on the other hand, if you are writing standalone scripts today and not using Python 3, you are missing out on the fun!
+So the question is — how many of us have the luxury of using Python 3 in real life 😉.
+But on the other hand, if you are writing standalone scripts today and not using Python 3, you are missing out on the fun!
