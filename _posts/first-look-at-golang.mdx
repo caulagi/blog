@@ -89,7 +89,7 @@ func main() {
 }
 ```
 
-### Types
+## Types
 
 ![](https://user-images.githubusercontent.com/222507/109426660-11572300-79ef-11eb-8165-65899ed34d05.png)
 
@@ -103,18 +103,28 @@ func serveFile(w ResponseWriter,
                redirect bool)
 ```
 
-### Stdlib
+## Stdlib
 
 <Quotation
   author="James Robertson about Smalltalk"
   quotation="Talk small and carry a big class library"
 />
 
-Go is frequently said to be a modern language. This is evident in the standard libraries that come with the language. compress, crypt, html, etc are all libraries any program today would invariably use. In fact, you will notice that the static file server earlier is really tiny. It is due to the fact that stdlib has a complete implementation of a HTTP server with parts that can be easily customized.
+Go is frequently said to be a modern language. This is evident in the standard libraries
+that come with the language. compress, crypt, html, etc are all libraries any program
+today would invariably use. In fact, you will notice that the static file server earlier
+is really tiny. It is due to the fact that stdlib has a complete implementation of a
+HTTP server with parts that can be easily customized.
 
-### Concurrency
+## Concurrency
 
-This was probably the single biggest reason to try Go. To write a concurrent program. And while there are a few awesome videos describing the constructs, there are not sufficient real-time examples on the web to make this easy. Furthermore, it is not easy breaking a mostly sequential program into concurrent pieces in Go. Consider the problem of getting some data from a database in a request-response cyle in a web application. This would be some example Nodejs (find a user asynchronously from the database. If that succeeds, return the user. Else return the error) -
+This was probably the single biggest reason to try Go. To write a concurrent program.
+And while there are a few awesome videos describing the constructs, there are not sufficient
+real-time examples on the web to make this easy. Furthermore, it is not easy breaking a
+mostly sequential program into concurrent pieces in Go. Consider the problem of getting
+some data from a database in a request-response cyle in a web application. This would be
+some example Nodejs (find a user asynchronously from the database. If that succeeds,
+return the user. Else return the error) -
 
 ```javascript
 User.findOne({ email: email }, function (err, user) {
@@ -131,12 +141,17 @@ User.findOne({ email: email }, function (err, user) {
 
 It is not clear how to break this into idiomatic Go code. Perhaps I need to spend more time with Go.
 
-### REPL
+## REPL
 
-As far as I can tell, there is no REPL for GO. This is something I missed terribly. Especially when you are learning a new language and want to try little snippets. No, I don’t want to use [play](http://play.golang.org/). I am far too used to the terminal.
+As far as I can tell, there is no REPL for GO. This is something I missed terribly.
+Especially when you are learning a new language and want to try little snippets.
+No, I don’t want to use [play](http://play.golang.org/). I am far too used to the terminal.
 
-There are a couple of other minor points. Having programmed in an interpreted language mostly, it was hard to switch over to the compiled mindset. In particular, the compile and restart server was pretty annoying. The other point is that it is not possible to change/add code to stdlib. I tend to add log lines quite a lot initially to understand an idea/concept. But this was ruled out for Go.
+There are a couple of other minor points. Having programmed in an interpreted language
+mostly, it was hard to switch over to the compiled mindset. In particular, the compile
+and restart server was pretty annoying. The other point is that it is not possible
+to change/add code to stdlib. I tend to add log lines quite a lot initially to understand
+an idea/concept. But this was ruled out for Go.
 
-All in all, it was an interesting weekend. But it wasn’t love at first sight. :|
-
-Don’t forget that these are my impressions after using Go for only 2 days. Also, these are my personal opinions. Feel free to disagree/discuss on [twitter](https://twitter.com/caulagi).
+All in all, it was an interesting weekend. But it wasn’t love at first sight. 😏
+Don’t forget that these are my impressions after using Go for only 2 days.
