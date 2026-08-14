@@ -19,7 +19,6 @@ import DateFormatter from '../../components/date-formatter'
 import Layout from '../../components/layout'
 import PostBody from '../../components/post-body'
 import { getPostBySlug, getAllPosts } from '../../lib/api'
-import codeTheme from '../../lib/code-theme'
 import { AUTHOR_NAME, AUTHOR_PICTURE, SITE_URL } from '../../lib/constants'
 import rehypeCodeCard from '../../lib/rehype-code-card'
 import PostType from '../../types/post'
@@ -165,7 +164,7 @@ export async function getStaticProps({ params }: Params) {
         [
           rehypePrettyCode,
           {
-            theme: codeTheme,
+            theme: 'gruvbox-dark-medium',
             keepBackground: false,
             defaultLang: 'text',
           },

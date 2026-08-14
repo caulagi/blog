@@ -23,19 +23,14 @@
   --accent-soft: #f1eade;
   --accent-line: #e0bca9;
 
-  --code-bg: #191814;
-  --code-header: #211f1a;
-  --code-border: #2a2721;
-  --code-border-2: #2e2a23;
-  --code-text: #e8e2d6;
-  --code-comment: #736e60;
-  --code-keyword: #d98a5b;
-  --code-type: #e0a15d;
-  --code-fn: #e8c07d;
-  --code-string: #c9a66b;
-  --code-key: #8fa37c;
-  --code-chip: #6e6858;
-  --code-filename: #9c9484;
+  /* gruvbox dark medium — shiki inlines the token colors */
+  --code-bg: #282828;
+  --code-header: #32302f;
+  --code-border: #3c3836;
+  --code-border-2: #3c3836;
+  --code-text: #ebdbb2;
+  --code-chip: #928374;
+  --code-filename: #a89984;
 
   --serif: Newsreader, Georgia, 'Times New Roman', serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -676,32 +671,6 @@ img {
 .code-card [data-highlighted-line] {
   background: rgba(180, 68, 31, 0.14);
   box-shadow: inset 2px 0 0 var(--accent);
-}
-pre code .comment,
-.token.comment {
-  color: var(--code-comment);
-  font-style: italic;
-}
-pre code .keyword,
-.token.keyword {
-  color: var(--code-keyword);
-}
-pre code .type,
-.token.class-name {
-  color: var(--code-type);
-}
-pre code .function,
-.token.function {
-  color: var(--code-fn);
-}
-pre code .string,
-.token.string {
-  color: var(--code-string);
-}
-.token.number,
-.token.property,
-.token.key {
-  color: var(--code-key);
 }
 
 /* ---------- about ---------- */
