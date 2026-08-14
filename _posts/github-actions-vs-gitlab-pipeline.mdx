@@ -119,19 +119,32 @@ terraform:
     - terraform init
 ```
 
-The first thing to notice is `image` at the top. It is telling us the environment for a
-Gitlab job is a container, and the container is the unit of reuse. This is a much tighter
-coupling than a shared runner with setup steps. Everything the job does is bound to the
+The first thing to notice is that gitlab (the product offering hosted git) is
+tightly coupled with the pipeline. This is because nothing in the pipeline
+yaml is a reference to an event or an api call.
+
+`image` at the top is a more closed construct. It is telling us the environment for a
+Gitlab job is a container, and the container is the unit of reuse. Everything the
+job does is bound to the
 base image, and two tools that need different environments mean two jobs. Reuse of an
 environment does not compose with reuse of a step — we pick one image per job and it
 defines the world for that job.
 
-There is no first class notion of a step either. `script` is a bash script. Composability
-lives inside the yaml instead, via `include` and `extends`. A pipeline is composed by
-pulling in more yaml and inheriting from more yaml. That is a powerful shape for a platform
-team that wants a single source of truth — put the templates in a central project, mandate
-the `include`, and updates propagate. But the reuse unit is a whole job template, not a
-step, so composition happens at a coarser granularity. We compose jobs, not actions.
+I also think using container images as the unit of sandboxing is a wrong abstraction.
+It is very cheap to create VMs **today** and run jobs in them.
+This skips the complexity of processes talking to each other when testing and
+running out of memory and cpu.
+
+The decoupling between `stages` and `jobs` is a nice design choice. It allows us to
+express more complex workflows where we can promote between stages with ease. for example -
+
+```yaml
+deploy:staging:
+  stage: deploy
+
+deploy:prod:
+  stage: deploy
+```
 
 The api story is different too. Gitlab has an api and it is a good one, but the pipeline
 is more of a closed object. The yaml, the templates, the images, the registry, the
@@ -142,21 +155,22 @@ of the product, not building whatever we want on top of it.
 ## Closing thoughts
 
 The two yamls describe two different design philosophies. Github's is a thin declarative
-facade over git and REST. The yaml exists inside a larger system that is already an open
-marketplace and an api, and it inherits both properties for free. Gitlab's yaml describes
-an integrated product where composition, environments, and templates all live inside the
-pipeline definition itself.
+facade over the functionality github offers and their REST apis.
+The yaml exists inside a larger system that allows for an open marketplace. This means it is easy
+to build custom tooling, integrate third party vendors, or let non-CI actors participate in the
+pipeline.
 
-Neither is wrong, but they lead to very different systems. If we want to build custom
-tooling, integrate third party vendors, or let non-CI actors participate in the pipeline
-lifecycle, the Github model makes it cheap. If we want strong central control and a single
-vendor answering for the whole toolchain, the Gitlab model makes it cheap. Worth knowing
-which kind of composition you want before making the pick.
+Gitlab's yaml describes
+an integrated product where composition, environments, and templates all live inside the
+pipeline definition itself. In some sense, this is like
+the apple ecosystem — it is a closed system that is easy to use and hard to extend.
+
+Neither is wrong, but they lead to very different systems.
 
 <Footnotes>
   <Footnote id="1">
-    I mean everyone who reads/writes code - platform engineers, developers,
-    managers, QA/test engineers, etc.
+    I mean everyone who reads/writes code - platform engineers, SREs, devops
+    engineers, developers, managers, QA/test engineers, etc.
   </Footnote>
   <Footnote id="2">
     I have used GitHub Action extensively for the last 5 years. I have not used
