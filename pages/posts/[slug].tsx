@@ -64,31 +64,22 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
   }
 
   return (
-    <Layout description={post.excerpt}>
+    <Layout description={post.excerpt} image={post.ogImage.url}>
       <JsonLd data={blogPosting} />
       <Head>
         <title>{post.title + ' | Blog of ' + AUTHOR_NAME}</title>
-        <meta property="og:image" content={post.ogImage.url} key="ogImage" />
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content="article" key="ogType" />
         <meta property="og:title" content={post.title} key="ogTitle" />
         <meta
           property="og:description"
           content={post.excerpt}
           key="ogDescription"
         />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@blog.caulagi.com" />
-        <meta name="twitter:creator" content="@caulagi" />
         <meta name="twitter:title" content={post.title} key="twitterTitle" />
         <meta
           name="twitter:description"
           content={post.excerpt}
           key="twitterDescription"
-        />
-        <meta
-          name="twitter:image"
-          content={post.ogImage.url}
-          key="twitterImage"
         />
       </Head>
 

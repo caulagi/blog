@@ -6,7 +6,6 @@ import Layout from '../components/layout'
 import {
   AUTHOR_NAME,
   AUTHOR_PICTURE,
-  HOME_OG_IMAGE_URL,
   SAME_AS,
   SITE_URL,
 } from '../lib/constants'
@@ -46,23 +45,14 @@ const About: React.FC = () => {
       <JsonLd data={person} />
       <Head>
         <title>{title}</title>
-        <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" />
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content="profile" key="ogType" />
         <meta property="og:title" content={title} key="ogTitle" />
         <meta property="og:description" content={lede} key="ogDescription" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@blog.caulagi.com" />
-        <meta name="twitter:creator" content="@caulagi" />
         <meta name="twitter:title" content={title} key="twitterTitle" />
         <meta
           name="twitter:description"
           content={lede}
           key="twitterDescription"
-        />
-        <meta
-          name="twitter:image"
-          content={HOME_OG_IMAGE_URL}
-          key="twitterImage"
         />
       </Head>
 

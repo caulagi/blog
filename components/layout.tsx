@@ -5,12 +5,13 @@ import SiteFooter from './site-footer'
 type LayoutProps = {
   children: React.ReactNode
   description?: string
+  image?: string
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, description }) => {
+const Layout: React.FC<LayoutProps> = ({ children, description, image }) => {
   return (
     <>
-      <Meta description={description} />
+      <Meta description={description} image={image} />
       <div className="page shell">
         <SiteHeader />
         <main>{children}</main>

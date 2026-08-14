@@ -18,5 +18,8 @@ export const SAME_AS = [
   X_URL,
 ]
 export const EMAIL = 'caulagi@gmail.com'
-export const HOME_OG_IMAGE_URL =
-  'https://og-image.now.sh/Next.js%20Blog%20Starter%20Example.png?theme=light&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg'
+export const TWITTER_HANDLE = '@caulagi'
+// 1200x630 card in the site palette, used wherever a page has no cover image.
+export const DEFAULT_OG_IMAGE_URL = `${SITE_URL}/assets/og-default.png`
+export const DEFAULT_OG_IMAGE_WIDTH = '1200'
+export const DEFAULT_OG_IMAGE_HEIGHT = '630'
