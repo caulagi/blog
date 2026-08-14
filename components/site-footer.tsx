@@ -1,4 +1,9 @@
-import { AUTHOR_NAME, GIT_REPO, MASTODON_URL } from '../lib/constants'
+import {
+  AUTHOR_NAME,
+  GIT_REPO,
+  LINKEDIN_URL,
+  MASTODON_URL,
+} from '../lib/constants'
 
 const SiteFooter: React.FC = () => {
   return (
@@ -10,6 +15,10 @@ const SiteFooter: React.FC = () => {
         <a href="/feed.xml">RSS</a> ·{' '}
         <a href={MASTODON_URL} rel="me noreferrer" target="_blank">
           Mastodon
+        </a>{' '}
+        ·{' '}
+        <a href={LINKEDIN_URL} rel="me noreferrer" target="_blank">
+          LinkedIn
         </a>{' '}
         ·{' '}
         <a href={GIT_REPO} target="_blank" rel="noreferrer">
