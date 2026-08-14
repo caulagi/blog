@@ -1,0 +1,82 @@
+---
+title: 'GitHub Actions vs GitLab Pipeline'
+seoTitle: 'Thoughts on reasoning about CI/CD pipelines: GitHub Actions vs GitLab Pipeline'
+excerpt: 'Not all CI/CD yaml for pipelines are equal. These workflow yaml significantly impact system design and I argue on how to reason about them.'
+coverImage:
+  src: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
+date: '2026-08-14T05:35:07.322Z'
+ogImage:
+  url: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
+tags: ['nodejs']
+---
+
+Its been 5 years since my last post. Time for a new one 😅
+
+Developers spend a lot of time with source control systems like GitHub and GitLab.
+I would rate the choice of these systems as one of the most important decisions a development team can make.
+I have many times seen choices being made based on simplistic criteria like it is open source and free to host.
+I want to take a more holistic view and try to reason about the overall system design.
+
+In this first post, I want to focus only on the CI/CD pipelines provided by Github vs Gitlab and what
+choices we are making with each choice. I want to make a second post that will focus on the other features
+of these systems like communication using issue tracking, ability to build custom solutions on top of apis,
+granular permissions for these apis, securely integrating with other systems
+(CI taking to cloud provider with OIDC), etc. ...hopefully soon 😁
+
+## Github Actions
+
+Let us look at a simple workflow yaml for Github Action. I have used a terraform project as an example.
+
+```yaml title="github-actions.yaml"
+on:
+  push:
+    paths:
+      - 'terraform/*.tf'
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: '1.14.6'
+
+      - uses: 'google-github-actions/auth@v3'
+        with:
+          project_id: 'my-project'
+          workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+
+      - name: Terraform Init
+        working-directory: ./infra
+        run: terraform init
+```
+
+Lets take this yaml apart and reason about the design choices.
+
+The `on` section is a declarative way to specify the events that will trigger this workflow.
+It further allows us to filter the events based on the branch and the files that have changed -
+again declarative, i.e we specify the what and not the how. It also means that as long
+as we create a push event, the workflow will be triggered. This event can be created from a slack
+channel or a bot.
+
+`permissions` section is a declarative way to specify the permissions that this workflow will have.
+It decouples permissions from the jobs that will run. For example, the job can update the pull
+request with the output of terraform plan because we asked for write permissions.
+We can also reason from the yaml that the permissions are scoped to the workflow and
+not the user who triggered the workflow. So a github app with admin rights or a slack message triggering
+the workflow gets the same permissions.
+
+## Gitlab Pipeline
+
+## Closing thoughts
+
+I have used GitHub Action extensively for the last 5 years. I have not used GitLab Pipelines
+as extensively but used it on and off for a few years. So happy to be corrected and/or challenged on my reasoning.
