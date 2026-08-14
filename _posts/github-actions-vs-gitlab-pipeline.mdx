@@ -10,7 +10,7 @@ ogImage:
 tags: ['nodejs']
 ---
 
-Its been almost 5 years since my last post. Time for a new one 😅
+It's been almost 5 years since my last post. Time for a new one 😅
 
 Developers[1](#fn-1) spend a lot of time with source control systems like GitHub and GitLab.
 I would rate the choice of these systems as one of the most important decisions a development team can make.
@@ -59,11 +59,11 @@ jobs:
         run: terraform init
 ```
 
-Lets take this yaml apart and reason about the design choices.
+Let's take this yaml apart and reason about the design choices.
 
 The `on` section is a declarative way to specify the events that will trigger this workflow.
-It further allows us to filter the events based on the branch and the files that have changed -
-again declarative, i.e we specify the what and not the how. It also means that as long
+It further allows us to filter the events based on the branch and the files that have changed —
+again declarative, i.e. we specify the what and not the how. It also means that as long
 as we create a push event, the workflow will be triggered. This event can be created from a slack
 channel or a bot.
 
@@ -95,9 +95,9 @@ the system, not the system itself. So we can trigger a workflow from a slack bot
 a failed job from a dashboard, gate a deploy from a security scanner, or write our own UI
 on top. Any tooling we want, we can build.
 
-## Gitlab[2](#fn-2) Pipeline
+## Gitlab Pipeline
 
-Here is roughly the same pipeline in Gitlab.
+Here is roughly the same pipeline in Gitlab[2](#fn-2).
 
 ```yaml title="gitlab-ci.yaml"
 image: hashicorp/terraform:1.14.6
@@ -119,7 +119,7 @@ terraform:
     - terraform init
 ```
 
-The first thing to notice is that gitlab (the product offering hosted git) is
+The first thing to notice is that Gitlab (the product offering hosted git) is
 tightly coupled with the pipeline. This is because nothing in the pipeline
 yaml is a reference to an event or an api call.
 
@@ -136,7 +136,7 @@ This skips the complexity of processes talking to each other when testing and
 running out of memory and cpu.
 
 The decoupling between `stages` and `jobs` is a nice design choice. It allows us to
-express more complex workflows where we can promote between stages with ease. for example -
+express more complex workflows where we can promote between stages with ease. For example —
 
 ```yaml
 deploy:staging:
@@ -154,22 +154,21 @@ of the product, not building whatever we want on top of it.
 
 ## Closing thoughts
 
-The two yamls describe two different design philosophies. Github's is a thin declarative
-facade over the functionality github offers and their REST apis.
+The two yamls describe two different design philosophies. GitHub's is a thin declarative
+facade over the functionality GitHub offers and their REST apis.
 The yaml exists inside a larger system that allows for an open marketplace. This means it is easy
-to build custom tooling, integrate third party vendors, or let non-CI actors participate in the
+to build custom tooling, integrate third-party vendors, or let non-CI actors participate in the
 pipeline.
 
-Gitlab's yaml describes
-an integrated product where composition, environments, and templates all live inside the
+Gitlab's yaml describes an integrated product where composition, environments, and templates all live inside the
 pipeline definition itself. In some sense, this is like
-the apple ecosystem — it is a closed system that is easy to use and hard to extend.
+the Apple ecosystem — it is a closed system that is easy to use and hard to extend.
 
 Neither is wrong, but they lead to very different systems.
 
 <Footnotes>
   <Footnote id="1">
-    I mean everyone who reads/writes code - platform engineers, SREs, devops
+    I mean everyone who reads/writes code — platform engineers, SREs, DevOps
     engineers, developers, managers, QA/test engineers, etc.
   </Footnote>
   <Footnote id="2">
