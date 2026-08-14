@@ -20,7 +20,7 @@ const facts = [
 const About: React.FC = () => {
   const title = `About ${AUTHOR_NAME}`
   return (
-    <Layout>
+    <Layout description={lede}>
       <Head>
         <title>{title}</title>
         <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" />
