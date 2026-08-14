@@ -13,9 +13,7 @@ const SiteHeader: React.FC = () => {
         <nav className="site-nav">
           <ExternalLink href={PERSONAL_SITE_URL}>caulagi.com</ExternalLink>
           <Link href="/about">About</Link>
-          <a href={GIT_REPO} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
+          <ExternalLink href={GIT_REPO}>GitHub</ExternalLink>
         </nav>
       </header>
       <div className="header-rule" />

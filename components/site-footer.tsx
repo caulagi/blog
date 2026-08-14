@@ -16,17 +16,14 @@ const SiteFooter: React.FC = () => {
       <span>
         <ExternalLink href={PERSONAL_SITE_URL}>caulagi.com</ExternalLink> ·{' '}
         <a href="/feed.xml">RSS</a> ·{' '}
-        <a href={MASTODON_URL} rel="me noreferrer" target="_blank">
+        <ExternalLink href={MASTODON_URL} rel="me">
           Mastodon
-        </a>{' '}
+        </ExternalLink>{' '}
         ·{' '}
-        <a href={LINKEDIN_URL} rel="me noreferrer" target="_blank">
+        <ExternalLink href={LINKEDIN_URL} rel="me">
           LinkedIn
-        </a>{' '}
-        ·{' '}
-        <a href={GIT_REPO} target="_blank" rel="noreferrer">
-          Source
-        </a>
+        </ExternalLink>{' '}
+        · <ExternalLink href={GIT_REPO}>Source</ExternalLink>
       </span>
     </footer>
   )

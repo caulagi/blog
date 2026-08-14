@@ -1,10 +1,11 @@
 type ExternalLinkProps = {
   href: string
+  rel?: string
   children: React.ReactNode
 }
 
-const ExternalLink: React.FC<ExternalLinkProps> = ({ href, children }) => (
-  <a href={href} target="_blank" rel="noreferrer">
+const ExternalLink: React.FC<ExternalLinkProps> = ({ href, rel, children }) => (
+  <a href={href} target="_blank" rel={rel ? `${rel} noreferrer` : 'noreferrer'}>
     {children}
     <span className="external-arrow" aria-hidden="true">
       ↗
