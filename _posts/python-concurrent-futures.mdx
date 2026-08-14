@@ -27,7 +27,7 @@ Serving HTTP on 0.0.0.0 port 8000 ...
 127.0.0.1 - - [03/Aug/2014 19:37:37] "GET /shakuni.png HTTP/1.1" 200 -
 ```
 
-We will run the script on my Intel 4 Core laptop running Ubuntu 14.04 with Python 3.4.
+We will run the script on my _Intel 4 Core laptop running Ubuntu 14.04 with Python 3.4_.
 
 ```text
 Processor           4x Intel(R) Core(TM) i7-3517U CPU @ 1.90GHz
@@ -35,7 +35,8 @@ Memory              3905MB (2645MB used)
 Operating System    Ubuntu 14.04.1 LTS
 ```
 
-The first step is to establish some base benchmark to see how much time a sequential program would require. This is what the script looks like -
+The first step is to establish some base benchmark to see how much time a sequential program
+would require. This is what the script looks like -
 
 ```python title="picit-seq.py"
 import requests
@@ -69,9 +70,10 @@ Time to download a image 30000 times: 240.62441900000002 CPU units
 Time to download a image 40000 times: 317.55276999999995 CPU units
 ```
 
-Note that we have added a sanity check to verify that there is a linear increase in the time taken. So if 10k requests takes 80 seconds, 20k requests will require 160 seconds and so on.
+Note that we have added a sanity check to verify that there is a linear increase in the time taken.
+So if 10k requests takes 80 seconds, 20k requests will require 160 seconds and so on.
 
-Now let us look at a version that uses concurrent.futures. It is surprisingly easy to change the sequential code to run parallelly -
+Now let us look at a version that uses `concurrent.futures`. It is surprisingly easy to change the sequential code to run parallelly -
 
 ```python title="picit.py"
 import requests
@@ -120,6 +122,9 @@ Time to download a image 30000 times: 78.56723 CPU units
 Time to download a image 40000 times: 98.28945499999998 CPU units
 ```
 
-We see that the download times are down by a factor of 3 (approximately). Theoretically, we should have seen a 4x speed up because of the 4 cores my machine has. The difference is probably due to book keeping that concurrent.futures has to do.
+We see that the download times are down by a factor of 3 (approximately). Theoretically,
+we should have seen a 4x speed up because of the 4 cores my machine has. The difference
+is probably due to book keeping that concurrent.futures has to do.
 
-So the question is — how many of us have the luxury of using Python 3 in real life ;). But on the other hand, if you are writing standalone scripts today and not using Python 3, you are missing out on the fun!
+So the question is — how many of us have the luxury of using Python 3 in real life 😉.
+But on the other hand, if you are writing standalone scripts today and not using Python 3, you are missing out on the fun!
