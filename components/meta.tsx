@@ -5,7 +5,11 @@ import {
   SITE_DESCRIPTION,
 } from '../lib/constants'
 
-const Meta: React.FC = () => {
+type MetaProps = {
+  description?: string
+}
+
+const Meta: React.FC<MetaProps> = ({ description = SITE_DESCRIPTION }) => {
   return (
     <Head>
       <link
@@ -42,7 +46,7 @@ const Meta: React.FC = () => {
         href="/feed.xml"
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="description" content={SITE_DESCRIPTION} />
+      <meta name="description" content={description} />
       <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" />
     </Head>
   )

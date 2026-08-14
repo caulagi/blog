@@ -45,7 +45,7 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
 
   const tags = post.tags ?? []
   return (
-    <Layout>
+    <Layout description={post.excerpt}>
       <Head>
         <title>{post.title + ' | Blog of ' + AUTHOR_NAME}</title>
         <meta property="og:image" content={post.ogImage.url} key="ogImage" />
