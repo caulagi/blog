@@ -4,6 +4,7 @@ import { ImageProps } from '../components/cover-image'
 type PostType = {
   slug: string
   title: string
+  seoTitle?: string
   date: string
   coverImage: ImageProps
   author: Author
