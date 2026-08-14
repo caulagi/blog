@@ -264,7 +264,13 @@ and Clone. This is exactly same in a Python dictionary, where the keys have be
 hashable. But in the case of Rust, this is checked at compile type and doesn’t
 need unit-tests for this behaviour to hold.
 
-![Time taken in Rust and Python (lower is better)](https://cdn-images-1.medium.com/max/2000/1*NkDfVEodY6JRrst2XOLv4Q.png)_Time taken in Rust and Python (lower is better)_
+```shell
+$ python benchmark.py
+Time in rust: 2.5468742847442627
+Time in python: 3.2502663135528564
+```
+
+<Caption>Time taken in Rust and Python (lower is better).</Caption>
 
 As for the difference in performance, I used the same file that was used in the original article. Make 3/4 copies of [this file](http://norvig.com/big.txt) and put it in ‘data’ directory (the file names don’t matter).
 
