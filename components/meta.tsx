@@ -3,19 +3,29 @@ import { useRouter } from 'next/router'
 
 import {
   AUTHOR_NAME,
-  HOME_OG_IMAGE_URL,
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_URL,
+  DEFAULT_OG_IMAGE_WIDTH,
   SITE_DESCRIPTION,
   SITE_URL,
+  TWITTER_HANDLE,
 } from '../lib/constants'
 
 type MetaProps = {
   description?: string
+  image?: string
 }
 
-const Meta: React.FC<MetaProps> = ({ description = SITE_DESCRIPTION }) => {
+const Meta: React.FC<MetaProps> = ({
+  description = SITE_DESCRIPTION,
+  image,
+}) => {
   const { asPath } = useRouter()
   // Query strings and fragments are never part of the canonical URL.
   const canonical = SITE_URL + asPath.split(/[?#]/)[0]
+  // Dimensions are only declared for the card we ship — we don't know the
+  // size of a post's cover image.
+  const usingDefaultImage = !image
   return (
     <Head>
       <link rel="canonical" href={canonical} />
@@ -55,7 +65,43 @@ const Meta: React.FC<MetaProps> = ({ description = SITE_DESCRIPTION }) => {
       />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content={description} />
-      <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" />
+      <meta property="og:site_name" content={`Blog of ${AUTHOR_NAME}`} />
+      <meta property="og:type" content="website" key="ogType" />
+      <meta
+        property="og:image"
+        content={image ?? DEFAULT_OG_IMAGE_URL}
+        key="ogImage"
+      />
+      {usingDefaultImage && (
+        <meta
+          property="og:image:width"
+          content={DEFAULT_OG_IMAGE_WIDTH}
+          key="ogImageWidth"
+        />
+      )}
+      {usingDefaultImage && (
+        <meta
+          property="og:image:height"
+          content={DEFAULT_OG_IMAGE_HEIGHT}
+          key="ogImageHeight"
+        />
+      )}
+      <meta
+        name="twitter:card"
+        content="summary_large_image"
+        key="twitterCard"
+      />
+      <meta name="twitter:site" content={TWITTER_HANDLE} key="twitterSite" />
+      <meta
+        name="twitter:creator"
+        content={TWITTER_HANDLE}
+        key="twitterCreator"
+      />
+      <meta
+        name="twitter:image"
+        content={image ?? DEFAULT_OG_IMAGE_URL}
+        key="twitterImage"
+      />
     </Head>
   )
 }
