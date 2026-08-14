@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
-import { GIT_REPO } from '../lib/constants'
+import ExternalLink from './external-link'
+import { GIT_REPO, PERSONAL_SITE_URL } from '../lib/constants'
 
 const SiteHeader: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const SiteHeader: React.FC = () => {
           Caulagi
         </Link>
         <nav className="site-nav">
-          <Link href="/">Posts</Link>
+          <ExternalLink href={PERSONAL_SITE_URL}>caulagi.com</ExternalLink>
           <Link href="/about">About</Link>
           <a href={GIT_REPO} target="_blank" rel="noreferrer">
             GitHub
