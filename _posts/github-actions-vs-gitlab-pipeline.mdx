@@ -3,10 +3,10 @@ title: 'GitHub Actions vs GitLab Pipeline'
 seoTitle: 'Thoughts on reasoning about CI/CD pipelines: GitHub Actions vs GitLab Pipeline'
 excerpt: 'Not all CI/CD yaml for pipelines are equal. These workflow yaml significantly impact system design and I argue on how to reason about them.'
 coverImage:
-  src: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
+  src: 'https://github.com/user-attachments/assets/f8d7bf17-cf31-4098-bc60-cffba69c6059'
 date: '2026-08-14T05:35:07.322Z'
 ogImage:
-  url: 'https://user-images.githubusercontent.com/222507/109567726-1ba81880-7ae6-11eb-962c-f52c9a4b69fa.png'
+  url: 'https://github.com/user-attachments/assets/f8d7bf17-cf31-4098-bc60-cffba69c6059'
 tags: ['nodejs']
 ---
 
@@ -74,9 +74,84 @@ We can also reason from the yaml that the permissions are scoped to the workflow
 not the user who triggered the workflow. So a github app with admin rights or a slack message triggering
 the workflow gets the same permissions.
 
+The `jobs` and `steps` sections describe the work. Jobs run in parallel on runners, steps run
+in sequence inside a job. What is worth reasoning about is what steps share — they share a
+workspace filesystem, and that is it. No shared memory, no shared process, no shared runtime.
+This is a deliberately weak coupling between steps, and it is what makes composition safe.
+Any step can be swapped for any other step and the rest of the job does not need to know.
+
+The `uses` keyword is where composition actually happens, and it is telling us something
+specific about the system. `hashicorp/setup-terraform@v4` is not a marketplace entry — it is
+a reference to a github repository pinned to a git tag. There is no separate registry, no
+approval process, no publish step. Anyone with a public repo and an `action.yaml` has
+extended the system, and anyone can `uses:` it. The consequence is that the barrier to
+extending Github Actions is essentially zero, and forking or vendoring a stale action is
+a legitimate answer because the substrate underneath is just git.
+
+The deeper property visible from this yaml is that everything it describes also exists
+as an API. `push` is a git event, `workflow_dispatch` is an api call, `permissions` is a
+scope on a short-lived token, artifacts are objects with urls. The yaml is one client of
+the system, not the system itself. So we can trigger a workflow from a slack bot, rerun
+a failed job from a dashboard, gate a deploy from a security scanner, or write our own UI
+on top. Any tooling we want, we can build.
+
 ## Gitlab Pipeline
 
+Here is roughly the same pipeline in Gitlab.
+
+```yaml title="gitlab-ci.yaml"
+image: hashicorp/terraform:1.14.6
+
+stages:
+  - terraform
+
+terraform:
+  stage: terraform
+  id_tokens:
+    GCP_ID_TOKEN:
+      aud: 'https://iam.googleapis.com/projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - terraform/*.tf
+  script:
+    - cd infra
+    - terraform init
+```
+
+The first thing to notice is `image` at the top. It is telling us the environment for a
+Gitlab job is a container, and the container is the unit of reuse. This is a much tighter
+coupling than a shared runner with setup steps. Everything the job does is bound to the
+base image, and two tools that need different environments mean two jobs. Reuse of an
+environment does not compose with reuse of a step — we pick one image per job and it
+defines the world for that job.
+
+There is no first class notion of a step either. `script` is a bash script. Composability
+lives inside the yaml instead, via `include` and `extends`. A pipeline is composed by
+pulling in more yaml and inheriting from more yaml. That is a powerful shape for a platform
+team that wants a single source of truth — put the templates in a central project, mandate
+the `include`, and updates propagate. But the reuse unit is a whole job template, not a
+step, so composition happens at a coarser granularity. We compose jobs, not actions.
+
+The api story is different too. Gitlab has an api and it is a good one, but the pipeline
+is more of a closed object. The yaml, the templates, the images, the registry, the
+environments all sit inside Gitlab. It composes very well with other Gitlab primitives
+and less well with things outside that boundary. Extensibility here means adopting more
+of the product, not building whatever we want on top of it.
+
 ## Closing thoughts
+
+The two yamls describe two different design philosophies. Github's is a thin declarative
+facade over git and REST. The yaml exists inside a larger system that is already an open
+marketplace and an api, and it inherits both properties for free. Gitlab's yaml describes
+an integrated product where composition, environments, and templates all live inside the
+pipeline definition itself.
+
+Neither is wrong, but they lead to very different systems. If we want to build custom
+tooling, integrate third party vendors, or let non-CI actors participate in the pipeline
+lifecycle, the Github model makes it cheap. If we want strong central control and a single
+vendor answering for the whole toolchain, the Gitlab model makes it cheap. Worth knowing
+which kind of composition you want before making the pick.
 
 I have used GitHub Action extensively for the last 5 years. I have not used GitLab Pipelines
 as extensively but used it on and off for a few years. So happy to be corrected and/or challenged on my reasoning.
