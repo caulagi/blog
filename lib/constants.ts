@@ -5,6 +5,9 @@ export const SITE_URL = 'https://blog.caulagi.com'
 export const SITE_DESCRIPTION =
   'Notes on distributed systems, platform engineering and the tools in between.'
 export const MASTODON_URL = 'https://mastodon.social/@caulagi'
+export const GITHUB_URL = 'https://github.com/caulagi'
+// Profiles claimed as the same person in the /about JSON-LD.
+export const SAME_AS = [GITHUB_URL, MASTODON_URL]
 export const EMAIL = 'caulagi@gmail.com'
 export const HOME_OG_IMAGE_URL =
   'https://og-image.now.sh/Next.js%20Blog%20Starter%20Example.png?theme=light&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg'

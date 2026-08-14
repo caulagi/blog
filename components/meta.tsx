@@ -1,8 +1,11 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+
 import {
   AUTHOR_NAME,
   HOME_OG_IMAGE_URL,
   SITE_DESCRIPTION,
+  SITE_URL,
 } from '../lib/constants'
 
 type MetaProps = {
@@ -10,8 +13,13 @@ type MetaProps = {
 }
 
 const Meta: React.FC<MetaProps> = ({ description = SITE_DESCRIPTION }) => {
+  const { asPath } = useRouter()
+  // Query strings and fragments are never part of the canonical URL.
+  const canonical = SITE_URL + asPath.split(/[?#]/)[0]
   return (
     <Head>
+      <link rel="canonical" href={canonical} />
+      <meta property="og:url" content={canonical} key="ogUrl" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
