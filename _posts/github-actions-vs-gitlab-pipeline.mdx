@@ -10,9 +10,9 @@ ogImage:
 tags: ['nodejs']
 ---
 
-Its been 5 years since my last post. Time for a new one 😅
+Its been almost 5 years since my last post. Time for a new one 😅
 
-Developers spend a lot of time with source control systems like GitHub and GitLab.
+Developers[1](#fn-1) spend a lot of time with source control systems like GitHub and GitLab.
 I would rate the choice of these systems as one of the most important decisions a development team can make.
 I have many times seen choices being made based on simplistic criteria like it is open source and free to host.
 I want to take a more holistic view and try to reason about the overall system design.
@@ -95,7 +95,7 @@ the system, not the system itself. So we can trigger a workflow from a slack bot
 a failed job from a dashboard, gate a deploy from a security scanner, or write our own UI
 on top. Any tooling we want, we can build.
 
-## Gitlab Pipeline
+## Gitlab[2](#fn-2) Pipeline
 
 Here is roughly the same pipeline in Gitlab.
 
@@ -153,5 +153,14 @@ lifecycle, the Github model makes it cheap. If we want strong central control an
 vendor answering for the whole toolchain, the Gitlab model makes it cheap. Worth knowing
 which kind of composition you want before making the pick.
 
-I have used GitHub Action extensively for the last 5 years. I have not used GitLab Pipelines
-as extensively but used it on and off for a few years. So happy to be corrected and/or challenged on my reasoning.
+<Footnotes>
+  <Footnote id="1">
+    I mean everyone who reads/writes code - platform engineers, developers,
+    managers, QA/test engineers, etc.
+  </Footnote>
+  <Footnote id="2">
+    I have used GitHub Action extensively for the last 5 years. I have not used
+    GitLab Pipelines as extensively but used it on and off for a few years.
+    Happy to be corrected and/or challenged on my reasoning.
+  </Footnote>
+</Footnotes>
