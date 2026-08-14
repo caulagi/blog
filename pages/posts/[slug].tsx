@@ -60,6 +60,7 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
       name: AUTHOR_NAME,
       url: `${SITE_URL}/about`,
     },
+    ...(post.seoTitle && { alternativeHeadline: post.seoTitle }),
     ...(tags.length > 0 && { keywords: tags.join(', ') }),
   }
 
@@ -67,7 +68,7 @@ const Post: React.FC<PostProps> = ({ post, source }) => {
     <Layout description={post.excerpt} image={post.ogImage.url}>
       <JsonLd data={blogPosting} />
       <Head>
-        <title>{post.title + ' | Blog of ' + AUTHOR_NAME}</title>
+        <title>{post.seoTitle ?? post.title}</title>
         <meta property="og:type" content="article" key="ogType" />
         <meta property="og:title" content={post.title} key="ogTitle" />
         <meta
@@ -141,6 +142,7 @@ type Params = {
 export async function getStaticProps({ params }: Params) {
   const post = getPostBySlug(params.slug, [
     'title',
+    'seoTitle',
     'excerpt',
     'date',
     'slug',
