@@ -23,7 +23,7 @@ const SiteFooter: React.FC = () => {
         <ExternalLink href={LINKEDIN_URL} rel="me">
           LinkedIn
         </ExternalLink>{' '}
-        · <ExternalLink href={GIT_REPO}>Source</ExternalLink>
+        · <ExternalLink href={GIT_REPO}>GitHub</ExternalLink>
       </span>
     </footer>
   )
