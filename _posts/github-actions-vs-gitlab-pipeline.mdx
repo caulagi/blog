@@ -148,7 +148,7 @@ yaml is a reference to an event or an api call.
 - Harder to reason - The unnecessary information that runtime is a container makes it harder
   to reason about the system. What happens if I want to build a docker image as part of CI to
   test my change? This is one of the most common usecase but fairly tricky to reason about with
-  all the failure cases.
+  all the failure cases ().
 
 The decoupling between `stages` and `jobs` is a nice design choice. It allows us to
 express more complex workflows where we can promote between stages with ease.
@@ -165,15 +165,15 @@ of the product, not building whatever we want on top of it.
 
 The two yamls describe two different design philosophies. GitHub's is a thin declarative
 facade over the functionality GitHub offers and their REST apis.
-The yaml exists inside a larger system that allows for an open marketplace. This means it is easy
-to build custom tooling, integrate third-party vendors, or let non-CI actors participate in the
-pipeline.
+It is more cohesive with the rest of the system and is easy to reason about.
+It is more extensible because it is easy to build custom tooling on top of the system.
 
-Gitlab's yaml describes an integrated product where composition, environments, and templates all live inside the
-pipeline definition itself. In some sense, this is like
-the Apple ecosystem — it is a closed system that is easy to use and hard to extend.
+Gitlab's yaml describes an integrated product where composition, environments, and
+templates all live inside the pipeline definition itself. It is possible to build
+cleaner, more sophisticated, DRY pipelines than GHA. I like to think of Gitlab pipelines
+as the Apple ecosystem — it is a closed system that is easy to use and hard to extend.
 
-Neither is wrong, but they lead to very different systems.
+Neither is wrong, but I would pick GitHub Actions ...probably every time.
 
 <Footnotes>
   <Footnote id="1">
