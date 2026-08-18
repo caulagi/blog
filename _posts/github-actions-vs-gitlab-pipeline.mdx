@@ -1,7 +1,7 @@
 ---
 title: 'GitHub Actions vs GitLab Pipeline'
 seoTitle: 'Thoughts on reasoning about CI/CD pipelines: GitHub Actions vs GitLab Pipeline'
-excerpt: 'Not all CI/CD yaml for pipelines are equal. These workflow yaml significantly impact system design and I argue on how to reason about them.'
+excerpt: 'Not all CI/CD yaml for pipelines are equal. The vocabulary a platform exposes (events, permissions, jobs/steps, images, stages) reveals what the designers prioritised, made cheap, or made difficult.'
 coverImage:
   src: 'https://github.com/user-attachments/assets/f8d7bf17-cf31-4098-bc60-cffba69c6059'
 date: '2026-08-14T05:35:07.322Z'
@@ -18,7 +18,7 @@ I have many times seen choices being made based on simplistic criteria like it i
 I want to take a more holistic view and try to reason about the overall system design.
 
 In this first post, I want to focus only on the CI/CD pipelines provided by GitHub vs GitLab and what
-choices we are making with each choice. I want to make a second post that will focus on the other features
+choices we are making with each selection. I want to make a second post that will focus on the other features
 of these systems like communication using issue tracking, ability to build custom solutions on top of apis,
 granular permissions for these apis, securely integrating with other systems
 (CI taking to cloud provider with OIDC), etc. ...hopefully soon 😁
@@ -41,7 +41,7 @@ primary, what they made cheap, and what they made hard.
 
 ## Github Actions
 
-Let us look at a simple workflow yaml for Github Action. I have used a terraform project as an example.
+Let us look at a simple workflow yaml for Github Action.
 
 ```yaml title="github-actions.yaml"
 on:
@@ -64,12 +64,10 @@ jobs:
       - uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: '1.14.6'
-
       - uses: 'google-github-actions/auth@v3'
         with:
           project_id: 'my-project'
           workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-
       - name: Terraform Init
         working-directory: ./infra
         run: terraform init
@@ -78,16 +76,17 @@ jobs:
 Let's take this yaml apart and reason about the design choices.
 
 The `on` section is a declarative way to specify the events that will trigger this workflow.
-It further allows us to filter the events based on the branch and the files that have changed —
-again declarative, i.e. we specify the what and not the how. It also means that as long
-as we create a push event, the workflow will be triggered. This event can be created from a slack
-channel or a bot.
+It further allows us to filter the events declaratively - run these steps if terraform have changed on main branch.
+The fact that `on` is a keyword in the yaml syntax also means _events are first class citizens_
+in GitHub. The design that event is first class citizen also means the details are available in
+strongly typed context. For example -
+`if: contains(github.event.comment.body, '/needs-repro')`
 
-`permissions` section is a declarative way to specify the permissions that this workflow will have.
+`permissions` is a declarative way to specify the permissions that this workflow will have.
 It decouples permissions from the jobs that will run. For example, the job can update the pull
 request with the output of terraform plan because we asked for write permissions.
 We can also reason from the yaml that the permissions are scoped to the workflow and
-not the user who triggered the workflow. So a github app with admin rights or a slack message triggering
+not dependent on the user/actor who triggered the workflow. So a github app with admin rights or a slack message triggering
 the workflow gets the same permissions.
 
 The `jobs` and `steps` sections describe the work. Jobs run in parallel on runners, steps run
@@ -100,11 +99,14 @@ The `uses` keyword is where composition actually happens, and it is telling us s
 specific about the system. `hashicorp/setup-terraform@v4` is not a marketplace entry — it is
 a reference to a github repository pinned to a git tag. There is no separate registry, no
 approval process, no publish step. Anyone with a public repo and an `action.yaml` has
-extended the system, and anyone can `uses:` it. The consequence is that the barrier to
-extending Github Actions is essentially zero, and forking or vendoring a stale action is
-a legitimate answer because the substrate underneath is just git.
+extended the system, and anyone can `uses:` it.
 
-The deeper property visible from this yaml is that everything it describes also exists
+The flip side of design of composition with `uses` has also been a source of supply-chain
+attacks. Mutable version tags (force-pushed to point at malicious commits),
+untrusted input in workflow scripts are problems that need to be solved on an everyday basis.
+It is both one-of-my favorite features but also very hard to justify in a security review 😅
+
+Lastly, everything in the yaml also exists
 as an API. `push` is a git event, `workflow_dispatch` is an api call, `permissions` is a
 scope on a short-lived token, artifacts are objects with urls. The yaml is one client of
 the system, not the system itself. So we can trigger a workflow from a slack bot, rerun
@@ -139,16 +141,16 @@ The first thing to notice is that Gitlab (the product offering hosted git) is
 tightly coupled with the pipeline. This is because nothing in the pipeline
 yaml is a reference to an event or an api call.
 
-`image` as part of the yaml is leaky abstraction. It leaks into yaml 2 separate concerns -
+`image` as a keyword in yaml is leaky abstraction. It leaks into yaml 2 separate concerns -
 
 - Isolation - while we want isolation between steps and between jobs, how we achieve
-  is not something that should be part of yaml. We can equally achieve isolation with runtimes
+  this is not something that should be part of yaml. We can equally achieve isolation with runtimes
   like Deno/WASM or even lightweight VMs (Kata Containers, Firecracker). Making `image` a keyword
   in our YAML definition rules out these options for platforms.
 - Harder to reason - The unnecessary information that runtime is a container makes it harder
   to reason about the system. What happens if I want to build a docker image as part of CI to
   test my change? This is one of the most common usecase but fairly tricky to reason about with
-  all the failure cases ().
+  all the failure cases (docker ).
 
 The decoupling between `stages` and `jobs` is a nice design choice. It allows us to
 express more complex workflows where we can promote between stages with ease.
@@ -160,6 +162,33 @@ is more of a closed object. The yaml, the templates, the images, the registry, t
 environments all sit inside Gitlab. It composes very well with other Gitlab primitives
 and less well with things outside that boundary. Extensibility here means adopting more
 of the product, not building whatever we want on top of it.
+
+## Expressions
+
+While much of what pipelines you can build is based on the constructs we have seen so far
+(jobs, stages, yaml anchors, inheritance), some of the power and elegance also is due to expressions.
+
+- **GitHub Actions**: Expressions are a first-class, relatively powerful mini-language. You access
+  structured contexts (objects) and compose functions. This makes workflows highly dynamic
+  and composable, but the syntax can become nested and hard to read. Everything that can be
+  an expression usually is.
+
+      ```
+      # returns true if the issue related to the event has a label "bug".
+      contains(github.event.issue.labels.*.name, 'bug')
+      ```
+
+- **GitLab CI**: Expressions are simpler and more constrained. The main power for conditionals
+  lives in the rules system (order-evaluated list of conditions) plus specialized keywords
+  (changes, exists). Dynamic configuration has improved with $[[]] (inputs, matrix, components),
+  but runtime expressions remain limited. Complex logic often moves into shell scripts.
+
+      ```yaml
+      rules:
+      - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+      - if: $CI_COMMIT_MESSAGE =~ /skip-ci/
+          when: never
+      ```
 
 ## Closing thoughts
 
@@ -173,7 +202,7 @@ templates all live inside the pipeline definition itself. It is possible to buil
 cleaner, more sophisticated, DRY pipelines than GHA. I like to think of Gitlab pipelines
 as the Apple ecosystem — it is a closed system that is easy to use and hard to extend.
 
-Neither is wrong, but I would pick GitHub Actions ...probably every time.
+Neither is wrong, but I’d pick GitHub Actions most of the time. It feels more consistent and better designed, at least to my personal taste.
 
 <Footnotes>
   <Footnote id="1">
