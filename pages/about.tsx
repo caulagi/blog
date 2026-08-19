@@ -16,7 +16,7 @@ const lede =
 const facts = [
   { label: 'Languages', value: 'Python · Go · Rust' },
   { label: 'Curious about', value: 'Kubernetes · WASM · Nix' },
-  { label: 'Off the clock', value: 'Chess · long walks' },
+  { label: 'Off the clock', value: 'Chess · Long walks' },
 ]
 
 const person = {
