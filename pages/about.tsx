@@ -66,7 +66,7 @@ const About: React.FC = () => {
 
       <div className="about-body prose-blog">
         <p>
-          Hi 👋. I am Pradip Caulagi. I build backend APIs and gRPC services in
+          Hi 👋, I'm Pradip Caulagi. I build backend APIs and gRPC services in
           Python, Go and Rust. I've been confidently wrong in all three, which
           is how I eventually learned to write any of them properly.
         </p>
@@ -74,15 +74,15 @@ const About: React.FC = () => {
           The rest is platform work — Kubernetes, Terraform, Google Cloud,
           keeping production honest and other developers moving. I've done it at
           startups, at mid-size companies and inside large ones; the dashboards
-          get fancier, but the problems being solved - familiar. Right now I'm
-          poking at Kubernetes internals, WASM and Nix, and some of it ends up
-          open source on GitHub.
+          get fancier, but the problems stay familiar. Right now I'm poking at
+          Kubernetes internals, WASM and Nix, and some of it ends up open source
+          on GitHub.
         </p>
         <p>
           Off the clock there are two kids and a girlfriend, a chess habit I
-          defend as "pattern recognition practice", Indian classical music I
-          will absolutely over-explain, and my best debugging tool for life and
-          everything else - long walks. ▎ years and now can't skip.
+          defend as &ldquo;pattern recognition practice&rdquo;, Indian classical
+          music I will absolutely over-explain, and long walks, still my best
+          debugging tool.
         </p>
       </div>
 
