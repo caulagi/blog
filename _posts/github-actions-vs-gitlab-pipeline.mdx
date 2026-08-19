@@ -77,8 +77,8 @@ Let's take this yaml apart and reason about the design choices.
 The `on` section is a declarative way to specify the events that will trigger this workflow.
 It also lets us filter those events declaratively — run these steps only if terraform files have changed on the main branch.
 The fact that `on` is a keyword in the yaml syntax also means _events are first class citizens_
-in GitHub. Making events first class means their details are available in a
-strongly typed context. For example — `if: contains(github.event.comment.body, '/needs-repro')`
+in GitHub. Making events first class allows the information to be accessed as structured context and we can write
+code like — `if: contains(github.event.comment.body, '/needs-repro')`
 
 `permissions` block declaratively specifies what the workflow can do.
 It decouples authorization from the jobs that will run. For example, the job can update the pull
@@ -201,8 +201,9 @@ templates all live inside the pipeline definition itself. It is possible to buil
 cleaner, more sophisticated, DRY pipelines than in GHA. I like to think of GitLab pipelines
 as the Apple ecosystem — a closed system that is easy to use and hard to extend.
 
-Both solutions solve the problem, but I’d pick GitHub Actions most of the time.
-It feels more consistent and better designed, at least to my personal taste.
+Both solutions solve the problem, even though GitHub and GitLab chose different
+boundaries for their CI systems. I’d pick GitHub Actions most of the time. It feels
+more consistent and better designed to me.
 
 <Footnotes>
   <Footnote id="1">
