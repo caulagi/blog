@@ -101,9 +101,9 @@ a reference to a github repository pinned to a git tag. There is no separate reg
 approval process, no publish step. Anyone with a public repo and an `action.yaml` has
 extended the system, and anyone can `uses:` it.
 
-The flip side of design of composition with `uses` has also been a source of supply-chain
+The flip side of open-design of composing with `uses` has also been a source of supply-chain
 attacks. Mutable version tags (force-pushed to point at malicious commits),
-untrusted input in workflow scripts are problems that need to be solved on an everyday basis.
+untrusted input in workflow scripts, etc are problems that need to be solved on an everyday basis.
 It is both one-of-my favorite features but also very hard to justify in a security review 😅
 
 Lastly, everything in the yaml also exists
@@ -139,7 +139,8 @@ terraform:
 
 The first thing to notice is that Gitlab (the product offering hosted git) is
 tightly coupled with the pipeline. This is because nothing in the pipeline
-yaml is a reference to an event or an api call.
+yaml is a reference to an event or an api call. I understand the event exists
+in the system, of course. It is just not available as part of pipeline yaml.
 
 `image` as a keyword in yaml is leaky abstraction. It leaks into yaml 2 separate concerns -
 
@@ -154,8 +155,8 @@ yaml is a reference to an event or an api call.
 
 The decoupling between `stages` and `jobs` is a nice design choice. It allows us to
 express more complex workflows where we can promote between stages with ease.
-When we add the support for YAML anchors and inheritance of workflows with include
-and exclude, we can build fairly sophisticated pipelines (definitely better than GitHub Actions).
+When we add the support for YAML anchors and inheritance of workflows with `include`
+and `exclude`, we can build fairly sophisticated pipelines (better than GitHub Actions).
 
 The api story is different too. Gitlab has an api and it is a good one, but the pipeline
 is more of a closed object. The yaml, the templates, the images, the registry, the
@@ -165,8 +166,8 @@ of the product, not building whatever we want on top of it.
 
 ## Expressions
 
-While much of what pipelines you can build is based on the constructs we have seen so far
-(jobs, stages, yaml anchors, inheritance), some of the power and elegance also is due to expressions.
+While most pipelines can be built using the constructs we have seen so far — jobs, stages,
+YAML anchors, and inheritance — much of their power and elegance also comes from expressions.
 
 - **GitHub Actions**: Expressions are a first-class, relatively powerful mini-language. You access
   structured contexts (objects) and compose functions. This makes workflows highly dynamic
@@ -180,8 +181,8 @@ While much of what pipelines you can build is based on the constructs we have se
 
 - **GitLab CI**: Expressions are simpler and more constrained. The main power for conditionals
   lives in the rules system (order-evaluated list of conditions) plus specialized keywords
-  (changes, exists). Dynamic configuration has improved with $[[]] (inputs, matrix, components),
-  but runtime expressions remain limited. Complex logic often moves into shell scripts.
+  (changes, exists). Dynamic configuration has improved with `$[[]]` (inputs, matrix, components),
+  but runtime expressions remain limited.
 
       ```yaml
       rules:
