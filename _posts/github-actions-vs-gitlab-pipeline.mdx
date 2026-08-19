@@ -77,19 +77,17 @@ Let's take this yaml apart and reason about the design choices.
 The `on` section is a declarative way to specify the events that will trigger this workflow.
 It also lets us filter those events declaratively — run these steps only if terraform files have changed on the main branch.
 The fact that `on` is a keyword in the yaml syntax also means _events are first class citizens_
-in GitHub. Making events first class also means their details are available in a
-strongly typed context. For example —
+in GitHub. Making events first class means their details are available in a
+strongly typed context. For example — `if: contains(github.event.comment.body, '/needs-repro')`
 
-`if: contains(github.event.comment.body, '/needs-repro')`
-
-The `permissions` block declaratively specifies what the workflow can do.
+`permissions` block declaratively specifies what the workflow can do.
 It decouples authorization from the jobs that will run. For example, the job can update the pull
 request with the output of terraform plan because we asked for write access.
 The YAML also makes it clear that permissions are scoped to the workflow itself, not to
 the user or actor who triggered it. A GitHub app with admin rights and a Slack message that fires
 the workflow both get the same permissions.
 
-The `jobs` and `steps` sections describe the work. Jobs run in parallel on runners; steps execute
+`jobs` and `steps` sections describe the work. Jobs run in parallel on runners; steps execute
 in sequence inside a job. What is worth noting is what steps share — a workspace filesystem, and
 that is it. No shared memory, no shared process, no shared runtime.
 This deliberately weak coupling is what makes composition safe.
@@ -174,7 +172,7 @@ YAML anchors, and inheritance — much of their power and elegance also comes fr
   and composable, but the syntax can become nested and hard to read. Everything that can be
   an expression usually is.
 
-      ```
+      ```bash
       # returns true if the issue related to the event has a label "bug".
       contains(github.event.issue.labels.*.name, 'bug')
       ```
