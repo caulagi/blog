@@ -90,10 +90,10 @@ the workflow both get the same permissions.
 `jobs` and `steps` sections describe the work. Jobs run in parallel on runners; steps execute
 in sequence inside a job. What is worth noting is what steps share — a workspace filesystem, and
 that is it. No shared memory, no shared process, no shared runtime.
-This deliberately weak coupling is what makes composition safe.
+This deliberate weak coupling makes composition safe.
 Any step can be swapped out and the rest of the job does not need to know.
 
-The `uses` keyword is where composition actually happens, and it tells us something
+`uses` keyword is where composition actually happens, and it tells us something
 specific about the system. `hashicorp/setup-terraform@v4` is not a marketplace entry — it is
 a reference to a GitHub repository pinned to a git tag. There is no separate registry, no
 approval process, no publish step. Anyone with a public repo and an `action.yaml` has
