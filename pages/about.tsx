@@ -11,12 +11,12 @@ import {
 } from '../lib/constants'
 
 const lede =
-  'Developer and platform engineer. Interested in distributed systems.'
+  'Developer and platform engineer. Has been confidently wrong in three languages.'
 
 const facts = [
   { label: 'Languages', value: 'Python · Go · Rust' },
   { label: 'Curious about', value: 'Kubernetes · WASM · Nix' },
-  { label: 'Off the clock', value: 'Chess · long walks' },
+  { label: 'Off the clock', value: 'Chess · Long walks' },
 ]
 
 const person = {
@@ -66,21 +66,23 @@ const About: React.FC = () => {
 
       <div className="about-body prose-blog">
         <p>
-          Hi 👋. I am proficient with Python, Golang and Rust — my code is
-          idiomatic, well tested and performs well. In devops-ish roles I have
-          run production systems and helped other developers daily; in developer
-          roles I have built and maintained backend APIs and gRPC services.
+          Hi 👋, I'm Pradip Caulagi. I build backend APIs and gRPC services in
+          Python, Go and Rust. I've been confidently wrong in all three, which
+          is how I eventually learned to write any of them properly.
         </p>
         <p>
-          I have worked with startups, mid-size and large companies, and I am
-          active on GitHub and contribute to open source. These days the things
-          I keep poking at are Kubernetes, WASM and Nix. I fit the roles of
-          platform or systems developer.
+          The rest is platform work — Kubernetes, Terraform, Google Cloud,
+          keeping production honest and other developers moving. I've done it at
+          startups, at mid-size companies and inside large ones; the dashboards
+          get fancier, but the problems stay familiar. Right now I'm poking at
+          Kubernetes internals, WASM and Nix, and some of it ends up open source
+          on GitHub.
         </p>
         <p>
-          Outside of work I have two kids and a girlfriend. I spend my time
-          watching and playing chess, listening to music (ask me about Indian
-          classical) and, recently, taking long walks.
+          Off the clock there are two kids and a girlfriend, a chess habit I
+          defend as &ldquo;pattern recognition practice&rdquo;, Indian classical
+          music I will absolutely over-explain, and long walks, still my best
+          debugging tool.
         </p>
       </div>
 
