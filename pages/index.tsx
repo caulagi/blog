@@ -24,8 +24,9 @@ const Index: React.FC<IndexProps> = ({ allPosts }) => {
         <p className="eyebrow">Blog of {AUTHOR_NAME}</p>
         <h1>Notes on distributed systems and the tools in between.</h1>
         <p>
-          I build and run backend systems in Python, Go and Rust. These are the
-          things I picked up along the way — mostly the hard way.
+          Python, Go and Rust for the code; Kubernetes, Terraform and Google
+          Cloud for everything around it. I've broken most of it at least once —
+          that's where these notes come from.
         </p>
       </section>
 
