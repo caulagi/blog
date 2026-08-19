@@ -604,6 +604,21 @@ img {
   margin: 0 0 32px;
 }
 
+sup {
+  font-size: 0.72em;
+  line-height: 0;
+  vertical-align: super;
+}
+sup a {
+  border-bottom: 0;
+  padding: 0 1px;
+  font-family: var(--mono);
+  color: var(--muted-3);
+}
+sup a:hover {
+  color: var(--accent);
+}
+
 .footnotes {
   margin-top: 56px;
   padding-top: 22px;
