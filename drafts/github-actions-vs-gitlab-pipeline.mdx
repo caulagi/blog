@@ -1,0 +1,218 @@
+---
+title: 'GitHub Actions vs GitLab Pipeline'
+seoTitle: 'Thoughts on reasoning about CI/CD pipelines: GitHub Actions vs GitLab Pipeline'
+excerpt: 'Not all CI/CD yaml for pipelines are equal. The vocabulary a platform exposes (events, permissions, jobs/steps, images, stages) reveals what the designers prioritised, made cheap, or made difficult.'
+coverImage:
+  src: 'https://github.com/user-attachments/assets/f8d7bf17-cf31-4098-bc60-cffba69c6059'
+date: '2026-08-14T05:35:07.322Z'
+ogImage:
+  url: 'https://github.com/user-attachments/assets/f8d7bf17-cf31-4098-bc60-cffba69c6059'
+tags: ['github', 'gitlab', 'system design']
+---
+
+It's been almost 5 years since my last post. Time for a new one 😅
+
+Developers<sup>[1](#fn-1)</sup> spend a lot of time with source control systems like GitHub and GitLab.
+I would rate the choice of these systems as one of the most important decisions a development team can make.
+I have often seen choices made on simplistic criteria — that it's open source and free to host.
+I want to take a more holistic view and reason about the overall system design.
+
+In this first post, I want to focus only on the CI/CD pipelines from GitHub and GitLab and the tradeoffs of each.
+A second post will cover other features — issue tracking for communication, the ability to build custom
+solutions on top of the APIs, granular permissions on those APIs, and securely integrating with other
+systems (CI talking to a cloud provider over OIDC). ...hopefully soon 😁
+
+## YAML is your CI/CD design
+
+<Quotation
+  reference="Epigrams on Programming"
+  author="Alan Perlis"
+  quotation="It is better to have 100 functions operate on
+   one data structure than 10 functions operate on 10 data structures.
+  "
+/>
+
+YAML matters in GitHub Actions and GitLab pipelines because it is the surface through
+which the system exposes itself. It is declarative — we say what we want, not how — which
+means the vocabulary the platform gives us (events, permissions, jobs, images, stages)
+**is** the design. Reading a pipeline YAML carefully tells us what its authors thought was
+primary, what they made cheap, and what they made hard.
+
+## GitHub Actions
+
+Let us look at a simple workflow yaml for GitHub Actions.
+
+```yaml title="github-actions.yaml"
+on:
+  push:
+    paths:
+      - 'terraform/*.tf'
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: '1.14.6'
+      - uses: 'google-github-actions/auth@v3'
+        with:
+          project_id: 'my-project'
+          workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+      - name: Terraform Init
+        working-directory: ./infra
+        run: terraform init
+```
+
+Let's take this yaml apart and reason about the design choices.
+
+The `on` section is a declarative way to specify the events that will trigger this workflow.
+It also lets us filter those events declaratively — run these steps only if terraform files have changed on the main branch.
+The fact that `on` is a keyword in the yaml syntax also means _events are first class citizens_
+in GitHub. Making events first class allows the information to be accessed as structured context and we can write
+code like — `if: contains(github.event.comment.body, '/needs-repro')`
+
+`permissions` block declaratively specifies what the workflow can do.
+It decouples authorization from the jobs that will run. For example, the job can update the pull
+request with the output of terraform plan because we asked for write access.
+The YAML also makes it clear that permissions are scoped to the workflow itself, not to
+the user or actor who triggered it. A GitHub app with admin rights and a Slack message that fires
+the workflow both get the same permissions.
+
+`jobs` and `steps` sections describe the work. Jobs run in parallel on runners; steps execute
+in sequence inside a job. What is worth noting is what steps share — a workspace filesystem, and
+that is it. No shared memory, no shared process, no shared runtime.
+This deliberate weak coupling makes composition safe.
+Any step can be swapped out and the rest of the job does not need to know.
+
+`uses` keyword is where composition actually happens, and it tells us something
+specific about the system. `hashicorp/setup-terraform@v4` is not a marketplace entry — it is
+a reference to a GitHub repository pinned to a git tag. There is no separate registry, no
+approval process, no publish step. Anyone with a public repo and an `action.yaml` has
+extended the system, and anyone else can `uses:` it.
+
+The flip side of this open composition through `uses` is that it has been a source of
+supply-chain attacks. Mutable version tags (force-pushed to point at malicious commits) and
+untrusted input in workflow scripts are problems that have to be solved every day.
+It is one of my favorite features but also very hard to justify in a security review 😅
+
+Lastly, everything in the yaml also exists
+as an API. `push` is a git event, `workflow_dispatch` is an api call, `permissions` is a
+scope on a short-lived token, artifacts are objects with urls. The yaml is one client of
+the system, not the system itself. So we can trigger a workflow from a Slack bot, rerun
+a failed job from a dashboard, gate a deploy from a security scanner, or write our own UI
+on top. Any tooling we want, we can build.
+
+## GitLab Pipeline
+
+Here is roughly the same pipeline in GitLab<sup>[2](#fn-2)</sup>.
+
+```yaml title="gitlab-ci.yaml"
+image: hashicorp/terraform:1.14.6
+
+stages:
+  - terraform
+
+terraform:
+  stage: terraform
+  id_tokens:
+    GCP_ID_TOKEN:
+      aud: 'https://iam.googleapis.com/projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - terraform/*.tf
+  script:
+    - cd infra
+    - terraform init
+```
+
+The first thing to notice is that GitLab (the product offering hosted git) is
+tightly coupled with the pipeline. Nothing in the pipeline yaml is a reference
+to an event or an api call. Events exist in the system, of course — they are
+just not available as part of the pipeline yaml.
+
+`image` as a keyword in yaml is a leaky abstraction. It pulls two separate concerns into the yaml —
+
+- Isolation — we want isolation between steps and between jobs, but how we achieve
+  it should not be baked into the yaml. Runtimes like Deno/WASM or lightweight VMs
+  (Kata Containers, Firecracker) could do the job just as well. Making `image` a keyword
+  in the YAML definition rules those alternatives out.
+- Harder to reason about — exposing the runtime as a container leaks unnecessary detail
+  into the pipeline. What happens if I want to build a docker image as part of CI to
+  test my change? This is one of the most common use cases but tricky to think through
+  once you consider all the failure modes (Docker-in-Docker, privilege escalation, etc).
+
+The decoupling between `stages` and `jobs` is a nice design choice. It lets us
+express more complex workflows and promote between stages with ease.
+Once we add YAML anchors and workflow inheritance through `include` and `exclude`,
+we can build fairly sophisticated pipelines (better than GitHub Actions).
+
+The API story is different too. GitLab has a good API, but the pipeline is more of a
+closed object. The yaml, the templates, the images, the registry, and the environments
+all sit inside GitLab. The pipeline composes well with other GitLab primitives and less
+well with things outside that boundary. Extensibility here means adopting more
+of the product, not building whatever we want on top of it.
+
+## Expressions
+
+While most pipelines can be built using the constructs we have seen so far — jobs, stages,
+YAML anchors, and inheritance — much of their power and elegance also comes from expressions.
+
+- **GitHub Actions**: Expressions are a first-class, relatively powerful mini-language. You access
+  structured contexts (objects) and compose functions. This makes workflows highly dynamic
+  and composable, but the syntax can become nested and hard to read. Everything that can be
+  an expression usually is.
+
+      ```bash
+      # returns true if the issue related to the event has a label "bug".
+      contains(github.event.issue.labels.*.name, 'bug')
+      ```
+
+- **GitLab CI**: Expressions are simpler and more constrained. The main power for conditionals
+  lives in the rules system (order-evaluated list of conditions) plus specialized keywords
+  (changes, exists). Dynamic configuration has improved with `$[[]]` (inputs, matrix, components),
+  but runtime expressions remain limited.
+
+      ```yaml
+      rules:
+      - if: $CI_COMMIT_BRANCH == "main" && $CI_PIPELINE_SOURCE == "push"
+      - if: $CI_COMMIT_MESSAGE =~ /skip-ci/
+          when: never
+      ```
+
+## Closing thoughts
+
+The two yamls describe different design philosophies. GitHub's is a thin declarative
+facade over the functionality the platform offers through its REST APIs.
+It is more cohesive with the rest of the system and easy to reason about.
+It is also more extensible because custom tooling is easy to build on top.
+
+GitLab's yaml describes an integrated product where composition, environments, and
+templates all live inside the pipeline definition itself. It is possible to build
+cleaner, more sophisticated, DRY pipelines than in GHA. I like to think of GitLab pipelines
+as the Apple ecosystem — a closed system that is easy to use and hard to extend.
+
+Both solutions solve the problem, even though GitHub and GitLab chose different
+boundaries for their CI systems. I’d pick GitHub Actions most of the time. It feels
+more consistent and better designed to me.
+
+<Footnotes>
+  <Footnote id="1">
+    I mean everyone who reads/writes code — platform engineers, SREs, DevOps
+    engineers, developers, managers, QA/test engineers, etc.
+  </Footnote>
+  <Footnote id="2">
+    I have used GitHub Actions extensively for the last 5 years. I have used
+    GitLab Pipelines on and off for a few years, but not as heavily. Happy to be
+    corrected and/or challenged on my reasoning.
+  </Footnote>
+</Footnotes>

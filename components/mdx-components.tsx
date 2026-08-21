@@ -45,10 +45,24 @@ export const Code: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => (
   <code {...props} />
 )
 
+export const Footnotes: React.FC<{ children: ReactNode }> = ({ children }) => (
+  <section className="footnotes" aria-labelledby="footnotes-heading">
+    <h2 id="footnotes-heading">Notes</h2>
+    <ol>{children}</ol>
+  </section>
+)
+
+export const Footnote: React.FC<{ id?: string; children: ReactNode }> = ({
+  id,
+  children,
+}) => <li id={id ? `fn-${id}` : undefined}>{children}</li>
+
 const mdxComponents = {
   Caption,
   Code,
   Contact: ContactCard,
+  Footnote,
+  Footnotes,
   PullQuote,
   Quotation,
   YoutubeEmbed,
