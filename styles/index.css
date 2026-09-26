@@ -668,6 +668,65 @@ sup a:hover {
   background: var(--rule-2);
 }
 
+/* <NumberedList> — wraps a markdown list, renders 01/02/03 rows */
+.prose-blog .num-list ul,
+.prose-blog .num-list ol {
+  list-style: none;
+  margin: 0 0 30px;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  counter-reset: num;
+}
+.prose-blog .num-list li {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: baseline;
+  margin: 0;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-2);
+  font-size: 22px;
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--ink);
+  counter-increment: num;
+}
+.prose-blog .num-list li::before {
+  content: counter(num, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+/* <Terms><Term name="…">…</Term></Terms> — definition cells */
+.terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 0 30px;
+}
+.term {
+  background: var(--paper);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.term code {
+  align-self: flex-start;
+}
+.prose-blog .term p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+
 /* ---------- code blocks ---------- */
 
 .code-card {

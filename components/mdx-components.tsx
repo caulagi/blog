@@ -45,6 +45,26 @@ export const Code: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => (
   <code {...props} />
 )
 
+// Wrap a markdown list to render it as numbered 01/02/03 rows.
+export const NumberedList: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => <div className="num-list">{children}</div>
+
+// Side-by-side definitions: <Terms><Term name="…">…</Term></Terms>
+export const Terms: React.FC<{ children: ReactNode }> = ({ children }) => (
+  <div className="terms">{children}</div>
+)
+
+export const Term: React.FC<{ name: string; children: ReactNode }> = ({
+  name,
+  children,
+}) => (
+  <div className="term">
+    <code>{name}</code>
+    <p>{children}</p>
+  </div>
+)
+
 export const Footnotes: React.FC<{ children: ReactNode }> = ({ children }) => (
   <section className="footnotes" aria-labelledby="footnotes-heading">
     <h2 id="footnotes-heading">Notes</h2>
@@ -63,8 +83,11 @@ const mdxComponents = {
   Contact: ContactCard,
   Footnote,
   Footnotes,
+  NumberedList,
   PullQuote,
   Quotation,
+  Term,
+  Terms,
   YoutubeEmbed,
 }
 
