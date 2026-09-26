@@ -46,9 +46,15 @@ export const Code: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => (
 )
 
 // Wrap a markdown list to render it as numbered 01/02/03 rows.
-export const NumberedList: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => <div className="num-list">{children}</div>
+// `long` for paragraph-length items that lead with **A short title.**
+export const NumberedList: React.FC<{
+  long?: boolean
+  children: ReactNode
+}> = ({ long, children }) => (
+  <div className={long ? 'num-list num-list--long' : 'num-list'}>
+    {children}
+  </div>
+)
 
 // Side-by-side definitions: <Terms><Term name="…">…</Term></Terms>
 export const Terms: React.FC<{ children: ReactNode }> = ({ children }) => (

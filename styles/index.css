@@ -699,10 +699,28 @@ sup a:hover {
   color: var(--accent);
 }
 
+/* <NumberedList long> — paragraph-length items; lead with **Title.** */
+.prose-blog .num-list--long li {
+  padding: 18px 0;
+  font-size: 18px;
+  line-height: 1.6;
+  font-style: normal;
+  color: var(--ink-3);
+}
+.prose-blog .num-list--long li strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink);
+}
+
 /* <Terms><Term name="…">…</Term></Terms> — definition cells */
 .terms {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
