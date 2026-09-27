@@ -9,31 +9,54 @@ coverImage:
 date: '2026-09-27T21:35:07.322Z'
 ogImage:
   url: 'https://user-images.githubusercontent.com/222507/148700710-cd6466ff-059b-4631-94be-bf19e7a70832.jpg'
-tags: ['observability']
+tags: ['observability', 'system design']
 ---
 
-In one of my previous roles, we were running Gluster FS on OpenShift. Every once in a while,
-there used to be issues with Gluster FS.
-Many of the issues could be resolved by following the runbooks and scripts we had. But once in a while,
-the scripts and runbooks were not enough. In times like this, we typically involved the guy who setup Gluster FS.
-It was a similar experience when it came to troubleshooting issues with F5 load balancers.
-There were 2 or 3 people in our team who were experts in F5 load balancers and it went faster when they were involved.
+In one of my previous roles we ran GlusterFS on OpenShift. Most problems yielded to our
+runbooks and scripts. When they did not, we called the person who had set it up. Our F5
+load balancers were the same story: two or three people knew them well, and things went
+faster when they were in the room.
 
-Before you think this is a bad setup, I want to clarify that this is the fundamental idea behind open source also.
+That is not a bad setup. It is how open source works too.
 
-<PullQuote>Given enough eye balls, all bugs are shallow.</PullQuote>
+<PullQuote cite="Linus's law">
+  Given enough eye balls, all bugs are shallow.
+</PullQuote>
 
-Even large and successful open source projects like Rust and Kubernetes have only a few people who are responsible
-for smaller components, curl which is one of the most used projects is maintained by one person and so on.
+Even Rust and Kubernetes have a handful of people responsible for each component, and
+curl, one of the most used programs in the world, is maintained by one person.
 
 But I digress. Lets start with observability. I want to start with the definition, so we are thiking of the same thing.
 I define observability as the ability to be informed ~~if~~ **when** thinks break as soon as possible,
 have enough information to identify the root cause or a reasonable hypothesis of the root cause.
 We want the information to be available for everyone in the team.
 
-# Chapter 1: Just click and drag!
+## Chapter 1: Just click and drag!
 
 ![Grafana k8s dashboard](https://github.com/user-attachments/assets/eb110407-ab7b-4025-8ceb-a79835c60346)
 
-We have all seen dashboards like the one above. They are easy to create - you write a query and click and drag
-panels to arrange them.
+We have all seen dashboards like the one above. They are easy to make: write a query, drag
+a panel into place. A new data source is a few clicks. So are users, Slack and PagerDuty.
+That ease of use is exactly what is wrong with them. Every editable thing in that UI is a
+problem the tool now has to solve, and none of those problems are about your system.
+
+<NumberedList long>
+
+- **State** - Because the dashboards are editable, the tool needs a database. Now someone
+  owns backups, encryption and what happens when two people edit the same panel. None of
+  this is about observing your system. It exists only because the UI is where the dashboard
+  lives.
+
+- **Shadow permissions** - Because the dashboards are editable, the tool needs its own answer to
+  who may change what, plus an audit trail of who changed it. Your company already has that answer:
+  Kubernetes RBAC and cloud IAM. Now there is a second copy, kept in the observability tool, that
+  drifts from the first one as people join, leave and change teams.
+
+- **Forest for trees** - Because the dashboards are editable, there is no way to state what
+  we want and let the tool work it out. What we want is one line: are there deadlocks in
+  Postgres? Is anything returning errors it did not return yesterday? Instead we describe
+  how to draw it: which panel, which row, which data source, who may see it. The intent is
+  a sentence, and it is buried under a hundred settings about placement.
+  </NumberedList>
+
+## Chapter 2: Hive mind
