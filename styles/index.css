@@ -679,11 +679,9 @@ sup a:hover {
   counter-reset: num;
 }
 .prose-blog .num-list li {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  align-items: baseline;
+  position: relative;
   margin: 0;
-  padding: 14px 0;
+  padding: 14px 0 14px 44px;
   border-bottom: 1px solid var(--rule-2);
   font-size: 22px;
   line-height: 1.4;
@@ -693,6 +691,10 @@ sup a:hover {
 }
 .prose-blog .num-list li::before {
   content: counter(num, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  line-height: calc(22px * 1.4);
   font-family: var(--mono);
   font-size: 11.5px;
   font-style: normal;
@@ -702,11 +704,15 @@ sup a:hover {
 
 /* <NumberedList long> — paragraph-length items; lead with **Title.** */
 .prose-blog .num-list--long li {
-  padding: 18px 0;
+  padding: 18px 0 18px 44px;
   font-size: 18px;
   line-height: 1.6;
   font-style: normal;
   color: var(--ink-3);
+}
+.prose-blog .num-list--long li::before {
+  top: 18px;
+  line-height: calc(22px * 1.35);
 }
 .prose-blog .num-list--long li strong {
   display: block;
