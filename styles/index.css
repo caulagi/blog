@@ -575,7 +575,8 @@ img {
   display: block;
   height: 22px;
 }
-.pull-quote p {
+.pull-quote .quote,
+.pull-quote .quote p {
   font-size: 22px;
   line-height: 1.55;
   font-style: italic;
@@ -678,11 +679,9 @@ sup a:hover {
   counter-reset: num;
 }
 .prose-blog .num-list li {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  align-items: baseline;
+  position: relative;
   margin: 0;
-  padding: 14px 0;
+  padding: 14px 0 14px 44px;
   border-bottom: 1px solid var(--rule-2);
   font-size: 22px;
   line-height: 1.4;
@@ -692,6 +691,10 @@ sup a:hover {
 }
 .prose-blog .num-list li::before {
   content: counter(num, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  line-height: calc(22px * 1.4);
   font-family: var(--mono);
   font-size: 11.5px;
   font-style: normal;
@@ -699,10 +702,32 @@ sup a:hover {
   color: var(--accent);
 }
 
+/* <NumberedList long> — paragraph-length items; lead with **Title.** */
+.prose-blog .num-list--long li {
+  padding: 18px 0 18px 44px;
+  font-size: 18px;
+  line-height: 1.6;
+  font-style: normal;
+  color: var(--ink-3);
+}
+.prose-blog .num-list--long li::before {
+  top: 18px;
+  line-height: calc(22px * 1.35);
+}
+.prose-blog .num-list--long li strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink);
+}
+
 /* <Terms><Term name="…">…</Term></Terms> — definition cells */
 .terms {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
@@ -720,8 +745,10 @@ sup a:hover {
 .term code {
   align-self: flex-start;
 }
-.prose-blog .term p {
+.prose-blog .term .body,
+.prose-blog .term .body p {
   margin: 0;
+  overflow-wrap: anywhere;
   font-size: 18px;
   line-height: 1.6;
   color: var(--ink-3);
