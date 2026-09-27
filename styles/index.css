@@ -748,6 +748,7 @@ sup a:hover {
 .prose-blog .term .body,
 .prose-blog .term .body p {
   margin: 0;
+  overflow-wrap: anywhere;
   font-size: 18px;
   line-height: 1.6;
   color: var(--ink-3);
