@@ -575,7 +575,8 @@ img {
   display: block;
   height: 22px;
 }
-.pull-quote p {
+.pull-quote .quote,
+.pull-quote .quote p {
   font-size: 22px;
   line-height: 1.55;
   font-style: italic;
@@ -738,7 +739,8 @@ sup a:hover {
 .term code {
   align-self: flex-start;
 }
-.prose-blog .term p {
+.prose-blog .term .body,
+.prose-blog .term .body p {
   margin: 0;
   font-size: 18px;
   line-height: 1.6;

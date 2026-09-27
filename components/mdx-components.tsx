@@ -14,7 +14,7 @@ export const PullQuote: React.FC<PullQuoteProps> = ({ cite, children }) => (
     <span className="mark" aria-hidden="true">
       &ldquo;
     </span>
-    <p>{children}</p>
+    <div className="quote">{children}</div>
     {cite && <figcaption>— {cite}</figcaption>}
   </figure>
 )
@@ -67,7 +67,7 @@ export const Term: React.FC<{ name: string; children: ReactNode }> = ({
 }) => (
   <div className="term">
     <code>{name}</code>
-    <p>{children}</p>
+    <div className="body">{children}</div>
   </div>
 )
 
