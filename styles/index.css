@@ -817,6 +817,49 @@ sup a:hover {
   color: var(--ink);
 }
 
+/* <Request label="…">…</Request> — closing ask; first paragraph set large, steps via <NumberedList> */
+.prose-blog .request {
+  margin: 14px 0 30px;
+  padding: 22px 0 26px;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.prose-blog .request .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.prose-blog .request p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink-3);
+}
+.prose-blog .request p:first-of-type {
+  font-size: 23px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.prose-blog .request .num-list ol,
+.prose-blog .request .num-list ul {
+  margin: 0;
+}
+.prose-blog .request .num-list li {
+  padding: 11px 0 11px 44px;
+  font-size: 18px;
+  line-height: 1.55;
+  font-style: normal;
+}
+.prose-blog .request .num-list li::before {
+  top: 11px;
+  line-height: calc(18px * 1.55);
+}
+
 /* ---------- code blocks ---------- */
 
 .code-card {

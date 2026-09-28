@@ -93,6 +93,17 @@ export const Notification: React.FC<{
   </div>
 )
 
+// Closing ask: <Request label="…">markdown</Request>; the first paragraph is set large
+export const Request: React.FC<{ label?: string; children: ReactNode }> = ({
+  label = 'A request',
+  children,
+}) => (
+  <section className="request">
+    <span className="label">{label}</span>
+    {children}
+  </section>
+)
+
 export const Footnotes: React.FC<{ children: ReactNode }> = ({ children }) => (
   <section className="footnotes" aria-labelledby="footnotes-heading">
     <h2 id="footnotes-heading">Notes</h2>
@@ -115,6 +126,7 @@ const mdxComponents = {
   NumberedList,
   PullQuote,
   Quotation,
+  Request,
   Term,
   Terms,
   YoutubeEmbed,
