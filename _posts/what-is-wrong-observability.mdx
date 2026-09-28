@@ -1,7 +1,7 @@
 ---
 title: 'What is wrong, observability?'
-seoTitle: 'Current observability tools are outdated. We need a modern declarative complementary tool built for phones'
-excerpt: 'Observability dashboards were designed for the person who builds them, not the person who needs them during an incident. I argue that we need a complementary observability tool.'
+seoTitle: 'Observability dashboards are built for the desk. On-call needs a different view, built for the phone.'
+excerpt: 'Observability dashboards were designed for the person who builds them, not the person who reads them during an incident. I argue that we need a complementary observability tool.'
 coverImage:
   src: 'https://github.com/user-attachments/assets/59e3a3b2-8e3b-4043-88f1-59656e3a66b5'
   authorName: Sylvain Mauroux
@@ -20,7 +20,7 @@ faster when they were in the room.
 That is not a bad setup. It is how open source works too.
 
 <PullQuote cite="Linus's law">
-  Given enough eye balls, all bugs are shallow.
+  Given enough eyeballs, all bugs are shallow.
 </PullQuote>
 
 Even Rust and Kubernetes have a handful of people responsible for each component, and
@@ -59,12 +59,12 @@ problem the tool now has to solve, and none of those problems are about your sys
   how to draw it: which panel, which row, which data source, who may see it. The intent is
   a sentence, and it is buried under a hundred settings about placement.
 
-- **Not in the repo** - Because the UI are editable, none of this goes through the
+- **Not in the repo** Because the dashboards are editable, none of this goes through the
   workflow we already trust for everything else. Code lands in a git repo, someone reviews
-  the pull request, and a pipeline builds and deploys it. Adding a user, a data source or an
-  alert rule to the dashboard is a click in a UI. There is no review, no history to bisect,
-  no rollback, and no way to bring the same setup up in the next cluster except by clicking
-  it together again from memory.
+  the pull request, and a pipeline builds and deploys it. A dashboard is a click in a UI.
+  The view you will stare at during an incident should be reviewed before the incident,
+  not built during it, and it should come up in the next cluster from a file, not from
+  memory.
 
 </NumberedList>
 
@@ -114,6 +114,9 @@ layout someone else designed for a 27-inch screen. The board never went home wit
 
 I have been working on a [new tool](https://vedavid.dev) based on the ideas above.
 It is declarative, and it is designed for phones and lets you view Prometheus metrics on the go.
+It does not replace the need for logs and traces.
+Vedavid is the view you open on your
+phone between the page and the desk: declarative, read-only, and built for one screen.
 
 ![How vedavid fits together](/assets/blog/what-is-wrong-observability/architecture.svg)
 
@@ -121,7 +124,7 @@ It has three parts. The [connector](https://github.com/vedavid-dev/connector) is
 Kubernetes cluster. It reads your dashboard definitions, fetches the matching
 metrics from Prometheus, and sends the results out. It needs no special cluster
 permissions and never accepts incoming connections; it only reaches out. The relay
-is a service hosted by Vedavid that sits in the middle. It securely connects each phone
+is a service hosted by vedavid that sits in the middle. It securely connects each phone
 to the right cluster and makes sure users only ever see their own organization's data.
 The iOS app is where engineers view dashboards. It's deliberately read-only:
 you look at dashboards on the phone, but you never build or edit them there.
@@ -129,14 +132,16 @@ you look at dashboards on the phone, but you never build or edit them there.
 [Dashboards](https://github.com/vedavid-dev/dashboards) are written in a simple,
 [declarative YAML DSL](https://github.com/vedavid-dev/dashboard-dsl) (a small, purpose-built
 language for describing dashboards) and kept in git alongside the rest of your infrastructure,
-so they're reviewed and versioned like code. The files declare what to show, not where
-to put it, and the phone decides how to lay everything out for a small screen.
+so they're reviewed and versioned like code. This is not a copy of every Grafana board.
+It is the short list of things you check when paged, written down once. The files declare
+what to show, not where to put it, and the phone decides how to lay everything out for a
+small screen.
 
 [Vedavid](https://vedavid.dev) focuses only on metrics. It intentionally leaves out logs, traces,
 and alerting so it can do one job well: giving on-call engineers a fast,
 clear view of what's happening when they get paged.
 
-I'd love for you to try [Vedavid](https://vedavid.dev).
+I'd love for you to try [vedavid](https://vedavid.dev).
 The iOS app is available on [TestFlight](https://testflight.apple.com/join/CTSQrsnb).
 Install it, sign in with your Gmail address, and you'll land in a live demo environment
 with real dashboards. There's no cluster to set up and no connector to install.
@@ -145,3 +150,6 @@ It's early, and your feedback will shape what it becomes. Tell me what works,
 what's confusing, and what you'd need before you'd trust it during a real incident.
 Or if you think this is a terrible idea. All feedback is welcome, and I will respond
 to every message! 🙏🏻 🙇‍♂️
+
+... and one more thing. It works on iPads too! Same dashboards but layout optimized
+for a larger screen.
