@@ -106,8 +106,38 @@ Our observability tools deliver the summary to the phone and keep the picture at
 The graph that says which service is on fire lives in a browser tab, behind a login, in a
 layout someone else designed for a 27-inch screen. The board never went home with anyone.
 
-## Chapter 3: One universal standard number 14
+## Chapter 3: [One universal standard number 14](https://xkcd.com/927/)
 
-I have been working on a new tool based on the ideas above. It is declarative,
-and it is designed for phones. It uses mTLS for communication between services,
-there is no database or users to manage, and it is built for containers.
+I have been working on a [new tool](https://vedavid.dev) based on the ideas above.
+It is declarative, and it is designed for phones and lets you view Prometheus metrics on the go.
+
+![How vedavid fits together](/assets/blog/what-is-wrong-observability/architecture.svg)
+
+It has three parts. The [connector](https://github.com/vedavid-dev/connector) is a small open-source program that runs inside your
+Kubernetes cluster. It reads your dashboard definitions, fetches the matching
+metrics from Prometheus, and sends the results out. It needs no special cluster
+permissions and never accepts incoming connections; it only reaches out. The relay
+is a service hosted by Vedavid that sits in the middle. It securely connects each phone
+to the right cluster and makes sure users only ever see their own organization's data.
+The iOS app is where engineers view dashboards. It's deliberately read-only:
+you look at dashboards on the phone, but you never build or edit them there.
+
+[Dashboards](https://github.com/vedavid-dev/dashboards) are written in a simple,
+[declarative YAML DSL](https://github.com/vedavid-dev/dashboard-dsl) (a small, purpose-built
+language for describing dashboards) and kept in git alongside the rest of your infrastructure,
+so they're reviewed and versioned like code. The files declare what to show, not where
+to put it, and the phone decides how to lay everything out for a small screen.
+
+[Vedavid](https://vedavid.dev) focuses only on metrics. It intentionally leaves out logs, traces,
+and alerting so it can do one job well: giving on-call engineers a fast,
+clear view of what's happening when they get paged.
+
+I'd love for you to try [Vedavid](https://vedavid.dev).
+The iOS app is available on [TestFlight](https://testflight.apple.com/join/CTSQrsnb).
+Install it, sign in with your Gmail address, and you'll land in a live demo environment
+with real dashboards. There's no cluster to set up and no connector to install.
+
+It's early, and your feedback will shape what it becomes. Tell me what works,
+what's confusing, and what you'd need before you'd trust it during a real incident.
+Or if you think this is a terrible idea. All feedback is welcome, and I will respond
+to every message! 🙏🏻 🙇‍♂️
