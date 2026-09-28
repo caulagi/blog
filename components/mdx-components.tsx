@@ -104,6 +104,34 @@ export const Request: React.FC<{ label?: string; children: ReactNode }> = ({
   </section>
 )
 
+interface LinkRowProps {
+  href: string
+  icon?: string
+  title: string
+  children?: ReactNode
+}
+
+// Call-to-action row: <LinkRow href="…" title="…" icon="#">note</LinkRow>
+export const LinkRow: React.FC<LinkRowProps> = ({
+  href,
+  icon = '#',
+  title,
+  children,
+}) => (
+  <a className="link-row" href={href} target="_blank" rel="noreferrer">
+    <span className="icon" aria-hidden="true">
+      {icon}
+    </span>
+    <span className="body">
+      <span className="title">{title}</span>
+      {children && <span className="note">{children}</span>}
+    </span>
+    <span className="arrow" aria-hidden="true">
+      →
+    </span>
+  </a>
+)
+
 export const Footnotes: React.FC<{ children: ReactNode }> = ({ children }) => (
   <section className="footnotes" aria-labelledby="footnotes-heading">
     <h2 id="footnotes-heading">Notes</h2>
@@ -122,6 +150,7 @@ const mdxComponents = {
   Contact: ContactCard,
   Footnote,
   Footnotes,
+  LinkRow,
   Notification,
   NumberedList,
   PullQuote,
