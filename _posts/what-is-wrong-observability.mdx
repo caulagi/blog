@@ -1,7 +1,7 @@
 ---
 title: 'What is wrong, observability?'
-seoTitle: 'Current observability tools are outdated. We need a modern declarative tool built for phones'
-excerpt: 'Observability tools assume the person reading a dashboard built it, at a desk, with time to explore. They are not declarative and not built for containers. I argue that we need a new observability tool.'
+seoTitle: 'Current observability tools are outdated. We need a modern declarative complementary tool built for phones'
+excerpt: 'Observability dashboards were designed for the person who builds them, not the person who needs them during an incident. I argue that we need a complementary observability tool.'
 coverImage:
   src: 'https://github.com/user-attachments/assets/59e3a3b2-8e3b-4043-88f1-59656e3a66b5'
   authorName: Sylvain Mauroux
@@ -72,7 +72,11 @@ problem the tool now has to solve, and none of those problems are about your sys
 
 We have a tool that watches the system and is the first thing we reach for when something
 breaks. Getting told is the solved part: PagerDuty wakes the on-call, and Slack tells the
-rest of the team. What arrives is one line. Error rate above threshold. Is it the database,
+rest of the team. What arrives is one line.
+
+<Notification app="PagerDuty">Error rate above threshold</Notification>
+
+Is it the database,
 the last deploy, one customer with a bad script, or the usual Monday spike? The answer is
 on the dashboard, and the dashboard is on a desk. So the person holding the phone has a
 headline, and the person at a desk has the story. Everyone else waits for one of them.
