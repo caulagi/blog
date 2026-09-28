@@ -71,6 +71,39 @@ export const Term: React.FC<{ name: string; children: ReactNode }> = ({
   </div>
 )
 
+// Phone notification banner: <Notification app="PagerDuty" when="now">…</Notification>
+export const Notification: React.FC<{
+  app: string
+  when?: string
+  children: ReactNode
+}> = ({ app, when = 'now', children }) => (
+  <div className="notification">
+    <div className="banner">
+      <span className="icon" aria-hidden="true">
+        {app.charAt(0)}
+      </span>
+      <div className="body">
+        <div className="head">
+          <span className="app">{app}</span>
+          <span className="when">{when}</span>
+        </div>
+        <div className="text">{children}</div>
+      </div>
+    </div>
+  </div>
+)
+
+// Closing ask: <Request label="…">markdown</Request>; the first paragraph is set large
+export const Request: React.FC<{ label?: string; children: ReactNode }> = ({
+  label = 'A request',
+  children,
+}) => (
+  <section className="request">
+    <span className="label">{label}</span>
+    {children}
+  </section>
+)
+
 export const Footnotes: React.FC<{ children: ReactNode }> = ({ children }) => (
   <section className="footnotes" aria-labelledby="footnotes-heading">
     <h2 id="footnotes-heading">Notes</h2>
@@ -89,9 +122,11 @@ const mdxComponents = {
   Contact: ContactCard,
   Footnote,
   Footnotes,
+  Notification,
   NumberedList,
   PullQuote,
   Quotation,
+  Request,
   Term,
   Terms,
   YoutubeEmbed,
