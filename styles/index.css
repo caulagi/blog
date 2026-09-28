@@ -689,6 +689,9 @@ sup a:hover {
   color: var(--ink);
   counter-increment: num;
 }
+.prose-blog .num-list:has(+ h2) li:last-child {
+  border-bottom: 0;
+}
 .prose-blog .num-list li::before {
   content: counter(num, decimal-leading-zero);
   position: absolute;
